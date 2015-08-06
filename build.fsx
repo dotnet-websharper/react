@@ -5,6 +5,7 @@ open IntelliFactory.Build
 let bt =
     BuildTool().PackageId("WebSharper.React")
         .VersionFrom("WebSharper")
+        .WithFramework(fun x -> x.Net40)
 
 let extension =
     bt.WebSharper.Extension("WebSharper.React.Bindings")
