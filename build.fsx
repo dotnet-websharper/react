@@ -38,7 +38,7 @@ bt.Solution [
             { configuration with
                 Title = Some "WebSharper.React"
                 LicenseUrl = Some "http://websharper.com/licensing"
-                ProjectUrl = Some "https://github.com/intellifactory/websharper.react"
+                ProjectUrl = Some "https://bitbucket.org/intellifactory/websharper.react"
                 Description = "WebSharper bindings and abstractions for React."
                 Authors = [ "IntelliFactory" ]
                 RequiresLicenseAcceptance = true })
