@@ -118,6 +118,7 @@
     <Content Include="Web.config" />
     <Content Include="Global.asax" />
     <None Include="packages.config" />
+    <None Include="Client.old" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="IntelliFactory.Xml">
