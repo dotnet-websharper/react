@@ -52,6 +52,7 @@
     <Compile Include="Class.fs" />
     <None Include="app.config" />
     <None Include="packages.config" />
+    <Compile Include="Revamp.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="IntelliFactory.Xml">
