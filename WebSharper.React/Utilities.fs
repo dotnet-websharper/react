@@ -1,4 +1,4 @@
-﻿namespace WebSharper.React
+﻿namespace WebSharper.React.Obsolete
 
 open WebSharper
 
