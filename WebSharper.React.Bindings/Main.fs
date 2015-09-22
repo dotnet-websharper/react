@@ -12,7 +12,7 @@ module Definition =
     let ReactElement =
         Interface "ReactElement"
 
-    let DOMElement     = T<Dom.Element>
+    let DOMNode     = T<Dom.Node>
     let DOMEventTarget = T<Dom.EventTarget>
 
     let ReactComponent =
@@ -89,9 +89,9 @@ module Definition =
 
             "createFactory" => (T<string> + ReactClass) ^-> (T<obj> * (T<string> + ReactClass + ReactElement) ^-> ReactElement)
 
-            "render" => ReactElement * DOMElement * !? T<unit -> unit> ^-> ReactComponent
+            "render" => ReactElement * DOMNode * !? T<unit -> unit> ^-> ReactComponent
 
-            "unmountComponentAtNode" => DOMElement ^-> T<bool>
+            "unmountComponentAtNode" => DOMNode ^-> T<bool>
 
             "renderToString" => ReactElement ^-> T<string>
 
@@ -99,7 +99,7 @@ module Definition =
 
             "isValidElement" => T<obj> ^-> T<bool>
 
-            "findDOMNode" => ReactComponent ^-> DOMElement
+            "findDOMNode" => ReactComponent ^-> DOMNode
 
             "initializeTouchEvents" => T<bool> ^-> T<unit>
         ]
