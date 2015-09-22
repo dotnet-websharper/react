@@ -47,12 +47,13 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
-    <Compile Include="Utilities.fs" />
-    <Compile Include="Element.fs" />
+    <Compile Include="Component.fs" />
     <Compile Include="Class.fs" />
+    <Compile Include="Router.fs" />
+    <Compile Include="React.fs" />
+    <Compile Include="Element.fs" />
     <None Include="app.config" />
     <None Include="packages.config" />
-    <Compile Include="Revamp.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="IntelliFactory.Xml">
