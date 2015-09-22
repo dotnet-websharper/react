@@ -5,51 +5,52 @@ open WebSharper.JavaScript
 
 open WebSharper.React
 
-[<Require(typeof<WebSharper.React.Bindings.Resources.React>)>]
+[<Require(typeof<Bindings.Resources.React>)>]
 [<JavaScript>]
 module Client =
     
     type Action =
         | Home
-        | Contact
-
-    module Document =
-        
-        [<Inline "document.body">]
-        let Body = X<Dom.Element>
+        | Hello of string
+    
+    type Person = { Name : string }
 
     let Main =
         let routeMap =
             RouteMap.Create
             <| function
-                | Home    -> "/"
-                | Contact -> "/contact"
+                | Home -> []
+                | Hello name -> [ "hello"; name ]
             <| function
-                | "/"        -> Home
-                | "/contact" -> Contact
-                | _          -> Home
-
-        let page (router : Router<_>) (title, action) : Element<Action> =
-            Element.Wrap [
-                Element.Wrap [
-                    Element("strong", 
-                        [ Text "Current URL: " ])
-                    Text (routeMap.Serializer router.State)
-                ]
-
-                Element("button", 
-                    [ Text title ])
-                |>! OnClick (fun _ ->
-                    router.SetState action
-                )
-            ]
-
+                | [] -> Home
+                | [ "hello"; name ] -> Hello name
+                | _ -> Home
+            
         React.Router routeMap
         <| fun router ->
             match router.State with
             | Home ->
-                page router ("Contact Me", Contact)
-            | Contact ->
-                page router ("Home", Home)
+                React.Class { Name = "" }
+                <| fun this ->
+                    Element.Wrap [
+                        Element.Create "input" []
+                        |> OnChange (fun event ->
+                            this.SetState { Name = event?target?value }
+                        )
+
+                        Element.Create "h3" [ Text ("Hello " + this.State.Name + "!") ]
+
+                        Element.Create "button" [ Text "Greet" ]
+                        |> OnClick (fun _ ->
+                            router.SetState (Action.Hello this.State.Name)
+                        )
+                    ]
+                :> Component
+            | Hello name ->
+                Element.Create "button" [ Text "Say Hello" ]
+                |> OnClick (fun _ ->
+                    JS.Alert ("Hello " + name + "!")
+                )
+                :> Component
         |> React.Mount Document.Body
         
