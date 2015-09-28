@@ -7,9 +7,10 @@ open WebSharper.React.Bindings
 
 type Element =
     {
-        TagName  : string
-        Children : Component list
-        Events   : (string * (SyntheticEvent -> unit)) list
+        TagName    : string
+        Children   : Component list
+        Events     : (string * (SyntheticEvent -> unit)) list
+        Attributes : (string * obj) list
     }
 
     interface Component with
@@ -26,19 +27,32 @@ type Element =
                         |> List.map (fun (event, callback) ->
                             (event, box callback)
                         )
+                    yield! this.Attributes
                 ]
                 
             if this.TagName.StartsWith "!" then
-                React.CreateElement("span", null, this.TagName.Substring 1)
+                React.CreateElement("span", properties, this.TagName.Substring 1)
             else
                 React.CreateElement(this.TagName, properties, children)
     
     [<JavaScript>]
-    static member Create tagName children =
+    static member Create (tagName : string) children =
+        let (tagName, attributes) =
+            if not (tagName.StartsWith "!") && tagName.Contains "." then
+                if tagName.StartsWith "." then
+                    ("div", [ "className", box (tagName.Substring(1).Replace('.', ' ')) ])
+                else
+                    let parts = tagName.Split '.'
+                    
+                    (parts.[0], [ "className", box (String.concat " " parts.[1 ..]) ])
+            else
+                (tagName, [])
+        
         {
-            TagName  = tagName
-            Children = children
-            Events   = []
+            TagName    = tagName
+            Children   = children
+            Events     = []
+            Attributes = attributes
         }
 
     [<JavaScript>]
@@ -65,3 +79,16 @@ module Operators =
         
         [<Inline "document.body">]
         let Body = X<Dom.Document>
+
+    let (-<) element attributes =
+        { element with
+            Attributes = List.map (fun (name, value) -> (name, box value)) attributes }
+
+[<AutoOpen>]
+[<JavaScript>]
+module Tags =
+    
+    let Input = Element.Create "input" []
+
+    let Ul = Element.Create "ul"
+    let Li = Element.Create "li"
