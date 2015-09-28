@@ -69,6 +69,8 @@ module ClassEvents =
 
     let OnBeforeMount<'a, 'b when 'b :> Component> = Event<'a, 'b> "componentWillMount"
 
+    let OnUpdate<'a, 'b when 'b :> Component> = Event<'a, 'b> "componentDidUpdate"
+
 [<JavaScript>]
 module Class =
     
