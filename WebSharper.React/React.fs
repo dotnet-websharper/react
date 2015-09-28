@@ -5,6 +5,10 @@ open WebSharper.JavaScript
 
 open WebSharper.React.Bindings
 
+module Resources =
+    
+    type React = Resources.React
+
 [<JavaScript>]
 module React =
     
@@ -26,7 +30,16 @@ module React =
         React.Render(component'.Map(), target)
 
     let Router<'a, 'b when 'a : equality and 'b :> Component> routeMap (renderer : Router<'a> -> 'b) : Class<'a, 'b> =
-        Class (routeMap.Deserializer [])
+        let action =
+            Window.Current.LocalStorage.GetItem "last-action"
+            |> (fun action ->
+                if action = null then
+                    routeMap.Deserializer []
+                else
+                    As<'a> (JSON.Parse action)
+            )
+
+        Class action
         <| fun this ->
             let url =
                 routeMap.Serializer this.State
@@ -40,6 +53,9 @@ module React =
             Window.Current.Location.Hash <- "#" + url
 
             renderer this
+        |> OnUpdate (fun this _ ->
+            Window.Current.LocalStorage.SetItem("last-action", JSON.Stringify this.State)
+        )
         |> OnMount (fun class' _ ->
             Window.Current.AddEventListener("hashchange", (fun _ ->
                 let newState =
