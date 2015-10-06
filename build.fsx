@@ -5,6 +5,7 @@ open IntelliFactory.Build
 let bt =
     BuildTool().PackageId("WebSharper.React")
         .VersionFrom("WebSharper")
+        .WithFSharpVersion(FSharpVersion.FSharp30)
         .WithFramework(fun x -> x.Net40)
 
 let extension =
