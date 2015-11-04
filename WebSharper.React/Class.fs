@@ -50,8 +50,14 @@ type Class<'a, 'b when 'b :> Component> =
                     ()
 
                 yield! this.Events
-                    |> List.map (fun (event, callback) ->
-                        (event, box (FuncWithThis callback))
+                    |> Seq.groupBy (fun (event, _) -> event)
+                    |> Seq.map (fun (event, callbacks) ->
+                        (event, box (FuncWithThis<Class<'a>, SyntheticEvent -> unit>(fun x y ->
+                            callbacks
+                            |> Seq.iter (fun (_, callback) ->
+                                callback x y
+                            )
+                        )))
                     )
             ]
             |> React.CreateClass
