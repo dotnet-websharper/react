@@ -9,10 +9,12 @@
     * [React](React.module.md)
     * [Resources](Resources.module.md)
     * [Class](Class.module.md)
+
 * DOM
     * [Component](Component.type.md)
     * [Class](Class.type.md) - reactive component
     * [Element](Element.type.md) - static HTML elements
+    
 * Structure
     * [RouteMap](RouteMap.type.md)
     * [Router](Routing.md) - client-side routing support
