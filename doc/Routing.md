@@ -2,9 +2,11 @@
 
 > [Documentation][1] / [API Reference](API.md) / **Router type**
 
+Structuring Single Page Application with **WebSharper.React** is fairly easy, because it supports client-side routing out of the box.
+
 `React.Router` function inside the [React module](React.module.md) instantiates a special reactive component, where the state is an identical value (preferably a discriminated union case), which represents a page in your application.
 
-Since this is `Class<_, _>` instance, the currently viewed page can be altered type-safely, by calling the `SetState` member. It also listens for URL changes, so redirections using [Location API]() works as well.
+Since this is `Class<_, _>` instance, it can be mounted into the DOM and the currently viewed page can be altered type-safely, by calling the `SetState` member. It also listens for URL changes, so redirections using [Location API][2] works as well.
 
 * *function* Router
     * Signature: `val Router : RouteMap<'Action> -> (Router<'Action> -> #Component) -> Class<'Action, #Component>`
@@ -42,3 +44,4 @@ let router =
 ```
 
 [1]: https://bitbucket.org/IntelliFactory/websharper.react/overview
+[2]: https://developer.mozilla.org/en-US/docs/Web/API/Location
