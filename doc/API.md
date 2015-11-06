@@ -1,21 +1,20 @@
 # API Reference
 
-> [Documentation](?) / **API Reference**
+> [Documentation][1] / **API Reference**
 
 * Modules
 
-    **WebSharper.React** defines three public modules, that contain helper functions and types.
+    **WebSharper.React** organizes its API into three modules.
 
-    * [React](React.module.md) module
-    * [Resources](Resources.module.md) module
-    * [Class](Class.module.md) module
-* Components
+    * [React](React.module.md)
+    * [Resources](Resources.module.md)
+    * [Class](Class.module.md)
+* DOM
+    * [Component](Component.type.md)
+    * [Class](Class.type.md) - reactive component
+    * [Element](Element.type.md) - static HTML elements
+* Structure
+    * [RouteMap](RouteMap.type.md)
+    * [Router](Routing.md) - client-side routing support
 
-    Underlying types and combinators for creating views.
-
-    * [Component](Component.type.md) type
-    * [Class](Class.type.md) type
-    * [Element](Element.type.md) type
-* Client-side Routing
-    * [RouteMap](RouteMap.type.md) type
-    * [Router](Routing.md) function
+[1]: https://bitbucket.org/IntelliFactory/websharper.react/overview

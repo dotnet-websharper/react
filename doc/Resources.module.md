@@ -1,12 +1,15 @@
 # *module* Resources
 
-> [Documentation](?) / [API Reference](API.md) / **Resources**
+> [Documentation][1] / [API Reference](API.md) / **Resources module**
 
 * *type* React
 
-    Defines the needed resource for React. Usage:
+    A `BaseResource` subclass which wraps the needed resource(s) by [React][2].
 
-    ```fsharp
+```fsharp
 [<Require(typeof<Resources.React>)>]
 module MyApp =
-    ```
+```
+
+[1]: https://bitbucket.org/IntelliFactory/websharper.react/overview
+[2]: https://facebook.github.io/react/

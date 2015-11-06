@@ -1,24 +1,28 @@
 # *type* Element
 
-> [Documentation](?) / [API Reference](API.md) / **Element type**
+> [Documentation][1] / [API Reference](API.md) / **Element type**
 
 * *type* Element
 
-    This is a record type which represents static HTML tags.
+    A record type which represents static HTML tags.
 
     * *static member* Create
         * Signature: `static member Element.Create : string -> Component list -> Element`
 
-        Creates a static HTML tag with the given selector and children.
+        Creates an element with the given selector and children.
 
     * *static member* Wrap
         * Signature: `static member Element.Wrap : Component list -> Element`
 
-        Wraps the given child components into a `<div />`. Useful for grouping other `Component` instances.
+        Wraps the given child components. Useful for grouping `Component` instances.
 
 ## Selectors
 
-Selectors are strings in the following form, `tagName.x.y...` where `x` and `y` are CSS class names. `tagName` can be omitted if there is at least one class name specified.
+Selectors are strings in `tagName.x.y...` form where `x` and `y` are CSS class names.
+
+> Note: `tagName` can be omitted if there is at least one class name specified.
+
+### Examples
 
 Selector            | Element
 ------------------- | -------
@@ -26,20 +30,24 @@ button              | `<button />`
 button.primary.blue | `<button class="primary blue" />`
 .container          | `<div class="container" />`
 
-## Helper functions
+## Shorthand functions
 
 * *function* Text
     * Signature: `val Text : string -> Element`
 
-    Shorthand function for creating `<span />` elements, containing the given text.
+    Creates a `<span />` element, containing the given text.
 
 * *function* (-<)
     * Signature: `val (-<) : Element -> (string * 'T) list -> Element`
 
-    An operator for assigning un-typed properties to `Element` instances.
+    Assigns un-typed properties to `Element` instances.
 
-    ```fsharp
+### Example
+
+```fsharp
 Element.create "button" [ Text "Button1" ] -< [
         "myProperty", myPropertyValue
 ]
-    ```
+```
+
+[1]: https://bitbucket.org/IntelliFactory/websharper.react/overview

@@ -1,14 +1,14 @@
 # *type* Class
 
-> [Documentation](?) / [API Reference](API.md) / **Class type**
+> [Documentation][1] / [API Reference](API.md) / **Class type**
 
 * *type* Class<'T, #Component>
 
-    This is a record type which represents reactive components holding a state, a renderer and an event list. Should be constructed with [`React.Class`](React.module.md).
+    A record type which represents reactive components with a state, a renderer function and an event listener list. Should be constructed with [`React.Class`](React.module.md).
 
 * *type* Class<'T>
 
-    This is a subset of the type `Class<'T, #Component>`, giving access only to the state. An instance of this type is always made from `Class<_, _>` values being created and passed to renderer functions.
+    `Class<'T, #Component>` subset which gives access only to the state. An instance of this type is always made from `Class<_, _>` values being created and passed to the renderer function.
 
     * *member* State
 
@@ -16,6 +16,8 @@
 
     * *member* SetState
 
-        * Signature: `member SetState: 'T -> unit`
+        * Signature: `member Class.SetState: 'T -> unit`
 
-        Sets the current state of the class.
+        Sets the current state.
+
+[1]: https://bitbucket.org/IntelliFactory/websharper.react/overview
