@@ -15,7 +15,12 @@ module Client =
     
     type Person = { Name : string }
 
+#if ZAFIR
+    [<SPAEntryPoint>]
+    let Main() =
+#else
     let Main =
+#endif
         let routeMap =
             RouteMap.Create
             <| function
