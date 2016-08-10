@@ -1,13 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.React", "WebSharper.React\WebSharper.React.fsproj", "{6FCB47E7-BCDC-4119-A333-E53EE7DF0AE2}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.React.Bindings", "WebSharper.React.Bindings\WebSharper.React.Bindings.fsproj", "{A0D3C1C0-ADDE-40E9-AC40-A991B0DAFA61}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.React.Tests", "WebSharper.React.Tests\WebSharper.React.Tests.fsproj", "{35CB0A35-DEF3-4C94-B2A4-299CB7F9408F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1F76577A-AE0A-4C74-8875-C05AEAE9D2C2}"
+	ProjectSection(SolutionItems) = preProject
+		build-zafir.fsx = build-zafir.fsx
+		build.fsx = build.fsx
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
