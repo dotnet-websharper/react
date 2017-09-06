@@ -4,7 +4,7 @@ open IntelliFactory.Build
 
 let bt =
     BuildTool().PackageId("WebSharper.React")
-        .VersionFrom("WebSharper")
+        .VersionFrom("WebSharper", versionSpec = "(,4.0)")
         .WithFSharpVersion(FSharpVersion.FSharp30)
         .WithFramework(fun x -> x.Net40)
 
