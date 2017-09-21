@@ -5,7 +5,6 @@ open WebSharper.JavaScript
 
 open WebSharper.React
 
-[<Require(typeof<Bindings.Resources.React>)>]
 [<JavaScript>]
 module Client =
     
