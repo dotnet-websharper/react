@@ -1,49 +1,17 @@
-#load "tools/includes.fsx"
+#load "paket-files/build/intellifactory/websharper/tools/WebSharper.Fake.fsx"
+open Fake
+open WebSharper.Fake
 
-open IntelliFactory.Build
+let targets =
+    GetSemVerOf "WebSharper"
+    |> ComputeVersion
+    |> WSTargets.Default
+    |> MakeTargets
 
-let bt =
-    BuildTool().PackageId("WebSharper.React")
-        .VersionFrom("WebSharper", versionSpec = "(,4.0)")
-        .WithFSharpVersion(FSharpVersion.FSharp30)
-        .WithFramework(fun x -> x.Net40)
+Target "Build" DoNothing
+targets.BuildDebug ==> "Build"
 
-let extension =
-    bt.WebSharper.Extension("WebSharper.React.Bindings")
-        .SourcesFromProject()
+Target "CI-Release" DoNothing
+targets.CommitPublish ==> "CI-Release"
 
-let wrapper =
-    bt.WebSharper.Library("WebSharper.React")
-        .SourcesFromProject()
-        .References(fun ref -> 
-            [
-                ref.Project extension
-            ])
-
-let tests =
-    bt.WebSharper.BundleWebsite("WebSharper.React.Tests")
-        .SourcesFromProject()
-        .References(fun ref -> 
-            [
-                ref.Project extension
-                ref.Project wrapper
-            ])
-
-bt.Solution [
-    extension
-    wrapper
-    tests
-
-    bt.NuGet.CreatePackage()
-        .Configure(fun configuration ->
-            { configuration with
-                Title = Some "WebSharper.React"
-                LicenseUrl = Some "http://websharper.com/licensing"
-                ProjectUrl = Some "https://bitbucket.org/intellifactory/websharper.react"
-                Description = "WebSharper bindings and abstractions for React."
-                Authors = [ "IntelliFactory" ]
-                RequiresLicenseAcceptance = true })
-        .Add(extension)
-        .Add(wrapper)
-]
-|> bt.Dispatch
+RunTargetOrDefault "Build"
