@@ -1,6 +1,6 @@
 STORAGE: NONE
 NUGET
-  remote: https://nuget.intellifactory.com/nuget
+  remote: https://api.nuget.org/v3/index.json
     WebSharper (4.4.0.280)
     WebSharper.FSharp (4.4.0.280)
       WebSharper (4.4.0.280)
