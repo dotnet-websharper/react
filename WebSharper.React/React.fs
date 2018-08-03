@@ -57,7 +57,7 @@ module React =
             Window.Current.LocalStorage.SetItem("last-action", JSON.Stringify this.State)
         )
         |> OnMount (fun class' _ ->
-            Window.Current.AddEventListener("hashchange", (fun _ ->
+            Window.Current.AddEventListener("hashchange", fun () ->
                 let newState =
                     (Window.Current.Location.Hash.Substring 2).Split('/')
                     |> (fun parts ->
@@ -70,5 +70,5 @@ module React =
 
                 if class'.State <> newState then
                     class'.SetState newState
-            ))
+            )
         )
