@@ -3,6 +3,7 @@
 **WebSharper.React** is an abstraction over the JavaScript library [React][1] by Facebook. It provides a more functional API and circumvents the need of JSX with type-safe combinators.
 
 * [API Reference](doc/API.md)
+* Example "Tic-Tac-Toe" ported from the React tutorial: [on TryWebSharper](http://try.websharper.com/snippet/loic.denuziere/0000Lt)
 * Example "Get it done" with React and MaterialUI: [source](https://github.com/dotnet-websharper/materialui/blob/master/WebSharper.MaterialUI.Tests/Client.fs), [running](https://dotnet-websharper.github.io/materialui/)
 
 ## Licensing and availability
