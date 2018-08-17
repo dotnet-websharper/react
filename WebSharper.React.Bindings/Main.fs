@@ -161,7 +161,7 @@ module Definition =
             "createRef" => T<unit> ^-> React.Ref
             Generic - fun props ->
                 "forwardRef" => (props * React.Ref ^-> React.Component) ^-> React.Component
-            "fragment" =? React.Class
+            "Fragment" =? React.Class
             Generic - fun t ->
                 "createContext" => t ^-> React.Context.[t]
         ]

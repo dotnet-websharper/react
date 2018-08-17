@@ -1,31 +1,33 @@
 ﻿namespace rec WebSharper.React
 
+open System.Runtime.CompilerServices
 open WebSharper
 open WebSharper.JavaScript
 open WebSharper.React.Bindings
 type private R = WebSharper.React.Bindings.React
+type React = R
 
-type React private () =
+module React =
 
-    static let inlineArrayOfSeq (s: seq<'T>) : array<'T> =
+    let internal inlineArrayOfSeq (s: seq<'T>) : array<'T> =
         match s with
         | :? System.Array -> As s
         | s -> Array.ofSeq s
 
-    static member Element (name: string) (props: seq<string * obj>) (children: seq<R.Component>) =
-        R.CreateElement(name, New props, inlineArrayOfSeq children)
+    let Element (name: string) (props: seq<string * obj>) (children: seq<R.Component>) =
+        R.CreateElement(name, New props, React.inlineArrayOfSeq children)
 
-    static member Text (s: string) =
+    let Text (s: string) =
         As<R.Component> s
 
-    static member Mount target ``component`` =
+    let Mount target ``component`` =
         ReactDOM.Render(``component``, target) |> ignore
 
-    static member Make<'T, 'Props, 'State when 'T :> ComponentClass<'Props, 'State>>
-            (f: 'Props -> 'T)
-            (props: 'Props)
-            : R.Component =
+    let Make<'T, 'Props, 'State when 'T :> ComponentClass<'Props, 'State>> (f: 'Props -> 'T) (props: 'Props) =
         R.CreateElement(As<string> f, props)
+
+    let Fragment (children: seq<R.Component>) =
+        R.CreateElement(R.Fragment, null, React.inlineArrayOfSeq children)
 
 // Ideally we should be able to just write components with:
 //
@@ -66,6 +68,18 @@ type ComponentClass<'Props, 'State>(props: 'Props) =
 
     [<Name "setState"; Stub>]
     member this.SetState(s: 'State) = X<unit>
+
+[<AutoOpen>]
+module Extensions =
+
+    type R.Context<'T> with
+
+        member this.Provide (value: 'T) (comp: seq<R.Component>) =
+            R.CreateElement(this.Provider, New ["value" => value], React.inlineArrayOfSeq comp)
+
+        member this.Consume (f: 'T -> #seq<R.Component>) =
+            R.CreateElement(this.Consumer, null, fun v ->
+                R.CreateElement(R.Fragment, null, React.inlineArrayOfSeq(f v)))
 
 [<assembly: JavaScript>]
 do ()
