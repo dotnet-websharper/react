@@ -4,6 +4,7 @@ open WebSharper
 open WebSharper.JavaScript
 open WebSharper.React.Bindings
 open WebSharper.React
+open WebSharper.React.Html
 
 [<JavaScript>]
 module Client =
@@ -11,9 +12,9 @@ module Client =
     type SquareProps = { value: option<string>; onClick: unit -> unit }
 
     let Square props =
-        React.Element "button" [
-            "className" => "square"
-            "onClick" => props.onClick
+        button [
+            attr.className "square"
+            on.click (fun _ -> props.onClick())
         ] [React.Text (defaultArg props.value "")]
 
     type BoardProps = { squares: option<string>[]; onClick: int -> unit }
@@ -26,18 +27,18 @@ module Client =
                         value = this.Props.squares.[i]
                         onClick = fun () -> this.Props.onClick i
                     }
-                React.Element "div" [] [
-                    React.Element "div" ["className" => "board-row"] [
+                div [] [
+                    div [attr.className "board-row"] [
                         renderSquare 0
                         renderSquare 1
                         renderSquare 2
                     ]
-                    React.Element "div" ["className" => "board-row"] [
+                    div [attr.className "board-row"] [
                         renderSquare 3
                         renderSquare 4
                         renderSquare 5
                     ]
-                    React.Element "div" ["className" => "board-row"] [
+                    div [attr.className "board-row"] [
                         renderSquare 6
                         renderSquare 7
                         renderSquare 8
@@ -114,23 +115,23 @@ module Client =
                                 "Go to game start"
                             else
                                 "Go to move #" + string move
-                        React.Element "li" [
-                            "key" => move
-                            "onClick" => fun () -> jumpTo move
-                        ] [React.Element "button" [] [React.Text desc]]
+                        li [
+                            attr.key move
+                            on.click (fun _ -> jumpTo move)
+                        ] [button [] [React.Text desc]]
                     )
                 let status =
                     match winner with
                     | Some winner -> "Winner: " + winner
                     | None -> "Next player: " + (if this.State.xIsNext then "X" else "O")
 
-                React.Element "div" ["className" => "game"] [
-                    React.Element "div" ["className" => "game-board"] [
+                div [attr.className "game"] [
+                    div [attr.className "game-board"] [
                         Board { squares = current.squares; onClick = handleClick }
                     ]
-                    React.Element "div" ["className" => "game-info"] [
-                        React.Element "div" [] [React.Text status]
-                        React.Element "ol" [] moves
+                    div [attr.className "game-info"] [
+                        div [] [React.Text status]
+                        ol [] moves
                     ]
                 ]
             )

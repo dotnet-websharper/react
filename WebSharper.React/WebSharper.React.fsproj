@@ -9,6 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="React.fs" />
+    <Compile Include="Html.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../WebSharper.React.Bindings\WebSharper.React.Bindings.fsproj" />

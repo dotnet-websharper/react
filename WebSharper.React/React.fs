@@ -5,7 +5,6 @@ open WebSharper.JavaScript
 open WebSharper.React.Bindings
 type private R = WebSharper.React.Bindings.React
 
-[<JavaScript>]
 type React private () =
 
     static let inlineArrayOfSeq (s: seq<'T>) : array<'T> =
@@ -38,3 +37,6 @@ type React private () =
 
     static member Mount target ``component`` =
         ReactDOM.Render(``component``, target) |> ignore
+
+[<assembly: JavaScript>]
+do ()
