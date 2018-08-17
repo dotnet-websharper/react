@@ -8,11 +8,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Component.fs" />
-    <Compile Include="Class.fs" />
-    <Compile Include="Router.fs" />
     <Compile Include="React.fs" />
-    <Compile Include="Element.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../WebSharper.React.Bindings\WebSharper.React.Bindings.fsproj" />

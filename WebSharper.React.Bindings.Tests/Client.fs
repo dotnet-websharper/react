@@ -3,7 +3,6 @@ namespace WebSharper.React.Bindings.Tests
 open WebSharper
 open WebSharper.JavaScript
 open WebSharper.React.Bindings
-open WebSharper.React
 
 [<JavaScript>]
 module Client =
@@ -76,7 +75,7 @@ module Client =
 
     let Game =
         React.CreateClassArgs<unit, GameState>(
-            GetInitialState = (fun () ->
+            GetInitialState = (fun this ->
                 {
                     history = [| { squares = Array.create 9 None } |]
                     stepNumber = 0
@@ -85,7 +84,7 @@ module Client =
             ),
             Render = (fun this ->
                 let handleClick i =
-                    let history = this.State.history.[0..this.State.stepNumber + 1]
+                    let history = this.State.history.[0..this.State.stepNumber]
                     let current = Array.last history
                     let squares = Array.copy current.squares
                     if (calculateWinner squares).IsSome || squares.[i].IsSome then

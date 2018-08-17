@@ -1,74 +1,40 @@
-﻿namespace WebSharper.React
+﻿namespace rec WebSharper.React
 
 open WebSharper
 open WebSharper.JavaScript
-
 open WebSharper.React.Bindings
-
-module Resources =
-    
-    type React = Resources.React
+type private R = WebSharper.React.Bindings.React
 
 [<JavaScript>]
-module React =
-    
-    type private Window with
-        static member Current with [<Inline "window">] get () = X<Window>
+type React private () =
 
-        [<Inline "$0.addEventListener($1, $2)">]
-        member this.AddEventListener (_ : string, _ : (unit -> unit)) = ()
+    static let inlineArrayOfSeq (s: seq<'T>) : array<'T> =
+        match s with
+        | :? System.Array -> As s
+        | s -> Array.ofSeq s
 
-    let Class initialState renderer =
-        {
-            InitialState = initialState
-            Renderer     = renderer
-            Events       = []
-            Context      = None
-        }
+    static member Class<'Props, 'State>
+        (
+            render: R.Component<'Props, 'State> -> R.Component,
+            ?defaultProps: 'Props,
+            ?initialState: 'Props -> 'State
+        ) : 'Props -> R.Component =
+        let args =
+            R.CreateClassArgs(Render = (fun this -> render this))
+        match defaultProps with
+        | None -> ()
+        | Some props -> args.GetDefaultProps <- fun () -> props
+        match initialState with
+        | None -> ()
+        | Some getState -> args.GetInitialState <- (fun this -> getState this.Props)
+        let cls = R.CreateClass args
+        fun props -> R.CreateElement(cls, props)
 
-    let Mount target (component' : Component) =
-        React.Render(component'.Map(), target)
+    static member Element (name: string) (props: seq<string * obj>) (children: seq<R.Component>) =
+        R.CreateElement(name, New props, inlineArrayOfSeq children)
 
-    let Router<'a, 'b when 'a : equality and 'b :> Component> routeMap (renderer : Router<'a> -> 'b) : Class<'a, 'b> =
-        let action =
-            Window.Current.LocalStorage.GetItem "last-action"
-            |> (fun action ->
-                if action = null then
-                    routeMap.Deserializer []
-                else
-                    As<'a> (JSON.Parse action)
-            )
+    static member Text (s: string) =
+        As<R.Component> s
 
-        Class action
-        <| fun this ->
-            let url =
-                routeMap.Serializer this.State
-                |> (fun parts ->
-                    if List.isEmpty parts then
-                        "/"
-                    else
-                        List.fold (fun state -> (+) (state + "/")) "" parts
-                )
-
-            Window.Current.Location.Hash <- "#" + url
-
-            renderer this
-        |> OnUpdate (fun this _ ->
-            Window.Current.LocalStorage.SetItem("last-action", JSON.Stringify this.State)
-        )
-        |> OnMount (fun class' _ ->
-            Window.Current.AddEventListener("hashchange", fun () ->
-                let newState =
-                    (Window.Current.Location.Hash.Substring 2).Split('/')
-                    |> (fun parts ->
-                        if Array.isEmpty parts then
-                            []
-                        else
-                            Array.toList parts
-                    )
-                    |> routeMap.Deserializer
-
-                if class'.State <> newState then
-                    class'.SetState newState
-            )
-        )
+    static member Mount target ``component`` =
+        ReactDOM.Render(``component``, target) |> ignore

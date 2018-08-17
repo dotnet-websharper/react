@@ -104,8 +104,9 @@ module Definition =
                 |> WithInline "{render:$wsruntime.CreateFuncWithOnlyThis($Render)}"
             ]
             |+> Instance [
-                "getDefaultProps" =@ T<unit> ^-> props
-                "getInitialState" =@ T<unit> ^-> state
+                "getDefaultProps" =! T<unit> ^-> props
+                "getInitialState" =! ComponentT.[props, state]?this ^-> state
+                |> WithSetterInline "$0.getInitialState = $wsruntime.CreateFuncWithOnlyThis($1)"
             ]
 
         let Class = Class_
