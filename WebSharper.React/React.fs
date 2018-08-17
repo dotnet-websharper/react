@@ -12,23 +12,6 @@ type React private () =
         | :? System.Array -> As s
         | s -> Array.ofSeq s
 
-    static member Class<'Props, 'State>
-        (
-            render: R.Component<'Props, 'State> -> R.Component,
-            ?defaultProps: 'Props,
-            ?initialState: 'Props -> 'State
-        ) : 'Props -> R.Component =
-        let args =
-            R.CreateClassArgs(Render = (fun this -> render this))
-        match defaultProps with
-        | None -> ()
-        | Some props -> args.GetDefaultProps <- fun () -> props
-        match initialState with
-        | None -> ()
-        | Some getState -> args.GetInitialState <- (fun this -> getState this.Props)
-        let cls = R.CreateClass args
-        fun props -> R.CreateElement(cls, props)
-
     static member Element (name: string) (props: seq<string * obj>) (children: seq<R.Component>) =
         R.CreateElement(name, New props, inlineArrayOfSeq children)
 
@@ -37,6 +20,52 @@ type React private () =
 
     static member Mount target ``component`` =
         ReactDOM.Render(``component``, target) |> ignore
+
+    static member Make<'T, 'Props, 'State when 'T :> ComponentClass<'Props, 'State>>
+            (f: 'Props -> 'T)
+            (props: 'Props)
+            : R.Component =
+        R.CreateElement(As<string> f, props)
+
+// Ideally we should be able to just write components with:
+//
+//      type MyComponent(props) =
+//          inherit React.Component<Props, State>(props)
+//          override this.Render() = ...
+//
+// But currently we need this intermediary hacky class because of these issues:
+//  * core#1006: can't write an abstract class in WIG.
+//  * core#1007: prototype chain not set correctly when inheriting from a stub class.
+[<AbstractClass>]
+type ComponentClass<'Props, 'State>(props: 'Props) =
+
+    static do
+        JS.Inline """
+            for (var $p in React.Component.prototype) {
+                WebSharper.React.ComponentClass.prototype[$p] = React.Component.prototype[$p];
+            }
+            """
+
+    do JS.Inline("""React.Component.call(this, $1)""", props)
+
+    [<Name "render">]
+    abstract Render : unit -> R.Component
+
+    [<Name "getDefaultProps">]
+    abstract GetDefaultProps : unit -> 'Props
+    default this.GetDefaultProps() = JS.Undefined
+
+    [<Name "props"; Stub>]
+    member this.Props = X<'Props>
+
+    [<Name "state"; Stub>]
+    member this.State : 'State = X<'State>
+
+    [<Inline "$this.state = $state">]
+    member this.SetInitialState(state: 'State) = X<unit>
+
+    [<Name "setState"; Stub>]
+    member this.SetState(s: 'State) = X<unit>
 
 [<assembly: JavaScript>]
 do ()

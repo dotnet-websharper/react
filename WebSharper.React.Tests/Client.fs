@@ -1,4 +1,4 @@
-namespace WebSharper.React.Bindings.Tests
+namespace WebSharper.React.Tests
 
 open WebSharper
 open WebSharper.JavaScript
@@ -19,33 +19,32 @@ module Client =
 
     type BoardProps = { squares: option<string>[]; onClick: int -> unit }
 
-    let Board =
-        React.Class<BoardProps, unit>(
-            render = (fun this ->
-                let renderSquare i =
-                    Square {
-                        value = this.Props.squares.[i]
-                        onClick = fun () -> this.Props.onClick i
-                    }
-                div [] [
-                    div [attr.className "board-row"] [
-                        renderSquare 0
-                        renderSquare 1
-                        renderSquare 2
-                    ]
-                    div [attr.className "board-row"] [
-                        renderSquare 3
-                        renderSquare 4
-                        renderSquare 5
-                    ]
-                    div [attr.className "board-row"] [
-                        renderSquare 6
-                        renderSquare 7
-                        renderSquare 8
-                    ]
+    type Board(props) =
+        inherit ComponentClass<BoardProps, unit>(props)
+
+        override this.Render() =
+            let renderSquare i =
+                Square {
+                    value = this.Props.squares.[i]
+                    onClick = fun () -> this.Props.onClick i
+                }
+            div [] [
+                div [attr.className "board-row"] [
+                    renderSquare 0
+                    renderSquare 1
+                    renderSquare 2
                 ]
-            )
-        )
+                div [attr.className "board-row"] [
+                    renderSquare 3
+                    renderSquare 4
+                    renderSquare 5
+                ]
+                div [attr.className "board-row"] [
+                    renderSquare 6
+                    renderSquare 7
+                    renderSquare 8
+                ]
+            ]
 
     type HistoryItem = { squares: option<string>[] }
 
@@ -74,70 +73,69 @@ module Client =
                 None
         )
 
-    let Game =
-        React.Class<unit, GameState>(
-            initialState = (fun _ ->
-                {
-                    history = [| { squares = Array.create 9 None } |]
-                    stepNumber = 0
-                    xIsNext = true
+    type Game(props) as this =
+        inherit ComponentClass<unit, GameState>(props)
+
+        do this.SetInitialState {
+                history = [| { squares = Array.create 9 None } |]
+                stepNumber = 0
+                xIsNext = true
+            }
+
+        member this.handleClick i =
+            let history = this.State.history.[0..this.State.stepNumber]
+            let current = Array.last history
+            let squares = Array.copy current.squares
+            if (calculateWinner squares).IsSome || squares.[i].IsSome then
+                ()
+            else
+                squares.[i] <- Some (if this.State.xIsNext then "X" else "O")
+                this.SetState {
+                    history = Array.append history [| { squares = squares } |]
+                    stepNumber = history.Length
+                    xIsNext = not this.State.xIsNext
                 }
-            ),
-            render = (fun this ->
-                let handleClick i =
-                    let history = this.State.history.[0..this.State.stepNumber]
-                    let current = Array.last history
-                    let squares = Array.copy current.squares
-                    if (calculateWinner squares).IsSome || squares.[i].IsSome then
-                        ()
-                    else
-                        squares.[i] <- Some (if this.State.xIsNext then "X" else "O")
-                        this.SetState {
-                            history = Array.append history [| { squares = squares } |]
-                            stepNumber = history.Length
-                            xIsNext = not this.State.xIsNext
-                        }
 
-                let jumpTo step =
-                    this.SetState {
-                        this.State with
-                            stepNumber = step
-                            xIsNext = (step % 2) = 0
-                    }
+        member this.jumpTo step =
+            this.SetState {
+                this.State with
+                    stepNumber = step
+                    xIsNext = (step % 2) = 0
+            }
 
-                let history = this.State.history
-                let current = history.[this.State.stepNumber]
-                let winner = calculateWinner current.squares
-                let moves =
-                    history |> Array.mapi (fun move step ->
-                        let desc =
-                            if move = 0 then
-                                "Go to game start"
-                            else
-                                "Go to move #" + string move
-                        li [
-                            attr.key move
-                            on.click (fun _ -> jumpTo move)
-                        ] [button [] [React.Text desc]]
-                    )
-                let status =
-                    match winner with
-                    | Some winner -> "Winner: " + winner
-                    | None -> "Next player: " + (if this.State.xIsNext then "X" else "O")
+        [<JavaScriptExport>]
+        override this.Render() =
+            let history = this.State.history
+            let current = history.[this.State.stepNumber]
+            let winner = calculateWinner current.squares
+            let moves =
+                history |> Array.mapi (fun move step ->
+                    let desc =
+                        if move = 0 then
+                            "Go to game start"
+                        else
+                            "Go to move #" + string move
+                    li [
+                        attr.key move
+                        on.click (fun _ -> this.jumpTo move)
+                    ] [button [] [React.Text desc]]
+                )
+            let status =
+                match winner with
+                | Some winner -> "Winner: " + winner
+                | None -> "Next player: " + (if this.State.xIsNext then "X" else "O")
 
-                div [attr.className "game"] [
-                    div [attr.className "game-board"] [
-                        Board { squares = current.squares; onClick = handleClick }
-                    ]
-                    div [attr.className "game-info"] [
-                        div [] [React.Text status]
-                        ol [] moves
-                    ]
+            div [attr.className "game"] [
+                div [attr.className "game-board"] [
+                    React.Make Board { squares = current.squares; onClick = this.handleClick }
                 ]
-            )
-        )
+                div [attr.className "game-info"] [
+                    div [] [React.Text status]
+                    ol [] moves
+                ]
+            ]
 
     [<SPAEntryPoint>]
     let Main () =
-        Game ()
+        React.Make Game ()
         |> React.Mount (JS.Document.GetElementById "main")
