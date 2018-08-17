@@ -15,7 +15,7 @@ module Client =
     let Widget props =
         theme.Consume <| fun theme -> [
             div [] [
-                text ("This should be \"" + props.shouldBe + "\": " + theme)
+                textf "This should be \"%s\": %s" props.shouldBe theme
             ]
         ]
 

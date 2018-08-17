@@ -14,6 +14,8 @@ module Html =
     [<Inline>]
     let text (t: string) = React.Text t
 
+    let textf format = Printf.kprintf text format
+
     // {{ tag normal
     /// Create an HTML element <a> with props and children.
     [<Inline>]
