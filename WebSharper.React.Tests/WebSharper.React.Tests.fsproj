@@ -7,6 +7,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="TicTacToe.fs" />
     <Compile Include="Client.fs" />
   </ItemGroup>
   <ItemGroup>

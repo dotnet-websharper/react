@@ -16,3 +16,9 @@ group build
 
 group wsbuild
     git https://github.com/dotnet-websharper/build-script
+
+group includes
+    source https://api.nuget.org/v3/index.json
+    source https://daily.websharper.com/nuget
+
+    github dotnet-websharper/websharper src/htmllib/tags.csv

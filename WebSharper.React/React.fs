@@ -1,74 +1,85 @@
-﻿namespace WebSharper.React
+﻿namespace rec WebSharper.React
 
+open System.Runtime.CompilerServices
 open WebSharper
 open WebSharper.JavaScript
-
 open WebSharper.React.Bindings
+type private R = WebSharper.React.Bindings.React
+type React = R
 
-module Resources =
-    
-    type React = Resources.React
-
-[<JavaScript>]
 module React =
-    
-    type private Window with
-        static member Current with [<Inline "window">] get () = X<Window>
 
-        [<Inline "$0.addEventListener($1, $2)">]
-        member this.AddEventListener (_ : string, _ : (unit -> unit)) = ()
+    let internal inlineArrayOfSeq (s: seq<'T>) : array<'T> =
+        match s with
+        | :? System.Array -> As s
+        | s -> Array.ofSeq s
 
-    let Class initialState renderer =
-        {
-            InitialState = initialState
-            Renderer     = renderer
-            Events       = []
-            Context      = None
-        }
+    let Element (name: string) (props: seq<string * obj>) (children: seq<R.Component>) =
+        R.CreateElement(name, New props, React.inlineArrayOfSeq children)
 
-    let Mount target (component' : Component) =
-        React.Render(component'.Map(), target)
+    let Text (s: string) =
+        As<R.Component> s
 
-    let Router<'a, 'b when 'a : equality and 'b :> Component> routeMap (renderer : Router<'a> -> 'b) : Class<'a, 'b> =
-        let action =
-            Window.Current.LocalStorage.GetItem "last-action"
-            |> (fun action ->
-                if action = null then
-                    routeMap.Deserializer []
-                else
-                    As<'a> (JSON.Parse action)
-            )
+    let Mount target ``component`` =
+        ReactDOM.Render(``component``, target) |> ignore
 
-        Class action
-        <| fun this ->
-            let url =
-                routeMap.Serializer this.State
-                |> (fun parts ->
-                    if List.isEmpty parts then
-                        "/"
-                    else
-                        List.fold (fun state -> (+) (state + "/")) "" parts
-                )
+    let Make<'T, 'Props, 'State when 'T :> ComponentClass<'Props, 'State>> (f: 'Props -> 'T) (props: 'Props) =
+        R.CreateElement(As<string> f, props)
 
-            Window.Current.Location.Hash <- "#" + url
+    let Fragment (children: seq<R.Component>) =
+        R.CreateElement(R.Fragment, null, React.inlineArrayOfSeq children)
 
-            renderer this
-        |> OnUpdate (fun this _ ->
-            Window.Current.LocalStorage.SetItem("last-action", JSON.Stringify this.State)
-        )
-        |> OnMount (fun class' _ ->
-            Window.Current.AddEventListener("hashchange", fun () ->
-                let newState =
-                    (Window.Current.Location.Hash.Substring 2).Split('/')
-                    |> (fun parts ->
-                        if Array.isEmpty parts then
-                            []
-                        else
-                            Array.toList parts
-                    )
-                    |> routeMap.Deserializer
+// Ideally we should be able to just write components with:
+//
+//      type MyComponent(props) =
+//          inherit React.Component<Props, State>(props)
+//          override this.Render() = ...
+//
+// But currently we need this intermediary hacky class because of these issues:
+//  * core#1006: can't write an abstract class in WIG.
+//  * core#1007: prototype chain not set correctly when inheriting from a stub class.
+[<AbstractClass>]
+type ComponentClass<'Props, 'State>(props: 'Props) =
 
-                if class'.State <> newState then
-                    class'.SetState newState
-            )
-        )
+    static do
+        JS.Inline """
+            for (var $p in React.Component.prototype) {
+                WebSharper.React.ComponentClass.prototype[$p] = React.Component.prototype[$p];
+            }
+            """
+
+    do JS.Inline("""React.Component.call(this, $1)""", props)
+
+    [<Name "render">]
+    abstract Render : unit -> R.Component
+
+    [<Name "getDefaultProps">]
+    abstract GetDefaultProps : unit -> 'Props
+    default this.GetDefaultProps() = JS.Undefined
+
+    [<Name "props"; Stub>]
+    member this.Props = X<'Props>
+
+    [<Name "state"; Stub>]
+    member this.State : 'State = X<'State>
+
+    [<Inline "$this.state = $state">]
+    member this.SetInitialState(state: 'State) = X<unit>
+
+    [<Name "setState"; Stub>]
+    member this.SetState(s: 'State) = X<unit>
+
+[<AutoOpen>]
+module Extensions =
+
+    type R.Context<'T> with
+
+        member this.Provide (value: 'T) (comp: seq<R.Component>) =
+            R.CreateElement(this.Provider, New ["value" => value], React.inlineArrayOfSeq comp)
+
+        member this.Consume (f: 'T -> #seq<R.Component>) =
+            R.CreateElement(this.Consumer, null, fun v ->
+                R.CreateElement(R.Fragment, null, React.inlineArrayOfSeq(f v)))
+
+[<assembly: JavaScript>]
+do ()

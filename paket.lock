@@ -23,6 +23,11 @@ NUGET
       Mono.Cecil (>= 0.10.0-beta6)
       Newtonsoft.Json
 
+GROUP includes
+
+GITHUB
+  remote: dotnet-websharper/websharper
+    src/htmllib/tags.csv (1b6b067172e7e91cae0d92fc632a024405f60a3e)
 GROUP wsbuild
 
 GIT
