@@ -3,6 +3,7 @@
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <WebSharperProject>Bundle</WebSharperProject>
     <WebSharperBundleOutputDir>Content</WebSharperBundleOutputDir>
+    <WebSharperDeadCodeElimination>false</WebSharperDeadCodeElimination>
     <WebSharperSourceMap>false</WebSharperSourceMap>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>

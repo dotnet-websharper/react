@@ -1,8 +1,9 @@
 ﻿namespace WebSharper.React
 
-open System.Runtime.CompilerServices
 open WebSharper
 open WebSharper.JavaScript
+open WebSharper.Sitelets
+open WebSharper.Sitelets.InferRouter
 open WebSharper.React.Bindings
 type private R = WebSharper.React.Bindings.React
 type React = R
@@ -31,6 +32,49 @@ module React =
 
     let Fragment (children: seq<R.Component>) =
         R.CreateElement(R.Fragment, null, inlineArrayOfSeq children)
+
+    type BaseRouter<'Endpoint when 'Endpoint : equality>(router: Router<'Endpoint>, render_: 'Endpoint -> R.Component) =
+        inherit R.Component<Router<'Endpoint>, 'Endpoint>(router)
+
+        override this.Render() =
+            render_ this.State
+
+    type HashRouter<'Endpoint when 'Endpoint : equality>(router: Router<'Endpoint>, render_: 'Endpoint -> R.Component) as this =
+        inherit BaseRouter<'Endpoint>(router, render_)
+
+        let mutable listener : (Dom.Event -> unit) = JS.Undefined
+
+        let computeRoute() =
+            Route.FromHash(JS.Window.Location.Hash, true)
+            |> Router.Parse router
+
+        do computeRoute() |> Option.iter this.SetInitialState
+
+        override this.ComponentDidMount() =
+            listener <- fun (e: Dom.Event) ->
+                computeRoute() |> Option.iter this.SetState
+            JS.Window.AddEventListener("hashchange", listener)
+
+        override this.ComponentWillUnmount() =
+            JS.Window.RemoveEventListener("hashchange", listener)
+
+    // // Attempt to force WebSharper to include abstract methods in the output even with DCE.
+    // let private forceMethods() =
+    //     New [
+    //         "a" => fun (x: R.Component<unit, unit>) -> x.Render()
+    //         "b" => fun (x: R.Component<unit, unit>) -> x.ComponentDidMount()
+    //         "c" => fun (x: R.Component<unit, unit>) a b -> x.ComponentDidUpdate(a, b)
+    //         "d" => fun (x: R.Component<unit, unit>) -> x.ComponentWillUnmount()
+    //         "e" => fun (x: R.Component<unit, unit>) a b -> x.ShouldComponentUpdate(a, b)
+    //         "f" => fun (x: R.Component<unit, unit>) a b -> x.GetDerivedStateFromProps(a, b)
+    //         "g" => fun (x: R.Component<unit, unit>) a b -> x.GetSnapshotBeforeUpdate(a, b)
+    //         "h" => fun (x: R.Component<unit, unit>) a b -> x.ComponentDidCatch(a, b)
+    //     ]
+
+    [<Inline>]
+    let HashRouter (router: Router<'Endpoint>) (render: 'Endpoint -> R.Component) : R.Component =
+        // forceMethods()
+        Make (fun router -> HashRouter(router, render) :> R.Component<_, _>) router
 
 [<AutoOpen>]
 module Extensions =

@@ -102,7 +102,6 @@ module TicTacToe =
                     xIsNext = (step % 2) = 0
             }
 
-        [<JavaScriptExport>]
         override this.Render() =
             let history = this.State.history
             let current = history.[this.State.stepNumber]

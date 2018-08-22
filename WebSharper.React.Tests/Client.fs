@@ -2,11 +2,18 @@ namespace WebSharper.React.Tests
 
 open WebSharper
 open WebSharper.JavaScript
+open WebSharper.Sitelets
+open WebSharper.Sitelets.InferRouter
 open WebSharper.React
 open WebSharper.React.Html
 
 [<JavaScript>]
 module Client =
+
+    type EndPoint =
+        | [<EndPoint "/">] Home
+        | [<EndPoint "/context">] Context
+        | [<EndPoint "/tic-tac-toe">] TicTacToe
 
     let theme = React.CreateContext("default")
 
@@ -31,13 +38,35 @@ module Client =
                 Widget { shouldBe = "default" }
             ]
 
+    let HomePage (router: Router<EndPoint>) =
+        div [] [
+            h1 [] [text "React tests"]
+            ul [] [
+                li [] [
+                    a [attr.href ("#" + Router.Link router TicTacToe)] [text "Tic-Tac-Toe"]
+                ]
+                li [] [
+                    a [attr.href ("#" + Router.Link router Context)] [text "Context"]
+                ]
+            ]
+        ]
+
     [<SPAEntryPoint>]
     let Main () =
-        React.Fragment [
-            h1 [] [text "Tic-tac-toe"]
-            React.Make TicTacToe.Game ()
-        ]
-        |> React.Mount (JS.Document.GetElementById "tictactoe")
-
-        React.Make ContextTest ()
-        |> React.Mount (JS.Document.GetElementById "context")
+        let router = Router.Infer<EndPoint>()
+        React.HashRouter router (fun endpoint ->
+            match endpoint with
+            | Home -> HomePage router
+            | Context ->
+                React.Fragment [
+                    React.Make ContextTest ()
+                    a [attr.href ("#" + Router.Link router Home)] [text "Back to Home"]
+                ]
+            | TicTacToe ->
+                React.Fragment [
+                    h1 [] [text "Tic-tac-toe"]
+                    React.Make TicTacToe.Game ()
+                    a [attr.href ("#" + Router.Link router Home)] [text "Back to Home"]
+                ]
+        )
+        |> React.Mount (JS.Document.GetElementById "main")
