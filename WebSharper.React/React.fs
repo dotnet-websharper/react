@@ -17,14 +17,17 @@ module React =
     let Element (name: string) (props: seq<string * obj>) (children: seq<R.Component>) =
         R.CreateElement(name, New props, inlineArrayOfSeq children)
 
+    [<Inline>]
     let Text (s: string) =
         As<R.Component> s
 
+    [<Inline>]
     let Mount target ``component`` =
         ReactDOM.Render(``component``, target) |> ignore
 
+    [<Inline>]
     let Make<'T, 'Props, 'State when 'T :> R.Component<'Props, 'State>> (f: 'Props -> 'T) (props: 'Props) =
-        R.CreateElement(As<string> f, props)
+        R.CreateElement(As<R.Class> f, props)
 
     let Fragment (children: seq<R.Component>) =
         R.CreateElement(R.Fragment, null, inlineArrayOfSeq children)
