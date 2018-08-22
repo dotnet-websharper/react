@@ -19,7 +19,7 @@ module TicTacToe =
     type BoardProps = { squares: option<string>[]; onClick: int -> unit }
 
     type Board(props) =
-        inherit ComponentClass<BoardProps, unit>(props)
+        inherit React.Component<BoardProps, unit>(props)
 
         override this.Render() =
             let renderSquare i =
@@ -73,7 +73,7 @@ module TicTacToe =
         )
 
     type Game(props) as this =
-        inherit ComponentClass<unit, GameState>(props)
+        inherit React.Component<unit, GameState>(props)
 
         do this.SetInitialState {
                 history = [| { squares = Array.create 9 None } |]

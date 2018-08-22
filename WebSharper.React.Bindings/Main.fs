@@ -35,7 +35,7 @@ module Definition =
 
         let ComponentT =
             Generic -- fun props state ->
-            Class "React.Component"
+            AbstractClass "React.Component"
             |=> Inherits Component
             |+> Static [
                 Constructor props
@@ -47,16 +47,28 @@ module Definition =
                 "state" =? state
                 "children" =? Children_
                 |> WithGetterInline "$this.props.children"
+                |> WithComment "Get the component's props.children."
+                "setInitialState" => state ^-> T<unit>
+                |> WithInline "$0.state = $1"
+                |> WithComment "Call this in the constructor of a component to set its initial state."
                 "setState" => state?newState * !?(T<unit> ^-> T<unit>)?callback ^-> T<unit>
                 "setState" => (state * props ^-> state)?update * !?(T<unit> ^-> T<unit>)?callback ^-> T<unit>
                 "render" => T<unit> ^-> Component
+                |> Abstract
                 "componentDidMount" => T<unit> ^-> T<unit>
+                |> Virtual
                 "componentDidUpdate" => props * state * !?T<obj> ^-> T<unit>
+                |> Virtual
                 "componentWillUnmount" => T<unit> ^-> T<unit>
+                |> Virtual
                 "shouldComponentUpdate" => props * state ^-> T<bool>
+                |> Virtual
                 "getDerivedStateFromProps" => props * state ^-> props
+                |> Virtual
                 "getSnapshotBeforeUpdate" => props * state ^-> T<obj>
+                |> Virtual
                 "componentDidCatch" => T<Error> * ErrorInfo ^-> T<unit>
+                |> Virtual
                 "forceUpdate" => (T<unit> ^-> T<unit>) ^-> T<unit>
             ]
 
@@ -99,6 +111,7 @@ module Definition =
         let CreateClassArgs =
             Generic -- fun props state ->
             Class "React.CreateClassArgs"
+            |> Requires [Res.CreateReactClass]
             |+> Static [
                 Constructor (ComponentT.[props, state] ^-> Component)?Render
                 |> WithInline "{render:$wsruntime.CreateFuncWithOnlyThis($Render)}"
@@ -124,7 +137,7 @@ module Definition =
 
     let React =
         Class "React"
-        |> Requires [Res.React; Res.CreateReactClass]
+        |> Requires [Res.React]
         |=> Nested [
             React.Children
             React.Class

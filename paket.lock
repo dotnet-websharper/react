@@ -1,9 +1,9 @@
 STORAGE: NONE
 NUGET
   remote: https://daily.websharper.com/nuget
-    WebSharper (4.5.0.290)
-    WebSharper.FSharp (4.5.0.290)
-      WebSharper (4.5.0.290)
+    WebSharper (4.5.1.294)
+    WebSharper.FSharp (4.5.1.294)
+      WebSharper (4.5.1.294)
 
 GROUP build
 RESTRICTION: == net45
@@ -27,7 +27,7 @@ GROUP includes
 
 GITHUB
   remote: dotnet-websharper/websharper
-    src/htmllib/tags.csv (1b6b067172e7e91cae0d92fc632a024405f60a3e)
+    src/htmllib/tags.csv (8fb4c16c7408bc9ca0ff94ef97631f3d1aeb7636)
 GROUP wsbuild
 
 GIT

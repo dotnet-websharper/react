@@ -20,10 +20,11 @@ module Client =
         ]
 
     type ContextTest() =
-        inherit ComponentClass<unit, unit>(())
+        inherit React.Component<unit, unit>(())
 
         override this.Render() =
             React.Fragment [
+                h1 [] [text "Context test"]
                 theme.Provide "provided" [
                     Widget { shouldBe = "provided" }
                 ]
@@ -32,7 +33,10 @@ module Client =
 
     [<SPAEntryPoint>]
     let Main () =
-        React.Make TicTacToe.Game ()
+        React.Fragment [
+            h1 [] [text "Tic-tac-toe"]
+            React.Make TicTacToe.Game ()
+        ]
         |> React.Mount (JS.Document.GetElementById "tictactoe")
 
         React.Make ContextTest ()
