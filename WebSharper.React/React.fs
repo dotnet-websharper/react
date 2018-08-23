@@ -36,15 +36,11 @@ module React =
         R.CreateElement(R.Fragment, null, inlineArrayOfSeq children)
 
     [<AbstractClass>]
-    type Router<'Endpoint when 'Endpoint : equality>
-        (
-            router: SRouter<'Endpoint>,
-            render_: Router<'Endpoint> -> R.Component
-        ) =
-        inherit R.Component<SRouter<'Endpoint>, 'Endpoint>(router)
+    type Router<'Endpoint when 'Endpoint : equality>(props) =
+        inherit R.Component<RouterProps<'Endpoint>, 'Endpoint>(props)
 
         override this.Render() =
-            render_ this
+            this.Props.render this
 
         [<Inline>]
         member this.Goto(endpoint: 'Endpoint) =
@@ -56,23 +52,25 @@ module React =
         member this.Href(endpoint: 'Endpoint) =
             "href" => this.Link endpoint
 
-    type HashRouter<'Endpoint when 'Endpoint : equality>
-        (
-            router: SRouter<'Endpoint>,
+    and RouterProps<'Endpoint when 'Endpoint : equality> =
+        {
+            router: SRouter<'Endpoint>
             render: Router<'Endpoint> -> R.Component
-        ) as this =
-        inherit Router<'Endpoint>(router, render)
+        }
+
+    type HashRouter<'Endpoint when 'Endpoint : equality>(props) as this =
+        inherit Router<'Endpoint>(props)
 
         let mutable listener : (Dom.Event -> unit) = JS.Undefined
 
-        let computeRoute() =
-            Route.FromHash(JS.Window.Location.Hash, true)
-            |> SRouter.Parse router
+        do this.ComputeRoute() |> Option.iter this.SetInitialState
 
-        do computeRoute() |> Option.iter this.SetInitialState
+        member this.ComputeRoute() =
+            Route.FromHash(JS.Window.Location.Hash, true)
+            |> SRouter.Parse this.Props.router
 
         override this.Link(endpoint: 'Endpoint) =
-            router.HashLink endpoint
+            this.Props.router.HashLink endpoint
 
         override this.ComponentDidUpdate(prevProps, prevState, _) =
             if prevState <> this.State then
@@ -80,7 +78,7 @@ module React =
 
         override this.ComponentDidMount() =
             listener <- fun (e: Dom.Event) ->
-                computeRoute() |> Option.iter this.SetState
+                this.ComputeRoute() |> Option.iter this.SetState
             JS.Window.AddEventListener("hashchange", listener)
 
         override this.ComponentWillUnmount() =
@@ -88,7 +86,7 @@ module React =
 
     [<Inline>]
     let HashRouter (router: SRouter<'Endpoint>) (render: Router<'Endpoint> -> R.Component) : R.Component =
-        Make (fun router -> HashRouter(router, render) :> R.Component<_, _>) router
+        Make HashRouter { router = router; render = render }
 
 [<AutoOpen>]
 module Extensions =
