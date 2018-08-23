@@ -38,35 +38,38 @@ module Client =
                 Widget { shouldBe = "default" }
             ]
 
-    let HomePage (router: Router<EndPoint>) =
+    let HomePage (router: React.Router<EndPoint>) =
         div [] [
             h1 [] [text "React tests"]
             ul [] [
                 li [] [
-                    a [attr.href ("#" + Router.Link router TicTacToe)] [text "Tic-Tac-Toe"]
+                    a [router.Href TicTacToe] [text "Tic-Tac-Toe"]
                 ]
                 li [] [
-                    a [attr.href ("#" + Router.Link router Context)] [text "Context"]
+                    a [router.Href Context] [text "Context"]
                 ]
             ]
         ]
 
     [<SPAEntryPoint>]
     let Main () =
-        let router = Router.Infer<EndPoint>()
-        React.HashRouter router (fun endpoint ->
-            match endpoint with
+        React.HashRouter (Router.Infer<EndPoint>()) (fun router ->
+            match router.State with
             | Home -> HomePage router
             | Context ->
                 React.Fragment [
                     React.Make ContextTest ()
-                    a [attr.href ("#" + Router.Link router Home)] [text "Back to Home"]
+                    a [
+                        // Test that setting the state sets the route
+                        attr.href "javascript:void(0)"
+                        on.click (fun _ -> router.Goto Home)
+                    ] [text "Back to Home"]
                 ]
             | TicTacToe ->
                 React.Fragment [
                     h1 [] [text "Tic-tac-toe"]
                     React.Make TicTacToe.Game ()
-                    a [attr.href ("#" + Router.Link router Home)] [text "Back to Home"]
+                    a [router.Href Home] [text "Back to Home"]
                 ]
         )
         |> React.Mount (JS.Document.GetElementById "main")

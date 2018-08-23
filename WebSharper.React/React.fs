@@ -6,6 +6,8 @@ open WebSharper.Sitelets
 open WebSharper.Sitelets.InferRouter
 open WebSharper.React.Bindings
 type private R = WebSharper.React.Bindings.React
+type private SRouter<'Endpoint when 'Endpoint : equality> = WebSharper.Sitelets.Router<'Endpoint>
+module SRouter = WebSharper.Sitelets.Router
 type React = R
 
 module React =
@@ -33,22 +35,48 @@ module React =
     let Fragment (children: seq<R.Component>) =
         R.CreateElement(R.Fragment, null, inlineArrayOfSeq children)
 
-    type BaseRouter<'Endpoint when 'Endpoint : equality>(router: Router<'Endpoint>, render_: 'Endpoint -> R.Component) =
-        inherit R.Component<Router<'Endpoint>, 'Endpoint>(router)
+    [<AbstractClass>]
+    type Router<'Endpoint when 'Endpoint : equality>
+        (
+            router: SRouter<'Endpoint>,
+            render_: Router<'Endpoint> -> R.Component
+        ) =
+        inherit R.Component<SRouter<'Endpoint>, 'Endpoint>(router)
 
         override this.Render() =
-            render_ this.State
+            render_ this
 
-    type HashRouter<'Endpoint when 'Endpoint : equality>(router: Router<'Endpoint>, render_: 'Endpoint -> R.Component) as this =
-        inherit BaseRouter<'Endpoint>(router, render_)
+        [<Inline>]
+        member this.Goto(endpoint: 'Endpoint) =
+            this.SetState endpoint
+
+        abstract Link : endpoint: 'Endpoint -> string
+
+        [<Inline>]
+        member this.Href(endpoint: 'Endpoint) =
+            "href" => this.Link endpoint
+
+    type HashRouter<'Endpoint when 'Endpoint : equality>
+        (
+            router: SRouter<'Endpoint>,
+            render: Router<'Endpoint> -> R.Component
+        ) as this =
+        inherit Router<'Endpoint>(router, render)
 
         let mutable listener : (Dom.Event -> unit) = JS.Undefined
 
         let computeRoute() =
             Route.FromHash(JS.Window.Location.Hash, true)
-            |> Router.Parse router
+            |> SRouter.Parse router
 
         do computeRoute() |> Option.iter this.SetInitialState
+
+        override this.Link(endpoint: 'Endpoint) =
+            router.HashLink endpoint
+
+        override this.ComponentDidUpdate(prevProps, prevState, _) =
+            if prevState <> this.State then
+                JS.Window.Location.Hash <- this.Link this.State
 
         override this.ComponentDidMount() =
             listener <- fun (e: Dom.Event) ->
@@ -59,7 +87,7 @@ module React =
             JS.Window.RemoveEventListener("hashchange", listener)
 
     [<Inline>]
-    let HashRouter (router: Router<'Endpoint>) (render: 'Endpoint -> R.Component) : R.Component =
+    let HashRouter (router: SRouter<'Endpoint>) (render: Router<'Endpoint> -> R.Component) : R.Component =
         Make (fun router -> HashRouter(router, render) :> R.Component<_, _>) router
 
 [<AutoOpen>]
