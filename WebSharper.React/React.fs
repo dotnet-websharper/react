@@ -58,22 +58,8 @@ module React =
         override this.ComponentWillUnmount() =
             JS.Window.RemoveEventListener("hashchange", listener)
 
-    // // Attempt to force WebSharper to include abstract methods in the output even with DCE.
-    // let private forceMethods() =
-    //     New [
-    //         "a" => fun (x: R.Component<unit, unit>) -> x.Render()
-    //         "b" => fun (x: R.Component<unit, unit>) -> x.ComponentDidMount()
-    //         "c" => fun (x: R.Component<unit, unit>) a b -> x.ComponentDidUpdate(a, b)
-    //         "d" => fun (x: R.Component<unit, unit>) -> x.ComponentWillUnmount()
-    //         "e" => fun (x: R.Component<unit, unit>) a b -> x.ShouldComponentUpdate(a, b)
-    //         "f" => fun (x: R.Component<unit, unit>) a b -> x.GetDerivedStateFromProps(a, b)
-    //         "g" => fun (x: R.Component<unit, unit>) a b -> x.GetSnapshotBeforeUpdate(a, b)
-    //         "h" => fun (x: R.Component<unit, unit>) a b -> x.ComponentDidCatch(a, b)
-    //     ]
-
     [<Inline>]
     let HashRouter (router: Router<'Endpoint>) (render: 'Endpoint -> R.Component) : R.Component =
-        // forceMethods()
         Make (fun router -> HashRouter(router, render) :> R.Component<_, _>) router
 
 [<AutoOpen>]
