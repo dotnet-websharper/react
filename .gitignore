@@ -11,3 +11,4 @@ obj/
 /.fake/
 /paket-files/
 /.vscode/
+.vs/
