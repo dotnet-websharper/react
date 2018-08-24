@@ -20,25 +20,44 @@ module Macros =
     type Make() =
         inherit Macro()
 
+        static let rPervasives = typeof<JSObject>.Assembly.GetType("WebSharper.JavaScript.Pervasives")
+        static let Pervasives = Reflection.ReadTypeDefinition rPervasives
+        static let rAs = rPervasives.GetMethod("As")
+        static let As = Reflection.ReadMethod rAs
+
+        let dotnetCtor (call: MacroCall) (ty: Concrete<TypeDefinition>) (ctor: Constructor) =
+            match call.Compilation.GetClassInfo(ty.Entity) with
+            | Some x ->
+                match x.Constructors.[ctor] with
+                | M.Constructor addr ->
+                    let args = GlobalAccess addr :: List.tail call.Arguments
+                    let call = Call(call.This, call.DefiningType, call.Method, args)
+                    MacroDependencies ([M.ConstructorNode(ty.Entity, ctor)], MacroOk call)
+                | _ -> MacroFallback
+            | None -> MacroFallback
+
+        let jsCtor (call: MacroCall) (ctor: Expression) =
+            let args = ctor :: List.tail call.Arguments
+            let call = Call(call.This, call.DefiningType, call.Method, args)
+            MacroOk call
+
         override this.TranslateCall(call) =
-            match call.Arguments.[0] with
+            let comp =
+                // Strip (As ...) from argument
+                match call.Arguments.[0] with
+                | I.Call(None, ty, meth, [comp]) when ty.Entity = Pervasives && meth.Entity = As -> comp
+                | comp -> comp
+            match comp with
+            | I.Function ([], I.Return (I.Ctor(ty, ctor, []))) ->
+                dotnetCtor call ty ctor
             | I.Function ([props], I.Return (I.Ctor(ty, ctor, [I.Var props']))) when props = props' ->
-                // Constructor of a .NET class
-                match call.Compilation.GetClassInfo(ty.Entity) with
-                | Some x ->
-                    match x.Constructors.[ctor] with
-                    | M.Constructor addr ->
-                        let args = GlobalAccess addr :: List.tail call.Arguments
-                        let call = Call(call.This, call.DefiningType, call.Method, args)
-                        MacroDependencies ([M.ConstructorNode(ty.Entity, ctor)], MacroOk call)
-                    | _ -> MacroFallback
-                | None -> MacroFallback
+                dotnetCtor call ty ctor
+            | I.Function ([], I.Return (I.New (ctor, []))) ->
+                jsCtor call ctor
             | I.Function ([props], I.Return (I.New (ctor, [I.Var props']))) when props = props' ->
-                // Inlined js constructor
-                let args = ctor :: List.tail call.Arguments
-                let call = Call(call.This, call.DefiningType, call.Method, args)
-                MacroOk call
-            | _ -> MacroFallback
+                jsCtor call ctor
+            | _ ->
+                MacroFallback
 
 module React =
 
@@ -47,8 +66,12 @@ module React =
         | :? System.Array -> As s
         | s -> Array.ofSeq s
 
-    let Element (name: string) (props: seq<string * obj>) (children: seq<R.Element>) =
+    let private elt (name: string) (props: seq<string * obj>) (children: seq<R.Element>) =
         R.CreateElement(name, New props, inlineArrayOfSeq children)
+
+    [<Macro(typeof<Macros.Make>); Inline>]
+    let Element name props children =
+        elt name props children
 
     [<Inline>]
     let Text (s: string) =
