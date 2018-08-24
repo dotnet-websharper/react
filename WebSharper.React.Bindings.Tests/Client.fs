@@ -12,7 +12,7 @@ module Client =
     let Square props =
         React.CreateElement("button",
             New ["className" => "square"; "onClick" => props.onClick],
-            As<React.Component> (defaultArg props.value "")
+            As<React.Element> (defaultArg props.value "")
         )
 
     type BoardProps = { squares: option<string>[]; onClick: int -> unit }
@@ -116,7 +116,7 @@ module Client =
                                 "Go to move #" + string move
                         React.CreateElement("li",
                             New ["key" => move; "onClick" => fun () -> jumpTo move],
-                            React.CreateElement("button", null, As<React.Component> desc)
+                            React.CreateElement("button", null, As<React.Element> desc)
                         )
                     )
                 let status =
@@ -129,7 +129,7 @@ module Client =
                         React.CreateElement(Board, { squares = current.squares; onClick = handleClick })
                     ),
                     React.CreateElement("div", New ["className" => "game-info"],
-                        React.CreateElement("div", null, As<React.Component> status),
+                        React.CreateElement("div", null, As<React.Element> status),
                         React.CreateElement("ol", null, moves)
                     )
                 )

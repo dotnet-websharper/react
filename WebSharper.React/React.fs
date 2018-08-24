@@ -17,12 +17,12 @@ module React =
         | :? System.Array -> As s
         | s -> Array.ofSeq s
 
-    let Element (name: string) (props: seq<string * obj>) (children: seq<R.Component>) =
+    let Element (name: string) (props: seq<string * obj>) (children: seq<R.Element>) =
         R.CreateElement(name, New props, inlineArrayOfSeq children)
 
     [<Inline>]
     let Text (s: string) =
-        As<R.Component> s
+        As<R.Element> s
 
     [<Inline>]
     let Mount target ``component`` =
@@ -32,7 +32,7 @@ module React =
     let Make<'T, 'Props, 'State when 'T :> R.Component<'Props, 'State>> (f: 'Props -> 'T) (props: 'Props) =
         R.CreateElement(As<R.Class> f, props)
 
-    let Fragment (children: seq<R.Component>) =
+    let Fragment (children: seq<R.Element>) =
         R.CreateElement(R.Fragment, null, inlineArrayOfSeq children)
 
     [<AbstractClass>]
@@ -55,7 +55,7 @@ module React =
     and RouterProps<'Endpoint when 'Endpoint : equality> =
         {
             router: SRouter<'Endpoint>
-            render: Router<'Endpoint> -> R.Component
+            render: Router<'Endpoint> -> R.Element
         }
 
     type HashRouter<'Endpoint when 'Endpoint : equality>(props) as this =
@@ -85,7 +85,7 @@ module React =
             JS.Window.RemoveEventListener("hashchange", listener)
 
     [<Inline>]
-    let HashRouter (router: SRouter<'Endpoint>) (render: Router<'Endpoint> -> R.Component) : R.Component =
+    let HashRouter (router: SRouter<'Endpoint>) (render: Router<'Endpoint> -> R.Element) : R.Element =
         Make HashRouter { router = router; render = render }
 
 [<AutoOpen>]
@@ -93,10 +93,10 @@ module Extensions =
 
     type R.Context<'T> with
 
-        member this.Provide (value: 'T) (comp: seq<R.Component>) =
+        member this.Provide (value: 'T) (comp: seq<R.Element>) =
             R.CreateElement(this.Provider, New ["value" => value], React.inlineArrayOfSeq comp)
 
-        member this.Consume (f: 'T -> #seq<R.Component>) =
+        member this.Consume (f: 'T -> #seq<R.Element>) =
             R.CreateElement(this.Consumer, null, fun v ->
                 R.CreateElement(R.Fragment, null, React.inlineArrayOfSeq(f v)))
 

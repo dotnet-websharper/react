@@ -30,13 +30,12 @@ module Definition =
                 "componentStack" =? T<string>
             ]
 
-        let Component =
-            Class "React.Component"
+        let Element =
+            Class "React.Element"
 
         let ComponentT =
             Generic -- fun props state ->
             AbstractClass "React.Component"
-            |=> Inherits Component
             |+> Static [
                 Constructor props
                 "defaultProps" =? props
@@ -53,7 +52,7 @@ module Definition =
                 |> WithComment "Call this in the constructor of a component to set its initial state."
                 "setState" => state?newState * !?(T<unit> ^-> T<unit>)?callback ^-> T<unit>
                 "setState" => (state * props ^-> state)?update * !?(T<unit> ^-> T<unit>)?callback ^-> T<unit>
-                "render" => T<unit> ^-> Component
+                "render" => T<unit> ^-> Element
                 |> Abstract
                 "componentDidMount" => T<unit> ^-> T<unit>
                 |> Virtual
@@ -75,21 +74,21 @@ module Definition =
         let Children =
             Children_
             |+> Static [
-                Generic - fun t -> "map" => TSelf * (Component ^-> t) ^-> Type.ArrayOf t
-                "forEach" => TSelf * (Component ^-> T<unit>) ^-> T<unit>
+                Generic - fun t -> "map" => TSelf * (Element ^-> t) ^-> Type.ArrayOf t
+                "forEach" => TSelf * (Element ^-> T<unit>) ^-> T<unit>
                 "count" => TSelf ^-> T<int>
-                "only" => TSelf ^-> Component
-                "toArray" => TSelf ^-> Type.ArrayOf Component
+                "only" => TSelf ^-> Element
+                "toArray" => TSelf ^-> Type.ArrayOf Element
             ]
 
         let Fragment =
             Class "React.Fragment"
-            |=> Inherits Component
+            |=> Inherits Element
 
         let Ref =
             Class "React.Ref"
             |+> Instance [
-                "current" =? Component
+                "current" =? Element
             ]
 
         let Class_ =
@@ -113,7 +112,7 @@ module Definition =
             Class "React.CreateClassArgs"
             |> Requires [Res.CreateReactClass]
             |+> Static [
-                Constructor (ComponentT.[props, state] ^-> Component)?Render
+                Constructor (ComponentT.[props, state] ^-> Element)?Render
                 |> WithInline "{render:$wsruntime.CreateFuncWithOnlyThis($Render)}"
             ]
             |+> Instance [
@@ -128,11 +127,11 @@ module Definition =
         Class "ReactDOM"
         |> Requires [Res.ReactDOM]
         |+> Static [
-            "render" => React.Component * T<Dom.Element> * !?(T<unit> ^-> T<unit>) ^-> React.Ref
-            "hydrate" => React.Component * T<Dom.Element> * !?(T<unit> ^-> T<unit>) ^-> React.Ref
+            "render" => React.Element * T<Dom.Element> * !?(T<unit> ^-> T<unit>) ^-> React.Ref
+            "hydrate" => React.Element * T<Dom.Element> * !?(T<unit> ^-> T<unit>) ^-> React.Ref
             "unmountComponentAsNode" => T<Dom.Element> ^-> T<bool>
-            "findDOMNode" => React.Component ^-> T<Dom.Element>
-            "createPortal" => React.Component * T<Dom.Element> ^-> React.Component
+            "findDOMNode" => React.Element ^-> T<Dom.Element>
+            "createPortal" => React.Element * T<Dom.Element> ^-> React.Element
         ]
 
     let React =
@@ -141,7 +140,7 @@ module Definition =
         |=> Nested [
             React.Children
             React.Class
-            React.Component
+            React.Element
             React.ComponentT
             React.Consumer
             React.Context
@@ -152,28 +151,28 @@ module Definition =
         ]
         |+> Static [
             "createElement"
-                => (T<string> + React.Class + (T<obj> ^-> React.Component))?``type``
+                => (T<string> + React.Class + (T<obj> ^-> React.Element))?``type``
                 * T<obj>?props
                 *+T<obj>
-                ^-> React.Component
+                ^-> React.Element
             Generic - fun t ->
                 "createElement"
                     => React.Consumer.[t]
                     * T<obj>?props
-                    * (t ^-> React.Component)
-                    ^-> React.Component
+                    * (t ^-> React.Element)
+                    ^-> React.Element
             "cloneElement"
-                => React.Component?element
+                => React.Element?element
                 * T<obj>?props
                 *+T<obj>
-                ^-> React.Component
+                ^-> React.Element
             Generic -- fun props state ->
                 "createClass" => React.CreateClassArgs.[props, state] ^-> React.Class
                 |> WithInline "$global.createReactClass($0)"
             "isValidElement" => T<obj> ^-> T<bool>
             "createRef" => T<unit> ^-> React.Ref
             Generic - fun props ->
-                "forwardRef" => (props * React.Ref ^-> React.Component) ^-> React.Component
+                "forwardRef" => (props * React.Ref ^-> React.Element) ^-> React.Element
             "Fragment" =? React.Class
             Generic - fun t ->
                 "createContext" => t ^-> React.Context.[t]
@@ -345,143 +344,6 @@ module Definition =
                 Res.CreateReactClass
             ]
         ]
-
-    // TODO: Context
-
-
-
-
-// module OldDefinition =
-    
-//     let ReactClass =
-//         Interface "ReactClass"
-
-//     let ReactElement =
-//         Interface "ReactElement"
-
-//     let DOMNode     = T<Dom.Node>
-//     let DOMEventTarget = T<Dom.EventTarget>
-
-//     let ReactComponent =
-//         Class "ReactComponent"
-//         |+> Instance [
-//             "setState"    => ((T<obj> * !? T<obj> ^-> T<obj>) + T<obj>) * !? T<unit -> unit> ^-> T<unit>
-//             "forceUpdate" => !? T<unit -> unit> ^-> T<unit>
-//             "setProps"    => T<obj> * !? T<unit -> unit> ^-> T<unit>
-//             "props"       =? T<obj>
-//             "state"       =? T<obj>
-//         ]
-
-//     let ReactComponentT =
-//         Generic -- fun props state ->
-//         Class "ReactComponent"
-//         |=> Inherits ReactComponent
-//         |+> Instance [
-//             "setState" => state * !? T<unit -> unit> ^-> T<unit>
-//             "props" =? props
-//             "state" =? state
-//         ]
-
-//     let PropTypes =
-//         Class "React.PropTypes"
-//             |+> Static [
-//                 "array"   =? TSelf
-//                 "bool"    =? TSelf
-//                 "func"    =? TSelf
-//                 "number"  =? TSelf
-//                 "object"  =? TSelf
-//                 "string"  =? TSelf
-//                 "node"    =? TSelf
-//                 "element" =? TSelf
-//                 "any"     =? TSelf
-
-//                 "isRequired" =? TSelf
-
-//                 "instanceOf" => T<obj> ^-> TSelf
-                
-//                 Generic - fun U ->
-//                     "oneOf" => Type.ArrayOf U ^-> TSelf
-                
-//                 "oneOfType" => Type.ArrayOf TSelf ^-> TSelf
-//                 "arrayOf"   => Type.ArrayOf TSelf ^-> TSelf
-//                 "objOf"     => T<obj> ^-> TSelf
-//                 "shape"     => T<obj> ^-> TSelf
-//             ]
-
-//     let Children =
-//         Class "React.Children"
-//             |+> Static [
-//                 "map"     => T<obj> * T<obj -> obj> * !? T<obj> ^-> T<obj>
-//                 "forEach" => T<obj> * T<obj -> unit> * !? T<obj> ^-> T<unit>
-//                 "count"   => T<obj> ^-> T<int>
-//                 "only"    => T<obj> ^-> T<obj>
-//             ]
-
-//     let SyntheticEvent =
-//         Class "SyntheticEvent"
-//         |+> Instance [
-//             "bubbles"          =? T<bool>
-//             "cancelable"       =? T<bool>
-//             "currentTarget"    =? DOMEventTarget
-//             "defaultPrevented" =? T<bool>
-//             "eventPhase"       =? T<JavaScript.Dom.PhaseType>
-//             "isTrusted"        =? T<bool>
-//             "nativeEvent"      =? T<JavaScript.Dom.Event>
-//             "target"           =? DOMEventTarget
-//             "timeStamp"        =? T<int>
-//             "type"             =? T<string>
-
-//             "preventDefault"  => T<unit> ^-> T<unit>
-//             "stopPropagation" => T<unit> ^-> T<unit>
-//         ]
-
-//     let React =
-//         Class "React"
-//         |+> Static [
-//             "createClass" => T<obj> ^-> ReactClass
-            
-//             "createElement" => (T<string> + ReactClass) * !? T<obj> ^-> ReactElement
-//             "createElement" => (T<string> + ReactClass) * T<obj> *+ (T<string> + ReactClass + ReactElement) ^-> ReactElement
-            
-//             "cloneElement" => ReactElement * !? T<obj> ^-> ReactElement
-//             "cloneElement" => ReactElement * T<obj> *+ (T<string> + ReactClass + ReactElement) ^-> ReactElement
-
-//             "createFactory" => (T<string> + ReactClass) ^-> (T<obj> * (T<string> + ReactClass + ReactElement) ^-> ReactElement)
-
-//             "render" => ReactElement * DOMNode * !? T<unit -> unit> ^-> ReactComponent
-
-//             "unmountComponentAtNode" => DOMNode ^-> T<bool>
-
-//             "renderToString" => ReactElement ^-> T<string>
-
-//             "renderToStaticMarkup" => ReactElement ^-> T<string>
-
-//             "isValidElement" => T<obj> ^-> T<bool>
-
-//             "findDOMNode" => ReactComponent ^-> DOMNode
-
-//             "initializeTouchEvents" => T<bool> ^-> T<unit>
-//         ]
-//         |=> Nested [
-//             PropTypes
-//             Children
-//         ]
-
-//     let Assembly =
-//         Assembly [
-//             Namespace "WebSharper.React.Bindings" [
-//                  ReactClass
-//                  ReactElement
-//                  ReactComponent
-//                  ReactComponentT
-//                  SyntheticEvent
-//                  React
-//             ]
-//             Namespace "WebSharper.React.Bindings.Resources" [
-//                 Resource "React" "https://fb.me/react-0.13.3.min.js"
-//                 |> AssemblyWide
-//             ]
-//         ]
 
 [<Sealed>]
 type Extension() =
