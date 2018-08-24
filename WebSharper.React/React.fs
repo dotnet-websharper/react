@@ -10,6 +10,36 @@ type private SRouter<'Endpoint when 'Endpoint : equality> = WebSharper.Sitelets.
 module SRouter = WebSharper.Sitelets.Router
 type React = R
 
+[<JavaScript false>]
+module Macros =
+    open WebSharper.Core
+    open WebSharper.Core.AST
+    module M = WebSharper.Core.Metadata
+    module I = WebSharper.Core.AST.IgnoreSourcePos
+
+    type Make() =
+        inherit Macro()
+
+        override this.TranslateCall(call) =
+            match call.Arguments.[0] with
+            | I.Function ([props], I.Return (I.Ctor(ty, ctor, [I.Var props']))) when props = props' ->
+                // Constructor of a .NET class
+                match call.Compilation.GetClassInfo(ty.Entity) with
+                | Some x ->
+                    match x.Constructors.[ctor] with
+                    | M.Constructor addr ->
+                        let args = GlobalAccess addr :: List.tail call.Arguments
+                        let call = Call(call.This, call.DefiningType, call.Method, args)
+                        MacroDependencies ([M.ConstructorNode(ty.Entity, ctor)], MacroOk call)
+                    | _ -> MacroFallback
+                | None -> MacroFallback
+            | I.Function ([props], I.Return (I.New (ctor, [I.Var props']))) when props = props' ->
+                // Inlined js constructor
+                let args = ctor :: List.tail call.Arguments
+                let call = Call(call.This, call.DefiningType, call.Method, args)
+                MacroOk call
+            | _ -> MacroFallback
+
 module React =
 
     let internal inlineArrayOfSeq (s: seq<'T>) : array<'T> =
@@ -28,6 +58,7 @@ module React =
     let Mount target ``component`` =
         ReactDOM.Render(``component``, target) |> ignore
 
+    [<Macro(typeof<Macros.Make>)>]
     [<Inline>]
     let Make<'T, 'Props, 'State when 'T :> R.Component<'Props, 'State>> (f: 'Props -> 'T) (props: 'Props) =
         R.CreateElement(As<R.Class> f, props)

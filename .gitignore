@@ -1,5 +1,7 @@
 packages/
 *.suo
+*.user
+Properties/
 bin/
 obj/
 Content/
