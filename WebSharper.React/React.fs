@@ -25,37 +25,41 @@ module Macros =
         static let rAs = rPervasives.GetMethod("As")
         static let As = Reflection.ReadMethod rAs
 
-        let dotnetCtor (call: MacroCall) (ty: Concrete<TypeDefinition>) (ctor: Constructor) =
-            match call.Compilation.GetClassInfo(ty.Entity) with
-            | Some x ->
-                match x.Constructors.[ctor] with
-                | M.Constructor addr ->
-                    let args = GlobalAccess addr :: List.tail call.Arguments
-                    let call = Call(call.This, call.DefiningType, call.Method, args)
-                    MacroDependencies ([M.ConstructorNode(ty.Entity, ctor)], MacroOk call)
-                | _ -> MacroFallback
-            | None -> MacroFallback
-
-        let jsCtor (call: MacroCall) (ctor: Expression) =
-            let args = ctor :: List.tail call.Arguments
-            let call = Call(call.This, call.DefiningType, call.Method, args)
-            MacroOk call
-
         override this.TranslateCall(call) =
-            let comp =
-                // Strip (As ...) from argument
-                match call.Arguments.[0] with
-                | I.Call(None, ty, meth, [comp]) when ty.Entity = Pervasives && meth.Entity = As -> comp
-                | comp -> comp
-            match comp with
+            let ix =
+                match call.Parameter with
+                | Some (:? int as i) -> i
+                | _ -> 0
+
+            let callWithReplacedArg (arg: Expression) =
+                let args = call.Arguments |> List.mapi (fun i e -> if i = ix then arg else e)
+                Call(call.This, call.DefiningType, call.Method, args)
+
+            let dotnetCtor (ty: Concrete<TypeDefinition>) (ctor: Constructor) =
+                match call.Compilation.GetClassInfo(ty.Entity) with
+                | Some x ->
+                    match x.Constructors.[ctor] with
+                    | M.Constructor addr ->
+                        let call = callWithReplacedArg (GlobalAccess addr)
+                        MacroDependencies ([M.ConstructorNode(ty.Entity, ctor)], MacroOk call)
+                    | _ -> MacroFallback
+                | None -> MacroFallback
+
+            let jsCtor (ctor: Expression) =
+                let call = callWithReplacedArg ctor
+                MacroOk call
+
+            match call.Arguments.[ix] with
+            | I.Call(None, ty, meth, [comp]) when ty.Entity = Pervasives && meth.Entity = As ->
+                callWithReplacedArg comp |> MacroOk
             | I.Function ([], I.Return (I.Ctor(ty, ctor, []))) ->
-                dotnetCtor call ty ctor
+                dotnetCtor ty ctor
             | I.Function ([props], I.Return (I.Ctor(ty, ctor, [I.Var props']))) when props = props' ->
-                dotnetCtor call ty ctor
+                dotnetCtor ty ctor
             | I.Function ([], I.Return (I.New (ctor, []))) ->
-                jsCtor call ctor
+                jsCtor ctor
             | I.Function ([props], I.Return (I.New (ctor, [I.Var props']))) when props = props' ->
-                jsCtor call ctor
+                jsCtor ctor
             | _ ->
                 MacroFallback
 
