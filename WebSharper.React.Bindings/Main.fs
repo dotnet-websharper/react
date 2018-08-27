@@ -192,23 +192,23 @@ module Definition =
             "isDefaultPrevented" => T<unit> ^-> T<bool>
             "stopPropagation" => T<unit> ^-> T<unit>
             "isPropagationStopped" => T<unit> ^-> T<bool>
-            "target" => T<Dom.EventTarget>
-            "timeStamp" => T<int>
-            "type" => T<string>
+            "target" =? T<Dom.EventTarget>
+            "timeStamp" =? T<int>
+            "type" =? T<string>
         ]
 
     let ClipboardEvent =
         Class "ClipboardEvent"
         |=> Inherits SyntheticEvent
         |+> Instance [
-            "clipboardData" => T<obj>
+            "clipboardData" =? T<obj>
         ]
 
     let CompositionEvent =
         Class "CompositionEvent"
         |=> Inherits SyntheticEvent
         |+> Instance [
-            "data" => T<string>
+            "data" =? T<string>
         ]
 
     let FocusEvent =
