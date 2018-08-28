@@ -150,7 +150,7 @@ module Tags =
                 [|
                     sprintf "/// Create an HTML attribute \"%s\" with the given value." e.Name
                     "[<Inline>]"
-                    sprintf "let %s (value: string) = \"%s\" => value" e.LowNameEsc e.LowName
+                    sprintf "let %s (value: obj) = \"%s\" => value" e.LowNameEsc e.LowName
                     ""
                 |]
 

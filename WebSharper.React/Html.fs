@@ -877,627 +877,627 @@ module Html =
         // {{ attr normal colliding deprecated
         /// Create an HTML attribute "accept" with the given value.
         [<Inline>]
-        let accept (value: string) = "accept" => value
+        let accept (value: obj) = "accept" => value
         
         /// Create an HTML attribute "accept-charset" with the given value.
         [<Inline>]
-        let acceptCharset (value: string) = "acceptCharset" => value
+        let acceptCharset (value: obj) = "acceptCharset" => value
         
         /// Create an HTML attribute "accesskey" with the given value.
         [<Inline>]
-        let accesskey (value: string) = "accesskey" => value
+        let accesskey (value: obj) = "accesskey" => value
         
         /// Create an HTML attribute "action" with the given value.
         [<Inline>]
-        let action (value: string) = "action" => value
+        let action (value: obj) = "action" => value
         
         /// Create an HTML attribute "align" with the given value.
         [<Inline>]
-        let align (value: string) = "align" => value
+        let align (value: obj) = "align" => value
         
         /// Create an HTML attribute "alink" with the given value.
         [<Inline>]
-        let alink (value: string) = "alink" => value
+        let alink (value: obj) = "alink" => value
         
         /// Create an HTML attribute "alt" with the given value.
         [<Inline>]
-        let alt (value: string) = "alt" => value
+        let alt (value: obj) = "alt" => value
         
         /// Create an HTML attribute "altcode" with the given value.
         [<Inline>]
-        let altcode (value: string) = "altcode" => value
+        let altcode (value: obj) = "altcode" => value
         
         /// Create an HTML attribute "archive" with the given value.
         [<Inline>]
-        let archive (value: string) = "archive" => value
+        let archive (value: obj) = "archive" => value
         
         /// Create an HTML attribute "async" with the given value.
         [<Inline>]
-        let async (value: string) = "async" => value
+        let async (value: obj) = "async" => value
         
         /// Create an HTML attribute "autocomplete" with the given value.
         [<Inline>]
-        let autocomplete (value: string) = "autocomplete" => value
+        let autocomplete (value: obj) = "autocomplete" => value
         
         /// Create an HTML attribute "autofocus" with the given value.
         [<Inline>]
-        let autofocus (value: string) = "autofocus" => value
+        let autofocus (value: obj) = "autofocus" => value
         
         /// Create an HTML attribute "autoplay" with the given value.
         [<Inline>]
-        let autoplay (value: string) = "autoplay" => value
+        let autoplay (value: obj) = "autoplay" => value
         
         /// Create an HTML attribute "autosave" with the given value.
         [<Inline>]
-        let autosave (value: string) = "autosave" => value
+        let autosave (value: obj) = "autosave" => value
         
         /// Create an HTML attribute "axis" with the given value.
         [<Inline>]
-        let axis (value: string) = "axis" => value
+        let axis (value: obj) = "axis" => value
         
         /// Create an HTML attribute "background" with the given value.
         [<Inline>]
-        let background (value: string) = "background" => value
+        let background (value: obj) = "background" => value
         
         /// Create an HTML attribute "bgcolor" with the given value.
         [<Inline>]
-        let bgcolor (value: string) = "bgcolor" => value
+        let bgcolor (value: obj) = "bgcolor" => value
         
         /// Create an HTML attribute "border" with the given value.
         [<Inline>]
-        let border (value: string) = "border" => value
+        let border (value: obj) = "border" => value
         
         /// Create an HTML attribute "bordercolor" with the given value.
         [<Inline>]
-        let bordercolor (value: string) = "bordercolor" => value
+        let bordercolor (value: obj) = "bordercolor" => value
         
         /// Create an HTML attribute "buffered" with the given value.
         [<Inline>]
-        let buffered (value: string) = "buffered" => value
+        let buffered (value: obj) = "buffered" => value
         
         /// Create an HTML attribute "cellpadding" with the given value.
         [<Inline>]
-        let cellpadding (value: string) = "cellpadding" => value
+        let cellpadding (value: obj) = "cellpadding" => value
         
         /// Create an HTML attribute "cellspacing" with the given value.
         [<Inline>]
-        let cellspacing (value: string) = "cellspacing" => value
+        let cellspacing (value: obj) = "cellspacing" => value
         
         /// Create an HTML attribute "challenge" with the given value.
         [<Inline>]
-        let challenge (value: string) = "challenge" => value
+        let challenge (value: obj) = "challenge" => value
         
         /// Create an HTML attribute "char" with the given value.
         [<Inline>]
-        let char (value: string) = "char" => value
+        let char (value: obj) = "char" => value
         
         /// Create an HTML attribute "charoff" with the given value.
         [<Inline>]
-        let charoff (value: string) = "charoff" => value
+        let charoff (value: obj) = "charoff" => value
         
         /// Create an HTML attribute "charset" with the given value.
         [<Inline>]
-        let charset (value: string) = "charset" => value
+        let charset (value: obj) = "charset" => value
         
         /// Create an HTML attribute "checked" with the given value.
         [<Inline>]
-        let ``checked`` (value: string) = "checked" => value
+        let ``checked`` (value: obj) = "checked" => value
         
         /// Create an HTML attribute "cite" with the given value.
         [<Inline>]
-        let cite (value: string) = "cite" => value
+        let cite (value: obj) = "cite" => value
         
         /// Create an HTML attribute "class" with the given value.
         [<Inline>]
-        let ``class`` (value: string) = "class" => value
+        let ``class`` (value: obj) = "class" => value
         
         /// Create an HTML attribute "classid" with the given value.
         [<Inline>]
-        let classid (value: string) = "classid" => value
+        let classid (value: obj) = "classid" => value
         
         /// Create an HTML attribute "clear" with the given value.
         [<Inline>]
-        let clear (value: string) = "clear" => value
+        let clear (value: obj) = "clear" => value
         
         /// Create an HTML attribute "code" with the given value.
         [<Inline>]
-        let code (value: string) = "code" => value
+        let code (value: obj) = "code" => value
         
         /// Create an HTML attribute "codebase" with the given value.
         [<Inline>]
-        let codebase (value: string) = "codebase" => value
+        let codebase (value: obj) = "codebase" => value
         
         /// Create an HTML attribute "codetype" with the given value.
         [<Inline>]
-        let codetype (value: string) = "codetype" => value
+        let codetype (value: obj) = "codetype" => value
         
         /// Create an HTML attribute "color" with the given value.
         [<Inline>]
-        let color (value: string) = "color" => value
+        let color (value: obj) = "color" => value
         
         /// Create an HTML attribute "cols" with the given value.
         [<Inline>]
-        let cols (value: string) = "cols" => value
+        let cols (value: obj) = "cols" => value
         
         /// Create an HTML attribute "colspan" with the given value.
         [<Inline>]
-        let colspan (value: string) = "colspan" => value
+        let colspan (value: obj) = "colspan" => value
         
         /// Create an HTML attribute "compact" with the given value.
         [<Inline>]
-        let compact (value: string) = "compact" => value
+        let compact (value: obj) = "compact" => value
         
         /// Create an HTML attribute "content" with the given value.
         [<Inline>]
-        let content (value: string) = "content" => value
+        let content (value: obj) = "content" => value
         
         /// Create an HTML attribute "contenteditable" with the given value.
         [<Inline>]
-        let contenteditable (value: string) = "contenteditable" => value
+        let contenteditable (value: obj) = "contenteditable" => value
         
         /// Create an HTML attribute "contextmenu" with the given value.
         [<Inline>]
-        let contextmenu (value: string) = "contextmenu" => value
+        let contextmenu (value: obj) = "contextmenu" => value
         
         /// Create an HTML attribute "controls" with the given value.
         [<Inline>]
-        let controls (value: string) = "controls" => value
+        let controls (value: obj) = "controls" => value
         
         /// Create an HTML attribute "coords" with the given value.
         [<Inline>]
-        let coords (value: string) = "coords" => value
+        let coords (value: obj) = "coords" => value
         
         /// Create an HTML attribute "data" with the given value.
         [<Inline>]
-        let data (value: string) = "data" => value
+        let data (value: obj) = "data" => value
         
         /// Create an HTML attribute "datetime" with the given value.
         [<Inline>]
-        let datetime (value: string) = "datetime" => value
+        let datetime (value: obj) = "datetime" => value
         
         /// Create an HTML attribute "declare" with the given value.
         [<Inline>]
-        let declare (value: string) = "declare" => value
+        let declare (value: obj) = "declare" => value
         
         /// Create an HTML attribute "default" with the given value.
         [<Inline>]
-        let ``default`` (value: string) = "default" => value
+        let ``default`` (value: obj) = "default" => value
         
         /// Create an HTML attribute "defer" with the given value.
         [<Inline>]
-        let defer (value: string) = "defer" => value
+        let defer (value: obj) = "defer" => value
         
         /// Create an HTML attribute "dir" with the given value.
         [<Inline>]
-        let dir (value: string) = "dir" => value
+        let dir (value: obj) = "dir" => value
         
         /// Create an HTML attribute "disabled" with the given value.
         [<Inline>]
-        let disabled (value: string) = "disabled" => value
+        let disabled (value: obj) = "disabled" => value
         
         /// Create an HTML attribute "download" with the given value.
         [<Inline>]
-        let download (value: string) = "download" => value
+        let download (value: obj) = "download" => value
         
         /// Create an HTML attribute "draggable" with the given value.
         [<Inline>]
-        let draggable (value: string) = "draggable" => value
+        let draggable (value: obj) = "draggable" => value
         
         /// Create an HTML attribute "dropzone" with the given value.
         [<Inline>]
-        let dropzone (value: string) = "dropzone" => value
+        let dropzone (value: obj) = "dropzone" => value
         
         /// Create an HTML attribute "enctype" with the given value.
         [<Inline>]
-        let enctype (value: string) = "enctype" => value
+        let enctype (value: obj) = "enctype" => value
         
         /// Create an HTML attribute "face" with the given value.
         [<Inline>]
-        let face (value: string) = "face" => value
+        let face (value: obj) = "face" => value
         
         /// Create an HTML attribute "for" with the given value.
         [<Inline>]
-        let ``for`` (value: string) = "for" => value
+        let ``for`` (value: obj) = "for" => value
         
         /// Create an HTML attribute "form" with the given value.
         [<Inline>]
-        let form (value: string) = "form" => value
+        let form (value: obj) = "form" => value
         
         /// Create an HTML attribute "formaction" with the given value.
         [<Inline>]
-        let formaction (value: string) = "formaction" => value
+        let formaction (value: obj) = "formaction" => value
         
         /// Create an HTML attribute "formenctype" with the given value.
         [<Inline>]
-        let formenctype (value: string) = "formenctype" => value
+        let formenctype (value: obj) = "formenctype" => value
         
         /// Create an HTML attribute "formmethod" with the given value.
         [<Inline>]
-        let formmethod (value: string) = "formmethod" => value
+        let formmethod (value: obj) = "formmethod" => value
         
         /// Create an HTML attribute "formnovalidate" with the given value.
         [<Inline>]
-        let formnovalidate (value: string) = "formnovalidate" => value
+        let formnovalidate (value: obj) = "formnovalidate" => value
         
         /// Create an HTML attribute "formtarget" with the given value.
         [<Inline>]
-        let formtarget (value: string) = "formtarget" => value
+        let formtarget (value: obj) = "formtarget" => value
         
         /// Create an HTML attribute "frame" with the given value.
         [<Inline>]
-        let frame (value: string) = "frame" => value
+        let frame (value: obj) = "frame" => value
         
         /// Create an HTML attribute "frameborder" with the given value.
         [<Inline>]
-        let frameborder (value: string) = "frameborder" => value
+        let frameborder (value: obj) = "frameborder" => value
         
         /// Create an HTML attribute "headers" with the given value.
         [<Inline>]
-        let headers (value: string) = "headers" => value
+        let headers (value: obj) = "headers" => value
         
         /// Create an HTML attribute "height" with the given value.
         [<Inline>]
-        let height (value: string) = "height" => value
+        let height (value: obj) = "height" => value
         
         /// Create an HTML attribute "hidden" with the given value.
         [<Inline>]
-        let hidden (value: string) = "hidden" => value
+        let hidden (value: obj) = "hidden" => value
         
         /// Create an HTML attribute "high" with the given value.
         [<Inline>]
-        let high (value: string) = "high" => value
+        let high (value: obj) = "high" => value
         
         /// Create an HTML attribute "href" with the given value.
         [<Inline>]
-        let href (value: string) = "href" => value
+        let href (value: obj) = "href" => value
         
         /// Create an HTML attribute "hreflang" with the given value.
         [<Inline>]
-        let hreflang (value: string) = "hreflang" => value
+        let hreflang (value: obj) = "hreflang" => value
         
         /// Create an HTML attribute "hspace" with the given value.
         [<Inline>]
-        let hspace (value: string) = "hspace" => value
+        let hspace (value: obj) = "hspace" => value
         
         /// Create an HTML attribute "http" with the given value.
         [<Inline>]
-        let http (value: string) = "http" => value
+        let http (value: obj) = "http" => value
         
         /// Create an HTML attribute "icon" with the given value.
         [<Inline>]
-        let icon (value: string) = "icon" => value
+        let icon (value: obj) = "icon" => value
         
         /// Create an HTML attribute "id" with the given value.
         [<Inline>]
-        let id (value: string) = "id" => value
+        let id (value: obj) = "id" => value
         
         /// Create an HTML attribute "ismap" with the given value.
         [<Inline>]
-        let ismap (value: string) = "ismap" => value
+        let ismap (value: obj) = "ismap" => value
         
         /// Create an HTML attribute "itemprop" with the given value.
         [<Inline>]
-        let itemprop (value: string) = "itemprop" => value
+        let itemprop (value: obj) = "itemprop" => value
         
         /// Create an HTML attribute "keytype" with the given value.
         [<Inline>]
-        let keytype (value: string) = "keytype" => value
+        let keytype (value: obj) = "keytype" => value
         
         /// Create an HTML attribute "kind" with the given value.
         [<Inline>]
-        let kind (value: string) = "kind" => value
+        let kind (value: obj) = "kind" => value
         
         /// Create an HTML attribute "label" with the given value.
         [<Inline>]
-        let label (value: string) = "label" => value
+        let label (value: obj) = "label" => value
         
         /// Create an HTML attribute "lang" with the given value.
         [<Inline>]
-        let lang (value: string) = "lang" => value
+        let lang (value: obj) = "lang" => value
         
         /// Create an HTML attribute "language" with the given value.
         [<Inline>]
-        let language (value: string) = "language" => value
+        let language (value: obj) = "language" => value
         
         /// Create an HTML attribute "link" with the given value.
         [<Inline>]
-        let link (value: string) = "link" => value
+        let link (value: obj) = "link" => value
         
         /// Create an HTML attribute "list" with the given value.
         [<Inline>]
-        let list (value: string) = "list" => value
+        let list (value: obj) = "list" => value
         
         /// Create an HTML attribute "longdesc" with the given value.
         [<Inline>]
-        let longdesc (value: string) = "longdesc" => value
+        let longdesc (value: obj) = "longdesc" => value
         
         /// Create an HTML attribute "loop" with the given value.
         [<Inline>]
-        let loop (value: string) = "loop" => value
+        let loop (value: obj) = "loop" => value
         
         /// Create an HTML attribute "low" with the given value.
         [<Inline>]
-        let low (value: string) = "low" => value
+        let low (value: obj) = "low" => value
         
         /// Create an HTML attribute "manifest" with the given value.
         [<Inline>]
-        let manifest (value: string) = "manifest" => value
+        let manifest (value: obj) = "manifest" => value
         
         /// Create an HTML attribute "marginheight" with the given value.
         [<Inline>]
-        let marginheight (value: string) = "marginheight" => value
+        let marginheight (value: obj) = "marginheight" => value
         
         /// Create an HTML attribute "marginwidth" with the given value.
         [<Inline>]
-        let marginwidth (value: string) = "marginwidth" => value
+        let marginwidth (value: obj) = "marginwidth" => value
         
         /// Create an HTML attribute "max" with the given value.
         [<Inline>]
-        let max (value: string) = "max" => value
+        let max (value: obj) = "max" => value
         
         /// Create an HTML attribute "maxlength" with the given value.
         [<Inline>]
-        let maxlength (value: string) = "maxlength" => value
+        let maxlength (value: obj) = "maxlength" => value
         
         /// Create an HTML attribute "media" with the given value.
         [<Inline>]
-        let media (value: string) = "media" => value
+        let media (value: obj) = "media" => value
         
         /// Create an HTML attribute "method" with the given value.
         [<Inline>]
-        let ``method`` (value: string) = "method" => value
+        let ``method`` (value: obj) = "method" => value
         
         /// Create an HTML attribute "min" with the given value.
         [<Inline>]
-        let min (value: string) = "min" => value
+        let min (value: obj) = "min" => value
         
         /// Create an HTML attribute "multiple" with the given value.
         [<Inline>]
-        let multiple (value: string) = "multiple" => value
+        let multiple (value: obj) = "multiple" => value
         
         /// Create an HTML attribute "name" with the given value.
         [<Inline>]
-        let name (value: string) = "name" => value
+        let name (value: obj) = "name" => value
         
         /// Create an HTML attribute "nohref" with the given value.
         [<Inline>]
-        let nohref (value: string) = "nohref" => value
+        let nohref (value: obj) = "nohref" => value
         
         /// Create an HTML attribute "noresize" with the given value.
         [<Inline>]
-        let noresize (value: string) = "noresize" => value
+        let noresize (value: obj) = "noresize" => value
         
         /// Create an HTML attribute "noshade" with the given value.
         [<Inline>]
-        let noshade (value: string) = "noshade" => value
+        let noshade (value: obj) = "noshade" => value
         
         /// Create an HTML attribute "novalidate" with the given value.
         [<Inline>]
-        let novalidate (value: string) = "novalidate" => value
+        let novalidate (value: obj) = "novalidate" => value
         
         /// Create an HTML attribute "nowrap" with the given value.
         [<Inline>]
-        let nowrap (value: string) = "nowrap" => value
+        let nowrap (value: obj) = "nowrap" => value
         
         /// Create an HTML attribute "object" with the given value.
         [<Inline>]
-        let ``object`` (value: string) = "object" => value
+        let ``object`` (value: obj) = "object" => value
         
         /// Create an HTML attribute "open" with the given value.
         [<Inline>]
-        let ``open`` (value: string) = "open" => value
+        let ``open`` (value: obj) = "open" => value
         
         /// Create an HTML attribute "optimum" with the given value.
         [<Inline>]
-        let optimum (value: string) = "optimum" => value
+        let optimum (value: obj) = "optimum" => value
         
         /// Create an HTML attribute "pattern" with the given value.
         [<Inline>]
-        let pattern (value: string) = "pattern" => value
+        let pattern (value: obj) = "pattern" => value
         
         /// Create an HTML attribute "ping" with the given value.
         [<Inline>]
-        let ping (value: string) = "ping" => value
+        let ping (value: obj) = "ping" => value
         
         /// Create an HTML attribute "placeholder" with the given value.
         [<Inline>]
-        let placeholder (value: string) = "placeholder" => value
+        let placeholder (value: obj) = "placeholder" => value
         
         /// Create an HTML attribute "poster" with the given value.
         [<Inline>]
-        let poster (value: string) = "poster" => value
+        let poster (value: obj) = "poster" => value
         
         /// Create an HTML attribute "preload" with the given value.
         [<Inline>]
-        let preload (value: string) = "preload" => value
+        let preload (value: obj) = "preload" => value
         
         /// Create an HTML attribute "profile" with the given value.
         [<Inline>]
-        let profile (value: string) = "profile" => value
+        let profile (value: obj) = "profile" => value
         
         /// Create an HTML attribute "prompt" with the given value.
         [<Inline>]
-        let prompt (value: string) = "prompt" => value
+        let prompt (value: obj) = "prompt" => value
         
         /// Create an HTML attribute "pubdate" with the given value.
         [<Inline>]
-        let pubdate (value: string) = "pubdate" => value
+        let pubdate (value: obj) = "pubdate" => value
         
         /// Create an HTML attribute "radiogroup" with the given value.
         [<Inline>]
-        let radiogroup (value: string) = "radiogroup" => value
+        let radiogroup (value: obj) = "radiogroup" => value
         
         /// Create an HTML attribute "readonly" with the given value.
         [<Inline>]
-        let readonly (value: string) = "readonly" => value
+        let readonly (value: obj) = "readonly" => value
         
         /// Create an HTML attribute "rel" with the given value.
         [<Inline>]
-        let rel (value: string) = "rel" => value
+        let rel (value: obj) = "rel" => value
         
         /// Create an HTML attribute "required" with the given value.
         [<Inline>]
-        let required (value: string) = "required" => value
+        let required (value: obj) = "required" => value
         
         /// Create an HTML attribute "rev" with the given value.
         [<Inline>]
-        let rev (value: string) = "rev" => value
+        let rev (value: obj) = "rev" => value
         
         /// Create an HTML attribute "reversed" with the given value.
         [<Inline>]
-        let reversed (value: string) = "reversed" => value
+        let reversed (value: obj) = "reversed" => value
         
         /// Create an HTML attribute "rows" with the given value.
         [<Inline>]
-        let rows (value: string) = "rows" => value
+        let rows (value: obj) = "rows" => value
         
         /// Create an HTML attribute "rowspan" with the given value.
         [<Inline>]
-        let rowspan (value: string) = "rowspan" => value
+        let rowspan (value: obj) = "rowspan" => value
         
         /// Create an HTML attribute "rules" with the given value.
         [<Inline>]
-        let rules (value: string) = "rules" => value
+        let rules (value: obj) = "rules" => value
         
         /// Create an HTML attribute "sandbox" with the given value.
         [<Inline>]
-        let sandbox (value: string) = "sandbox" => value
+        let sandbox (value: obj) = "sandbox" => value
         
         /// Create an HTML attribute "scheme" with the given value.
         [<Inline>]
-        let scheme (value: string) = "scheme" => value
+        let scheme (value: obj) = "scheme" => value
         
         /// Create an HTML attribute "scope" with the given value.
         [<Inline>]
-        let scope (value: string) = "scope" => value
+        let scope (value: obj) = "scope" => value
         
         /// Create an HTML attribute "scoped" with the given value.
         [<Inline>]
-        let scoped (value: string) = "scoped" => value
+        let scoped (value: obj) = "scoped" => value
         
         /// Create an HTML attribute "scrolling" with the given value.
         [<Inline>]
-        let scrolling (value: string) = "scrolling" => value
+        let scrolling (value: obj) = "scrolling" => value
         
         /// Create an HTML attribute "seamless" with the given value.
         [<Inline>]
-        let seamless (value: string) = "seamless" => value
+        let seamless (value: obj) = "seamless" => value
         
         /// Create an HTML attribute "selected" with the given value.
         [<Inline>]
-        let selected (value: string) = "selected" => value
+        let selected (value: obj) = "selected" => value
         
         /// Create an HTML attribute "shape" with the given value.
         [<Inline>]
-        let shape (value: string) = "shape" => value
+        let shape (value: obj) = "shape" => value
         
         /// Create an HTML attribute "size" with the given value.
         [<Inline>]
-        let size (value: string) = "size" => value
+        let size (value: obj) = "size" => value
         
         /// Create an HTML attribute "sizes" with the given value.
         [<Inline>]
-        let sizes (value: string) = "sizes" => value
+        let sizes (value: obj) = "sizes" => value
         
         /// Create an HTML attribute "span" with the given value.
         [<Inline>]
-        let span (value: string) = "span" => value
+        let span (value: obj) = "span" => value
         
         /// Create an HTML attribute "spellcheck" with the given value.
         [<Inline>]
-        let spellcheck (value: string) = "spellcheck" => value
+        let spellcheck (value: obj) = "spellcheck" => value
         
         /// Create an HTML attribute "src" with the given value.
         [<Inline>]
-        let src (value: string) = "src" => value
+        let src (value: obj) = "src" => value
         
         /// Create an HTML attribute "srcdoc" with the given value.
         [<Inline>]
-        let srcdoc (value: string) = "srcdoc" => value
+        let srcdoc (value: obj) = "srcdoc" => value
         
         /// Create an HTML attribute "srclang" with the given value.
         [<Inline>]
-        let srclang (value: string) = "srclang" => value
+        let srclang (value: obj) = "srclang" => value
         
         /// Create an HTML attribute "standby" with the given value.
         [<Inline>]
-        let standby (value: string) = "standby" => value
+        let standby (value: obj) = "standby" => value
         
         /// Create an HTML attribute "start" with the given value.
         [<Inline>]
-        let start (value: string) = "start" => value
+        let start (value: obj) = "start" => value
         
         /// Create an HTML attribute "step" with the given value.
         [<Inline>]
-        let step (value: string) = "step" => value
+        let step (value: obj) = "step" => value
         
         /// Create an HTML attribute "style" with the given value.
         [<Inline>]
-        let style (value: string) = "style" => value
+        let style (value: obj) = "style" => value
         
         /// Create an HTML attribute "subject" with the given value.
         [<Inline>]
-        let subject (value: string) = "subject" => value
+        let subject (value: obj) = "subject" => value
         
         /// Create an HTML attribute "summary" with the given value.
         [<Inline>]
-        let summary (value: string) = "summary" => value
+        let summary (value: obj) = "summary" => value
         
         /// Create an HTML attribute "tabindex" with the given value.
         [<Inline>]
-        let tabindex (value: string) = "tabindex" => value
+        let tabindex (value: obj) = "tabindex" => value
         
         /// Create an HTML attribute "target" with the given value.
         [<Inline>]
-        let target (value: string) = "target" => value
+        let target (value: obj) = "target" => value
         
         /// Create an HTML attribute "text" with the given value.
         [<Inline>]
-        let text (value: string) = "text" => value
+        let text (value: obj) = "text" => value
         
         /// Create an HTML attribute "title" with the given value.
         [<Inline>]
-        let title (value: string) = "title" => value
+        let title (value: obj) = "title" => value
         
         /// Create an HTML attribute "type" with the given value.
         [<Inline>]
-        let ``type`` (value: string) = "type" => value
+        let ``type`` (value: obj) = "type" => value
         
         /// Create an HTML attribute "usemap" with the given value.
         [<Inline>]
-        let usemap (value: string) = "usemap" => value
+        let usemap (value: obj) = "usemap" => value
         
         /// Create an HTML attribute "valign" with the given value.
         [<Inline>]
-        let valign (value: string) = "valign" => value
+        let valign (value: obj) = "valign" => value
         
         /// Create an HTML attribute "value" with the given value.
         [<Inline>]
-        let value (value: string) = "value" => value
+        let value (value: obj) = "value" => value
         
         /// Create an HTML attribute "valuetype" with the given value.
         [<Inline>]
-        let valuetype (value: string) = "valuetype" => value
+        let valuetype (value: obj) = "valuetype" => value
         
         /// Create an HTML attribute "version" with the given value.
         [<Inline>]
-        let version (value: string) = "version" => value
+        let version (value: obj) = "version" => value
         
         /// Create an HTML attribute "vlink" with the given value.
         [<Inline>]
-        let vlink (value: string) = "vlink" => value
+        let vlink (value: obj) = "vlink" => value
         
         /// Create an HTML attribute "vspace" with the given value.
         [<Inline>]
-        let vspace (value: string) = "vspace" => value
+        let vspace (value: obj) = "vspace" => value
         
         /// Create an HTML attribute "width" with the given value.
         [<Inline>]
-        let width (value: string) = "width" => value
+        let width (value: obj) = "width" => value
         
         /// Create an HTML attribute "wrap" with the given value.
         [<Inline>]
-        let wrap (value: string) = "wrap" => value
+        let wrap (value: obj) = "wrap" => value
         
         // }}
 
