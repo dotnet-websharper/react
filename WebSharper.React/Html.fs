@@ -18,415 +18,415 @@ module Html =
 
     // {{ tag normal
     /// Create an HTML element <a> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let a props children = React.Element "a" props children
     
     /// Create an HTML element <abbr> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let abbr props children = React.Element "abbr" props children
     
     /// Create an HTML element <address> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let address props children = React.Element "address" props children
     
     /// Create an HTML element <area> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let area props children = React.Element "area" props children
     
     /// Create an HTML element <article> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let article props children = React.Element "article" props children
     
     /// Create an HTML element <aside> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let aside props children = React.Element "aside" props children
     
     /// Create an HTML element <audio> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let audio props children = React.Element "audio" props children
     
     /// Create an HTML element <b> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let b props children = React.Element "b" props children
     
     /// Create an HTML element <base> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let ``base`` props children = React.Element "base" props children
     
     /// Create an HTML element <bdi> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let bdi props children = React.Element "bdi" props children
     
     /// Create an HTML element <bdo> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let bdo props children = React.Element "bdo" props children
     
     /// Create an HTML element <blockquote> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let blockquote props children = React.Element "blockquote" props children
     
     /// Create an HTML element <body> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let body props children = React.Element "body" props children
     
     /// Create an HTML element <br> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let br props children = React.Element "br" props children
     
     /// Create an HTML element <button> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let button props children = React.Element "button" props children
     
     /// Create an HTML element <canvas> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let canvas props children = React.Element "canvas" props children
     
     /// Create an HTML element <caption> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let caption props children = React.Element "caption" props children
     
     /// Create an HTML element <cite> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let cite props children = React.Element "cite" props children
     
     /// Create an HTML element <code> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let code props children = React.Element "code" props children
     
     /// Create an HTML element <col> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let col props children = React.Element "col" props children
     
     /// Create an HTML element <colgroup> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let colgroup props children = React.Element "colgroup" props children
     
     /// Create an HTML element <command> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let command props children = React.Element "command" props children
     
     /// Create an HTML element <datalist> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let datalist props children = React.Element "datalist" props children
     
     /// Create an HTML element <dd> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let dd props children = React.Element "dd" props children
     
     /// Create an HTML element <del> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let del props children = React.Element "del" props children
     
     /// Create an HTML element <details> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let details props children = React.Element "details" props children
     
     /// Create an HTML element <dfn> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let dfn props children = React.Element "dfn" props children
     
     /// Create an HTML element <div> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let div props children = React.Element "div" props children
     
     /// Create an HTML element <dl> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let dl props children = React.Element "dl" props children
     
     /// Create an HTML element <dt> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let dt props children = React.Element "dt" props children
     
     /// Create an HTML element <em> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let em props children = React.Element "em" props children
     
     /// Create an HTML element <embed> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let embed props children = React.Element "embed" props children
     
     /// Create an HTML element <fieldset> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let fieldset props children = React.Element "fieldset" props children
     
     /// Create an HTML element <figcaption> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let figcaption props children = React.Element "figcaption" props children
     
     /// Create an HTML element <figure> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let figure props children = React.Element "figure" props children
     
     /// Create an HTML element <footer> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let footer props children = React.Element "footer" props children
     
     /// Create an HTML element <form> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let form props children = React.Element "form" props children
     
     /// Create an HTML element <h1> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let h1 props children = React.Element "h1" props children
     
     /// Create an HTML element <h2> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let h2 props children = React.Element "h2" props children
     
     /// Create an HTML element <h3> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let h3 props children = React.Element "h3" props children
     
     /// Create an HTML element <h4> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let h4 props children = React.Element "h4" props children
     
     /// Create an HTML element <h5> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let h5 props children = React.Element "h5" props children
     
     /// Create an HTML element <h6> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let h6 props children = React.Element "h6" props children
     
     /// Create an HTML element <head> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let head props children = React.Element "head" props children
     
     /// Create an HTML element <header> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let header props children = React.Element "header" props children
     
     /// Create an HTML element <hgroup> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let hgroup props children = React.Element "hgroup" props children
     
     /// Create an HTML element <hr> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let hr props children = React.Element "hr" props children
     
     /// Create an HTML element <html> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let html props children = React.Element "html" props children
     
     /// Create an HTML element <i> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let i props children = React.Element "i" props children
     
     /// Create an HTML element <iframe> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let iframe props children = React.Element "iframe" props children
     
     /// Create an HTML element <img> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let img props children = React.Element "img" props children
     
     /// Create an HTML element <input> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let input props children = React.Element "input" props children
     
     /// Create an HTML element <ins> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let ins props children = React.Element "ins" props children
     
     /// Create an HTML element <kbd> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let kbd props children = React.Element "kbd" props children
     
     /// Create an HTML element <keygen> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let keygen props children = React.Element "keygen" props children
     
     /// Create an HTML element <label> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let label props children = React.Element "label" props children
     
     /// Create an HTML element <legend> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let legend props children = React.Element "legend" props children
     
     /// Create an HTML element <li> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let li props children = React.Element "li" props children
     
     /// Create an HTML element <link> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let link props children = React.Element "link" props children
     
     /// Create an HTML element <mark> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let mark props children = React.Element "mark" props children
     
     /// Create an HTML element <meta> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let meta props children = React.Element "meta" props children
     
     /// Create an HTML element <meter> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let meter props children = React.Element "meter" props children
     
     /// Create an HTML element <nav> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let nav props children = React.Element "nav" props children
     
     /// Create an HTML element <noframes> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let noframes props children = React.Element "noframes" props children
     
     /// Create an HTML element <noscript> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let noscript props children = React.Element "noscript" props children
     
     /// Create an HTML element <ol> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let ol props children = React.Element "ol" props children
     
     /// Create an HTML element <optgroup> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let optgroup props children = React.Element "optgroup" props children
     
     /// Create an HTML element <output> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let output props children = React.Element "output" props children
     
     /// Create an HTML element <p> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let p props children = React.Element "p" props children
     
     /// Create an HTML element <param> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let param props children = React.Element "param" props children
     
     /// Create an HTML element <picture> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let picture props children = React.Element "picture" props children
     
     /// Create an HTML element <pre> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let pre props children = React.Element "pre" props children
     
     /// Create an HTML element <progress> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let progress props children = React.Element "progress" props children
     
     /// Create an HTML element <q> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let q props children = React.Element "q" props children
     
     /// Create an HTML element <rp> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let rp props children = React.Element "rp" props children
     
     /// Create an HTML element <rt> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let rt props children = React.Element "rt" props children
     
     /// Create an HTML element <rtc> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let rtc props children = React.Element "rtc" props children
     
     /// Create an HTML element <ruby> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let ruby props children = React.Element "ruby" props children
     
     /// Create an HTML element <samp> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let samp props children = React.Element "samp" props children
     
     /// Create an HTML element <script> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let script props children = React.Element "script" props children
     
     /// Create an HTML element <section> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let section props children = React.Element "section" props children
     
     /// Create an HTML element <select> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let select props children = React.Element "select" props children
     
     /// Create an HTML element <shadow> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let shadow props children = React.Element "shadow" props children
     
     /// Create an HTML element <small> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let small props children = React.Element "small" props children
     
     /// Create an HTML element <source> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let source props children = React.Element "source" props children
     
     /// Create an HTML element <span> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let span props children = React.Element "span" props children
     
     /// Create an HTML element <strong> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let strong props children = React.Element "strong" props children
     
     /// Create an HTML element <sub> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let sub props children = React.Element "sub" props children
     
     /// Create an HTML element <summary> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let summary props children = React.Element "summary" props children
     
     /// Create an HTML element <sup> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let sup props children = React.Element "sup" props children
     
     /// Create an HTML element <table> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let table props children = React.Element "table" props children
     
     /// Create an HTML element <tbody> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let tbody props children = React.Element "tbody" props children
     
     /// Create an HTML element <td> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let td props children = React.Element "td" props children
     
     /// Create an HTML element <textarea> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let textarea props children = React.Element "textarea" props children
     
     /// Create an HTML element <tfoot> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let tfoot props children = React.Element "tfoot" props children
     
     /// Create an HTML element <th> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let th props children = React.Element "th" props children
     
     /// Create an HTML element <thead> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let thead props children = React.Element "thead" props children
     
     /// Create an HTML element <time> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let time props children = React.Element "time" props children
     
     /// Create an HTML element <tr> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let tr props children = React.Element "tr" props children
     
     /// Create an HTML element <track> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let track props children = React.Element "track" props children
     
     /// Create an HTML element <ul> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let ul props children = React.Element "ul" props children
     
     /// Create an HTML element <video> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let video props children = React.Element "video" props children
     
     /// Create an HTML element <wbr> with props and children.
-    [<Inline>]
+    [<Inline; Macro(typeof<Macros.Html>)>]
     let wbr props children = React.Element "wbr" props children
     
     // }}
@@ -435,107 +435,107 @@ module Html =
     module Tags =
         // {{ tag colliding deprecated
         /// Create an HTML element <acronym> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let acronym props children = React.Element "acronym" props children
         
         /// Create an HTML element <applet> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let applet props children = React.Element "applet" props children
         
         /// Create an HTML element <basefont> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let basefont props children = React.Element "basefont" props children
         
         /// Create an HTML element <big> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let big props children = React.Element "big" props children
         
         /// Create an HTML element <center> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let center props children = React.Element "center" props children
         
         /// Create an HTML element <content> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let content props children = React.Element "content" props children
         
         /// Create an HTML element <data> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let data props children = React.Element "data" props children
         
         /// Create an HTML element <dir> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let dir props children = React.Element "dir" props children
         
         /// Create an HTML element <font> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let font props children = React.Element "font" props children
         
         /// Create an HTML element <frame> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let frame props children = React.Element "frame" props children
         
         /// Create an HTML element <frameset> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let frameset props children = React.Element "frameset" props children
         
         /// Create an HTML element <isindex> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let isindex props children = React.Element "isindex" props children
         
         /// Create an HTML element <main> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let main props children = React.Element "main" props children
         
         /// Create an HTML element <map> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let map props children = React.Element "map" props children
         
         /// Create an HTML element <menu> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let menu props children = React.Element "menu" props children
         
         /// Create an HTML element <menuitem> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let menuitem props children = React.Element "menuitem" props children
         
         /// Create an HTML element <object> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let ``object`` props children = React.Element "object" props children
         
         /// Create an HTML element <option> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let option props children = React.Element "option" props children
         
         /// Create an HTML element <s> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let s props children = React.Element "s" props children
         
         /// Create an HTML element <strike> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let strike props children = React.Element "strike" props children
         
         /// Create an HTML element <style> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let style props children = React.Element "style" props children
         
         /// Create an HTML element <template> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let template props children = React.Element "template" props children
         
         /// Create an HTML element <title> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let title props children = React.Element "title" props children
         
         /// Create an HTML element <tt> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let tt props children = React.Element "tt" props children
         
         /// Create an HTML element <u> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let u props children = React.Element "u" props children
         
         /// Create an HTML element <var> with props and children.
-        [<Inline>]
+        [<Inline; Macro(typeof<Macros.Html>)>]
         let var props children = React.Element "var" props children
         
         // }}

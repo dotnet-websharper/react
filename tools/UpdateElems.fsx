@@ -135,7 +135,7 @@ module Tags =
             | "tag" ->
                 [|
                     sprintf "/// Create an HTML element <%s> with props and children." e.Name
-                    "[<Inline>]"
+                    "[<Inline; Macro(typeof<Macros.Html>)>]"
                     sprintf "let %s props children = React.Element \"%s\" props children" e.LowNameEsc e.Name
                     ""
                 |]

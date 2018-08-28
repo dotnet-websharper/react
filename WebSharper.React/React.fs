@@ -17,13 +17,87 @@ module Macros =
     module M = WebSharper.Core.Metadata
     module I = WebSharper.Core.AST.IgnoreSourcePos
 
+    type private Marker = class end
+
+    [<Literal>]
+    let private staticFlags =
+        System.Reflection.BindingFlags.Static |||
+        System.Reflection.BindingFlags.Public |||
+        System.Reflection.BindingFlags.NonPublic
+
+    let tPervasives =
+        TypeDefinition { Assembly = "WebSharper.Main"
+                         FullName = "WebSharper.JavaScript.Pervasives" }
+    let tSeq =
+        TypeDefinition { Assembly = "netstandard"
+                         FullName = "System.Collections.Generic.IEnumerable`1" }
+    let tReactModule =
+        TypeDefinition { Assembly = "WebSharper.React"
+                         FullName = "WebSharper.React.ReactModule" }
+    let tReact =
+        TypeDefinition { Assembly = "WebSharper.React.Bindings"
+                         FullName = "WebSharper.React.Bindings.React" }
+    let tElement =
+        TypeDefinition { Assembly = "WebSharper.React.Bindings"
+                         FullName = "WebSharper.React.Bindings.React+Element" }
+    let tHtml =
+        TypeDefinition { Assembly = "WebSharper.React"
+                         FullName = "WebSharper.React.Html" }
+    let tTags =
+        TypeDefinition { Assembly = "WebSharper.React"
+                         FullName = "WebSharper.React.Html+Tags" }
+    let mAs =
+        Method { MethodName = "As"
+                 Generics = 1
+                 Parameters = [NonGenericType Definitions.Object]
+                 ReturnType = TypeParameter 0 }
+    let mNew =
+        Method { MethodName = "New"
+                 Generics = 1
+                 Parameters = [
+                        GenericType tSeq [
+                            TupleType ([
+                                NonGenericType Definitions.String
+                                NonGenericType Definitions.Object
+                            ], false)
+                        ]
+                    ]
+                 ReturnType = TypeParameter 0 }
+    let mElt =
+        Method { MethodName = "elt"
+                 Generics = 0
+                 Parameters = [
+                        NonGenericType Definitions.String
+                        NonGenericType Definitions.Object
+                        GenericType tSeq [NonGenericType tElement]
+                    ]
+                 ReturnType = NonGenericType tElement }
+    let mCreateElement =
+        Method { MethodName = "CreateElement"
+                 Generics = 0
+                 Parameters = [
+                        NonGenericType Definitions.String
+                        NonGenericType Definitions.Object
+                        ArrayType(NonGenericType Definitions.Object, 1)
+                    ]
+                 ReturnType = NonGenericType tElement }
+
+    let callElt elt props children =
+        match children with
+        | I.NewArray _ ->
+            Call(None, NonGeneric tReact, NonGeneric mCreateElement, [elt; props; children])
+        | _ ->
+            Call(None, NonGeneric tReactModule, NonGeneric mElt, [elt; props; children])
+    let callNew arg = Call(None, NonGeneric tPervasives, NonGeneric mNew, [arg])
+    let callNewOrNull = function
+        | I.NewArray [] -> !~Null
+        | arg -> callNew arg
+
     type Make() =
         inherit Macro()
 
-        static let rPervasives = typeof<JSObject>.Assembly.GetType("WebSharper.JavaScript.Pervasives")
-        static let Pervasives = Reflection.ReadTypeDefinition rPervasives
-        static let rAs = rPervasives.GetMethod("As")
-        static let As = Reflection.ReadMethod rAs
+        abstract Fallback : MacroCall -> MacroResult
+        default this.Fallback(call) = MacroFallback
 
         override this.TranslateCall(call) =
             let ix =
@@ -42,15 +116,15 @@ module Macros =
                     | M.Constructor addr ->
                         let call = callWithReplacedArg (GlobalAccess addr)
                         MacroDependencies ([M.ConstructorNode(ty.Entity, ctor)], MacroOk call)
-                    | _ -> MacroFallback
-                | None -> MacroFallback
+                    | _ -> this.Fallback call
+                | None -> this.Fallback call
 
             let jsCtor (ctor: Expression) =
                 let call = callWithReplacedArg ctor
                 MacroOk call
 
             match call.Arguments.[ix] with
-            | I.Call(None, ty, meth, [comp]) when ty.Entity = Pervasives && meth.Entity = As ->
+            | I.Call(None, ty, meth, [comp]) when ty.Entity = tPervasives && meth.Entity = mAs ->
                 callWithReplacedArg comp |> MacroOk
             | I.Function ([], I.Return (I.Ctor(ty, ctor, []))) ->
                 dotnetCtor ty ctor
@@ -61,7 +135,27 @@ module Macros =
             | I.Function ([props], I.Return (I.New (ctor, [I.Var props']))) when props = props' ->
                 jsCtor ctor
             | _ ->
-                MacroFallback
+                this.Fallback call
+
+    type Element() =
+        inherit Make()
+
+        override this.Fallback(call) =
+            callElt
+                call.Arguments.[0]
+                (callNewOrNull call.Arguments.[1])
+                call.Arguments.[2]
+            |> MacroOk
+
+    type Html() =
+        inherit Macro()
+
+        override this.TranslateCall(call) =
+            callElt
+                !~(String call.Method.Entity.Value.MethodName)
+                (callNewOrNull call.Arguments.[0])
+                call.Arguments.[1]
+            |> MacroOk
 
 module React =
 
@@ -70,12 +164,12 @@ module React =
         | :? System.Array -> As s
         | s -> Array.ofSeq s
 
-    let private elt (name: string) (props: seq<string * obj>) (children: seq<R.Element>) =
-        R.CreateElement(name, New props, inlineArrayOfSeq children)
+    let private elt (name: string) (props: obj) (children: seq<R.Element>) =
+        R.CreateElement(name, props, inlineArrayOfSeq children)
 
-    [<Macro(typeof<Macros.Make>); Inline>]
+    [<Macro(typeof<Macros.Element>); Inline>]
     let Element name props children =
-        elt name props children
+        elt name (New props) children
 
     [<Inline>]
     let Text (s: string) =
