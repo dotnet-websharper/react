@@ -12,4 +12,8 @@ targets.BuildDebug ==> "Build"
 Target "CI-Release" DoNothing
 targets.CommitPublish ==> "CI-Release"
 
+Target "AppVeyor" DoNothing
+"WS-Update" ==> "AppVeyor"
+"WS-BuildRelease" ==> "AppVeyor"
+
 RunTargetOrDefault "Build"
