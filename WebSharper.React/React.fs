@@ -240,6 +240,16 @@ module React =
     let HashRouter (router: SRouter<'Endpoint>) (render: Router<'Endpoint> -> R.Element) : R.Element =
         Make HashRouter { router = router; render = render }
 
+    /// Create a WebSharper control that can be embedded in a Sitelet page.
+    let Control (e: React.Element) =
+        { new WebSharper.IControlBody with
+            member this.ReplaceInDom(el) =
+                let el' = el.OwnerDocument.CreateElement("div")
+                el.ParentNode.InsertBefore(el', el) |> ignore
+                el.ParentNode.RemoveChild(el) |> ignore
+                Mount el' e
+        }
+
 [<AutoOpen>]
 module Extensions =
 
