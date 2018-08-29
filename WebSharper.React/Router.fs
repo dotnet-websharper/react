@@ -1,2 +1,0 @@
-namespace WebSharper.React
-

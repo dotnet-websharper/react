@@ -1,6 +1,0 @@
-﻿{
-  "$schema": "https://websharper.com/wsconfig.schema.json",
-  "project": "bundleOnly",
-  "outputDir": "Content",
-  "sourceMap": false
-}
