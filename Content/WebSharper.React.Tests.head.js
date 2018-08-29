@@ -1,0 +1,1 @@
+document.write("<script src=\"https://unpkg.com/react@16/umd/react.production.min.js\" type=\"text/javascript\" charset=\"UTF-8\">\r\n\r\n</script><script src=\"https://unpkg.com/react-dom@16/umd/react-dom.production.min.js\" type=\"text/javascript\" charset=\"UTF-8\">\r\n\r\n</script>")
