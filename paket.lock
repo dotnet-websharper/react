@@ -1,9 +1,9 @@
 STORAGE: NONE
 NUGET
   remote: https://daily.websharper.com/nuget
-    WebSharper (4.5.1.304)
-    WebSharper.FSharp (4.5.1.304)
-      WebSharper (4.5.1.304)
+    WebSharper (4.5.2.308)
+    WebSharper.FSharp (4.5.2.308)
+      WebSharper (4.5.2.308)
 
 GROUP build
 RESTRICTION: == net45
