@@ -1094,6 +1094,11 @@ if (!console) {
    r.push(arr[i]);
   return r;
  };
+ Arrays.iter=function(f,arr)
+ {
+  var i,$1;
+  for(i=0,$1=arr.length-1;i<=$1;i++)f(arr[i]);
+ };
  WebSharper.checkThis=function(_this)
  {
   return Unchecked.Equals(_this,null)?Operators.InvalidOp("The initialization of an object or value resulted in an object or value being accessed recursively before it was fully initialized."):_this;
@@ -1526,48 +1531,29 @@ if (!console) {
  };
  Route.Combine=function(paths)
  {
-  var method,body,queryArgs,formData,i,$1,paths$1,m,segments,l;
+  var paths$1,m,method,body,segments,queryArgs,formData;
   paths$1=Arrays.ofSeq(paths);
   m=Arrays.length(paths$1);
-  if(m===0)
-   return Route.get_Empty();
-  else
-   if(m===1)
-    return Arrays.get(paths$1,0);
-   else
-    {
-     method=null;
-     body=null;
-     segments=[];
-     queryArgs=new FSharpMap.New([]);
-     formData=new FSharpMap.New([]);
-     i=0;
-     l=Arrays.length(paths$1);
-     while(i<l)
-      (function()
-      {
-       var p,m$1,m$2;
-       p=Arrays.get(paths$1,i);
-       m$1=p.Method;
-       m$1!=null&&m$1.$==1?method=m$1:void 0;
-       m$2=p.Body.f();
-       m$2===null?void 0:body=m$2;
-       queryArgs=Map.FoldBack(function(k,v,t)
-       {
-        return t.Add(k,v);
-       },queryArgs,p.QueryArgs);
-       formData=Map.FoldBack(function(k,v,t)
-       {
-        return t.Add(k,v);
-       },formData,p.FormData);
-       List$1.iter(function(a)
-       {
-        segments.push(a);
-       },p.Segments);
-       i=i+1;
-      }());
-     return Route.New(List$1.ofSeq(segments),queryArgs,formData,method,Lazy.CreateFromValue(body));
-    }
+  return m===0?Route.get_Empty():m===1?Arrays.get(paths$1,0):(method=null,body=null,segments=[],queryArgs=new FSharpMap.New([]),formData=new FSharpMap.New([]),Arrays.iter(function(p)
+  {
+   var m$1,m$2;
+   m$1=p.Method;
+   m$1!=null&&m$1.$==1?method=m$1:void 0;
+   m$2=p.Body.f();
+   m$2===null?void 0:body=m$2;
+   queryArgs=Map.FoldBack(function(k,v,t)
+   {
+    return t.Add(k,v);
+   },queryArgs,p.QueryArgs);
+   formData=Map.FoldBack(function(k,v,t)
+   {
+    return t.Add(k,v);
+   },formData,p.FormData);
+   List$1.iter(function(a)
+   {
+    segments.push(a);
+   },p.Segments);
+  },paths$1),Route.New(List$1.ofSeq(segments),queryArgs,formData,method,Lazy.CreateFromValue(body)));
  };
  Route.New=function(Segments,QueryArgs,FormData,Method,Body)
  {
