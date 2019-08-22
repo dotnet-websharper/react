@@ -400,10 +400,10 @@ NUGET
       Microsoft.NETCore.Targets (>= 1.1) - restriction: || (&& (== net461) (>= dnxcore50)) (&& (== net461) (< net451)) (== netstandard2.0)
       System.Runtime (>= 4.3) - restriction: || (&& (== net461) (>= dnxcore50)) (&& (== net461) (< net451)) (== netstandard2.0)
   remote: https://daily.websharper.com/nuget
-    WebSharper (4.5.15.342)
+    WebSharper (4.5.16.344)
       FSharp.Core (>= 4.2.3)
-    WebSharper.FSharp (4.5.15.342)
-      WebSharper (4.5.15.342)
+    WebSharper.FSharp (4.5.16.344)
+      WebSharper (4.5.16.344)
 
 GROUP build
 RESTRICTION: == net45
