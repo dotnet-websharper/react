@@ -1352,14 +1352,12 @@ if (!console) {
     e1.Dispose();
   }
  };
- Seq.delay=function(f)
+ Seq.rev=function(s)
  {
-  return{
-   GetEnumerator:function()
-   {
-    return Enumerator.Get(f());
-   }
-  };
+  return Seq.delay(function()
+  {
+   return Arrays.ofSeq(s).slice().reverse();
+  });
  };
  Seq.distinctBy=function(f,s)
  {
@@ -1403,6 +1401,15 @@ if (!console) {
      m=f(e.s);
      return m==null?false:(e.c=m.$0[0],e.s=m.$0[1],true);
     },void 0);
+   }
+  };
+ };
+ Seq.delay=function(f)
+ {
+  return{
+   GetEnumerator:function()
+   {
+    return Enumerator.Get(f());
    }
   };
  };
@@ -2144,16 +2151,13 @@ if (!console) {
  MapUtil.fromSeq=function(s)
  {
   var a;
-  a=Arrays.ofSeq(Seq.delay(function()
+  a=Arrays.ofSeq(Seq.map(function($1)
   {
-   return Seq.collect(function(m)
-   {
-    return[Pair.New(m[0],m[1])];
-   },Seq.distinctBy(function(t)
-   {
-    return t[0];
-   },s));
-  }));
+   return Pair.New($1[0],$1[1]);
+  },Seq.distinctBy(function(t)
+  {
+   return t[0];
+  },Seq.rev(s))));
   Arrays.sortInPlace(a);
   return BalancedTree.Build(a,0,a.length-1);
  };
