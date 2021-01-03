@@ -20,4 +20,4 @@ files
     ../WebSharper.React/bin/Release/netstandard2.0/WebSharper.React.dll ==> lib/netstandard2.0
     ../WebSharper.React/bin/Release/netstandard2.0/WebSharper.React.xml ==> lib/netstandard2.0
 dependencies
-        WebSharper ~> LOCKEDVERSION/3
+        WebSharper ~> LOCKEDVERSION:[3]

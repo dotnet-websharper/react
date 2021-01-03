@@ -7,7 +7,6 @@ obj/
 Content/
 build/
 /.vs/config/applicationhost.config
-nuget/*.paket.template
 bin/
 obj/
 /.fake/
