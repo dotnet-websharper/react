@@ -11,13 +11,10 @@ description
 tags
     Web JavaScript F# C#
 files
-    ../WebSharper.React.Bindings/bin/Release/net461/WebSharper.React.Bindings.dll ==> lib/net461
-    ../WebSharper.React.Bindings/bin/Release/net461/WebSharper.React.Bindings.xml ==> lib/net461
     ../WebSharper.React.Bindings/bin/Release/netstandard2.0/WebSharper.React.Bindings.dll ==> lib/netstandard2.0
     ../WebSharper.React.Bindings/bin/Release/netstandard2.0/WebSharper.React.Bindings.xml ==> lib/netstandard2.0
-    ../WebSharper.React/bin/Release/net461/WebSharper.React.dll ==> lib/net461
-    ../WebSharper.React/bin/Release/net461/WebSharper.React.xml ==> lib/net461
     ../WebSharper.React/bin/Release/netstandard2.0/WebSharper.React.dll ==> lib/netstandard2.0
     ../WebSharper.React/bin/Release/netstandard2.0/WebSharper.React.xml ==> lib/netstandard2.0
 dependencies
-        WebSharper ~> LOCKEDVERSION:[3]
+    framework: netstandard2.0
+            WebSharper ~> LOCKEDVERSION:[3]
