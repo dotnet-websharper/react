@@ -400,17 +400,17 @@ NUGET
       Microsoft.NETCore.Targets (>= 1.0.1) - restriction: || (&& (== net461) (< net451)) (== netstandard2.0)
       System.Runtime (>= 4.1) - restriction: || (&& (== net461) (< net451)) (== netstandard2.0)
   remote: https://daily.websharper.com/nuget
-    WebSharper (4.7.1.426)
+    WebSharper (4.7.2.444)
       FSharp.Core (>= 4.2.3)
       System.Reflection.Emit.Lightweight (>= 4.3)
-    WebSharper.FSharp (4.7.1.426)
-      WebSharper (4.7.1.426)
+    WebSharper.FSharp (4.7.2.444)
+      WebSharper (4.7.2.444)
 
 GROUP includes
 
 GITHUB
   remote: dotnet-websharper/websharper
-    src/htmllib/tags.csv (6f68bf63052acd091864a4da92e19bbfc2fb8fb0)
+    src/htmllib/tags.csv (fe970421d68f38f61549d5a35a81c40270b5dbeb)
 GROUP wsbuild
 
 GIT
