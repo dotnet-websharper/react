@@ -26,19 +26,33 @@ open WebSharper.InterfaceGenerator
 module Res =
 
     let React =
-        Resource "React" "https://unpkg.com/react@16/umd/react.production.min.js"
+        Resource "React" "https://unpkg.com/react@17/umd/react.production.min.js"
         
     let ReactDOM =
-        Resource "ReactDOM" "https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"
+        Resource "ReactDOM" "https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"
+        |> Requires [React]
+
+    let ReactDOMServer =
+        Resource "ReactDOMServer" "https://unpkg.com/react-dom@17.0.2/umd/react-dom-server.browser.production.min.js"
+        |> Requires [ReactDOM]
+
+    let ReactTestUtils =
+        Resource "ReactTestUtils" "https://unpkg.com/react-dom@17.0.2/umd/react-dom-test-utils.production.min.js"
+        |> Requires [ReactDOM]
+
+    let TestRenderer =
+        Resource "TestRenderer" "https://unpkg.com/react-test-renderer@17.0.2/umd/react-test-renderer.development.js"
         |> Requires [React]
 
     let CreateReactClass =
-        Resource "CreateReactClass" "https://unpkg.com/create-react-class@15.6.3/create-react-class.min.js"
+        Resource "CreateReactClass" "https://unpkg.com/create-react-class@15.7.0/create-react-class.min.js"
         |> Requires [React]
 
 module Definition =
 
     module React =
+
+        type Key = string
 
         let Children_ =
             Class "React.Children"
@@ -88,6 +102,8 @@ module Definition =
                 "componentDidCatch" => T<Error> * ErrorInfo ^-> T<unit>
                 |> Virtual
                 "forceUpdate" => (T<unit> ^-> T<unit>) ^-> T<unit>
+                |> Virtual
+                "getDerivedStateFromError" => T<Error> ^-> T<obj>
             ]
 
         let Children =
@@ -148,9 +164,69 @@ module Definition =
         |+> Static [
             "render" => React.Element * T<Dom.Element> * !?(T<unit> ^-> T<unit>) ^-> React.Ref
             "hydrate" => React.Element * T<Dom.Element> * !?(T<unit> ^-> T<unit>) ^-> React.Ref
-            "unmountComponentAsNode" => T<Dom.Element> ^-> T<bool>
-            "findDOMNode" => React.Element ^-> T<Dom.Element>
+            "unmountComponentAtNode" => T<Dom.Element> ^-> T<bool>
+            "findDOMNode" => React.Element ^-> T<Dom.Element> |> Obsolete
             "createPortal" => React.Element * T<Dom.Element> ^-> React.Element
+        ]
+
+    let ReactDOMServer =
+        Class "ReactDOMServer"
+        |> Requires [Res.ReactDOMServer]
+        |+> Static [
+            "renderToString" => React.Element ^-> T<string>
+            "renderToStaticMarkup" => React.Element ^-> T<string>
+            "renderToNodeStream" => React.Element ^-> (T<obj> ^-> T<string>)
+            |> WithWarning "Server-only. This API is not available in the browser."
+            "renderToStaticNodeStream" => React.Element ^-> (T<obj> ^-> T<string>)
+            |> WithWarning "Server-only. This API is not available in the browser."
+        ]
+
+    let ReactTestUtils =
+        Class "ReactTestUtils"
+        |> Requires [Res.ReactTestUtils]
+        |+> Static [
+            "act"=> T<unit> ^-> React.ComponentT ^-> T<unit>
+            "mockComponent" => React.ComponentT * !? T<string> ^-> T<unit>
+            "isElement" => React.Element ^-> T<bool>
+            "isElementOfType" => React.Element ^-> T<obj> ^-> T<bool>
+            "isDOMComponent" => T<obj> ^-> T<bool>
+            "isCompositeComponent" => T<obj> ^-> T<bool>
+            "isCompositeComponentWithType" => T<obj> ^-> T<obj> ^-> T<bool>
+            "findAllInRenderedTree" => T<obj> ^-> (React.ComponentT ^-> T<bool>) ^-> !| React.ComponentT
+            "scryRenderedDOMComponentsWithClass" => T<obj> ^-> T<string> ^-> !| T<Dom.Element>
+            "findRenderedDOMComponentsWithClass" => T<obj> ^-> T<string> ^-> T<Dom.Element> + T<Error>
+            "scryRenderedDOMComponentsWithTag" => T<obj> ^-> T<string> ^-> !| T<Dom.Element>
+            "findRenderedDOMComponentsWithTag" => T<obj> ^-> T<string> ^-> T<Dom.Element> + T<Error>
+            "scryRenderedDOMComponentsWithType" => T<obj> ^-> T<obj> ^-> !| T<Dom.Element>
+            "findRenderedDOMComponentsWithType" => T<obj> ^-> T<obj> ^-> T<Dom.Element> + T<Error>
+            "renderIntoDocument" => T<Dom.Element> ^-> T<unit>
+            "Simulate" => T<string> ^-> React.Element ^-> !? T<obj> ^-> T<unit>
+            |> WithInline "Simulate.$0($1, $2)"
+        ]
+
+    let rec TestRenderer =
+        Class "TestRenderer"
+        |> Requires [Res.TestRenderer]
+        |+> Static [
+            "create" => React.Element  ^-> TSelf
+            "act" => T<unit> ^-> React.ComponentT ^-> T<unit>
+            "toJSON" => T<unit> ^-> T<obj>
+            "toTree" => T<unit> ^-> T<obj>
+            "update" => React.Element ^-> T<unit>
+            "unmount" => T<unit> ^-> T<unit>
+            "getInstance" => T<unit> ^-> React.Element
+            "root" => T<obj>
+            "find" => (React.Element ^-> T<bool>) ^-> T<bool> + T<Error>
+            "findByType" => T<obj> ^-> React.Element + T<Error>
+            "findByProps" => T<obj> ^-> React.Element + T<Error>
+            "findAll" => (React.Element ^-> T<bool>) ^-> (!| React.Element)
+            "findAllByType" => T<obj> ^-> (!| React.Element)
+            "findAllByProps" => T<obj> ^-> (!| React.Element)
+            "instance" => React.ComponentT
+            "type" => T<obj>
+            "props" => T<obj>
+            "parent" => React.ComponentT
+            "children" => !| React.ComponentT
         ]
 
     let React =
@@ -185,6 +261,12 @@ module Definition =
                 * T<obj>?props
                 *+T<obj>
                 ^-> React.Element
+            Generic - fun t ->
+                "createFactory"
+                    => React.Consumer.[t]
+                        * T<obj>?props
+                        * (t ^-> React.Element)
+                        ^-> React.Element
             Generic -- fun props state ->
                 "createClass" => React.CreateClassArgs.[props, state] ^-> React.Class
                 |> WithInline "$global.createReactClass($0)"
@@ -195,6 +277,8 @@ module Definition =
             "Fragment" =? React.Class
             Generic - fun t ->
                 "createContext" => t ^-> React.Context.[t]
+            "Lazy" => T<unit> ^-> React.Element
+
         ]
 
     let SyntheticEvent =
@@ -220,7 +304,7 @@ module Definition =
         Class "ClipboardEvent"
         |=> Inherits SyntheticEvent
         |+> Instance [
-            "clipboardData" =? T<obj>
+            "clipboardData" =? T<obj> //DOMDataTransfer
         ]
 
     let CompositionEvent =
@@ -230,13 +314,6 @@ module Definition =
             "data" =? T<string>
         ]
 
-    let FocusEvent =
-        Class "FocusEvent"
-        |=> Inherits SyntheticEvent
-        |+> Instance [
-            "relatedTarget" =? T<Dom.EventTarget>
-        ]
-
     let KeyboardEvent =
         Class "KeyboardEvent"
         |=> Inherits SyntheticEvent
@@ -244,7 +321,7 @@ module Definition =
             "altKey" =? T<bool>
             "charCode" =? T<int>
             "ctrlKey" =? T<bool>
-            "getModifierState" => T<int> ^-> T<bool>
+            "getModifierState" => T<React.Key> ^-> T<bool>
             "key" =? T<string>
             "keyCode" =? T<int>
             "locale" =? T<string>
@@ -254,6 +331,23 @@ module Definition =
             "shiftKey" =? T<bool>
             "which" =? T<int>
         ]
+
+    let FocusEvent =
+        Class "FocusEvent"
+        |=> Inherits SyntheticEvent
+        |+> Instance [
+            "relatedTarget" =? T<Dom.EventTarget>
+        ]
+
+    let FormEvent =
+        Class "FormEvent"
+        |=> Inherits SyntheticEvent
+        |+> Instance []
+
+    let GenericEvent =
+        Class "GenericEvent"
+        |=> Inherits SyntheticEvent
+        |+> Instance []
 
     let MouseEvent =
         Class "MouseEvent"
@@ -265,7 +359,7 @@ module Definition =
             "clientX" =? T<int>
             "clientY" =? T<int>
             "ctrlKey" =? T<bool>
-            "getModifierState" => T<int> ^-> T<bool>
+            "getModifierState" => T<React.Key> ^-> T<bool>
             "metaKey" =? T<bool>
             "pageX" =? T<int>
             "pageY" =? T<int>
@@ -283,11 +377,18 @@ module Definition =
             "width" =? T<int>
             "height" =? T<int>
             "pressure" =? T<int>
-            "tilltX" =? T<int>
+            "tangentialPressure" =? T<int>
+            "tiltX" =? T<int>
             "tiltY" =? T<int>
+            "twist" =? T<int>
             "pointerType" =? T<string>
             "isPrimary" =? T<bool>
         ]
+
+    let SelectionEvent =
+        Class "SelectionEvent"
+        |=> Inherits SyntheticEvent
+        |+> Instance []
 
     let TouchEvent =
         Class "TouchEvent"
@@ -296,7 +397,7 @@ module Definition =
             "altKey" =? T<bool>
             "changedTouches" =? T<obj> // DOMTouchList
             "ctrlKey" =? T<bool>
-            "getModifierState" => T<int> ^-> T<bool>
+            "getModifierState" => T<React.Key> ^-> T<bool>
             "metaKey" =? T<bool>
             "shiftKey" =? T<bool>
             "targetTouches" =? T<obj> // DOMTouchList
@@ -321,6 +422,16 @@ module Definition =
             "deltaZ" =? T<int>
         ]
 
+    let MediaEvent =
+        Class "MediaEvent"
+        |=> Inherits SyntheticEvent
+        |+> Instance []
+
+    let ImageEvent =
+        Class "ImageEvent"
+        |=> Inherits SyntheticEvent
+        |+> Instance []
+
     let AnimationEvent =
         Class "AnimationEvent"
         |=> Inherits SyntheticEvent
@@ -344,6 +455,7 @@ module Definition =
             Namespace "WebSharper.React.Bindings" [
                  React
                  ReactDOM
+                 ReactDOMServer
                  SyntheticEvent
                  ClipboardEvent
                  CompositionEvent
@@ -356,10 +468,18 @@ module Definition =
                  WheelEvent
                  AnimationEvent
                  TransitionEvent
+                 FormEvent
+                 GenericEvent
+                 SelectionEvent
+                 MediaEvent
+                 ImageEvent
             ]
             Namespace "WebSharper.React.Bindings.Resources" [
                 Res.React
                 Res.ReactDOM
+                Res.ReactDOMServer
+                Res.ReactTestUtils
+                Res.TestRenderer
                 Res.CreateReactClass
             ]
         ]
