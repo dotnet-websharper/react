@@ -3,7 +3,7 @@ STRATEGY: MIN
 RESTRICTION: || (== net5.0) (== netcoreapp2.1) (== netcoreapp3.1) (== netstandard2.0)
 NUGET
   remote: https://api.nuget.org/v3/index.json
-    FSharp.Core (6.0.1)
+    FSharp.Core (6.0.3)
     Microsoft.AspNetCore.Http.Abstractions (2.0)
       Microsoft.AspNetCore.Http.Features (>= 2.0)
       System.Text.Encodings.Web (>= 4.4)
@@ -52,13 +52,13 @@ NUGET
     System.Windows.Extensions (4.7) - restriction: || (== net5.0) (&& (== netcoreapp2.1) (>= netcoreapp3.0)) (== netcoreapp3.1) (&& (== netstandard2.0) (>= netcoreapp3.0))
       System.Drawing.Common (>= 4.7) - restriction: || (== net5.0) (&& (== netcoreapp2.1) (>= netcoreapp3.0)) (== netcoreapp3.1) (&& (== netstandard2.0) (>= netcoreapp3.0))
   remote: https://nuget.pkg.github.com/dotnet-websharper/index.json
-    WebSharper (6.0.0.143)
-      FSharp.Core (>= 6.0.1)
+    WebSharper (6.0.0.159)
+      FSharp.Core (>= 6.0.3)
       Microsoft.AspNetCore.Mvc.Abstractions (>= 2.0)
       System.Configuration.ConfigurationManager (>= 4.7)
       System.Reflection.Emit.Lightweight (>= 4.7)
-    WebSharper.FSharp (6.0.0.143)
-      WebSharper (6.0.0.143)
+    WebSharper.FSharp (6.0.0.159)
+      WebSharper (6.0.0.159)
 
 GROUP testing
 STORAGE: NONE
@@ -66,7 +66,7 @@ STRATEGY: MIN
 RESTRICTION: || (== net5.0) (== netcoreapp2.1) (== netcoreapp3.1) (== netstandard2.0)
 NUGET
   remote: https://api.nuget.org/v3/index.json
-    FSharp.Core (6.0.1)
+    FSharp.Core (6.0.3)
     Microsoft.AspNetCore.Http.Abstractions (2.0)
       Microsoft.AspNetCore.Http.Features (>= 2.0)
       System.Text.Encodings.Web (>= 4.4)
@@ -115,16 +115,16 @@ NUGET
     System.Windows.Extensions (4.7) - restriction: || (== net5.0) (&& (== netcoreapp2.1) (>= netcoreapp3.0)) (== netcoreapp3.1) (&& (== netstandard2.0) (>= netcoreapp3.0))
       System.Drawing.Common (>= 4.7) - restriction: || (== net5.0) (&& (== netcoreapp2.1) (>= netcoreapp3.0)) (== netcoreapp3.1) (&& (== netstandard2.0) (>= netcoreapp3.0))
   remote: https://nuget.pkg.github.com/dotnet-websharper/index.json
-    WebSharper (6.0.0.143)
-      FSharp.Core (>= 6.0.1)
+    WebSharper (6.0.0.159)
+      FSharp.Core (>= 6.0.3)
       Microsoft.AspNetCore.Mvc.Abstractions (>= 2.0)
       System.Configuration.ConfigurationManager (>= 4.7)
       System.Reflection.Emit.Lightweight (>= 4.7)
-    WebSharper.FSharp (6.0.0.143)
-      WebSharper (6.0.0.143)
+    WebSharper.FSharp (6.0.0.159)
+      WebSharper (6.0.0.159)
 
 GROUP wsbuild
 
 GIT
   remote: https://github.com/dotnet-websharper/build-script
-     (3f1320b6f18c663fd395803eb79409ad102231ac)
+     (f028af07cf019553ae078fef9afc3706aa16c98c)
