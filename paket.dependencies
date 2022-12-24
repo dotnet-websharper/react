@@ -10,6 +10,8 @@ strategy: min
 nuget WebSharper prerelease
 nuget WebSharper.FSharp prerelease
 
+nuget WebSharper.Elmish
+nuget Elmish
 
 group wsbuild
     git https://github.com/dotnet-websharper/build-script websharper50

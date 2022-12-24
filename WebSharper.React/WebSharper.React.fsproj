@@ -6,6 +6,8 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="File2.fs" />
+    <Compile Include="File1.fs" />
     <Compile Include="React.fs" />
     <Compile Include="Html.fs" />
   </ItemGroup>
