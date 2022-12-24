@@ -22,6 +22,7 @@ namespace WebSharper.React.Bindings.Tests
 open WebSharper
 open WebSharper.JavaScript
 open WebSharper.React.Bindings
+open WebSharper.React.ReactDOM.Bindings
 
 [<JavaScript>]
 module Client =

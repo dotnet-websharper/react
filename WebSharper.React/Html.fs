@@ -1758,3 +1758,4 @@ module Html =
 
         [<Inline>]
         let toggle (f: SyntheticEvent -> unit) = "onToggle" => f
+

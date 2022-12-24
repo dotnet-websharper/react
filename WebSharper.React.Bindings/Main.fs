@@ -63,8 +63,24 @@ module Definition =
                 "componentStack" =? T<string>
             ]
 
+        // NEW
+
         let Element =
             Class "React.Element"
+
+        let ElementType =
+            Class "React.ElementType"
+
+        let ElementTypeGen =
+            Generic - fun props ->
+                Class "React.ElementType"
+
+        let ISSRContext =
+            Generic - fun t ->
+                Class "React.ISSRContext"
+                |+> Instance [
+                    "DefaultValue" =@ t
+                ]
 
         let ComponentT =
             Generic -- fun props state ->
@@ -121,10 +137,11 @@ module Definition =
             |=> Inherits Element
 
         let Ref =
-            Class "React.Ref"
-            |+> Instance [
-                "current" =? Element
-            ]
+            Generic - fun t ->
+                Class "React.Ref"
+                |+> Instance [
+                    "current" =? t
+                ]
 
         let Class_ =
             Class "React.Class"
@@ -158,15 +175,23 @@ module Definition =
 
         let Class = Class_
 
+    let ReactRoot =
+        Class "ReactRoot"
+        |> Requires [Res.ReactDOM]
+        |+> Instance [
+            "render" => React.Element?render ^-> T<unit>
+            "unmount" => T<unit> ^-> T<unit>
+        ]
+
     let ReactDOM =
         Class "ReactDOM"
         |> Requires [Res.ReactDOM]
         |+> Static [
-            "render" => React.Element * T<Dom.Element> * !?(T<unit> ^-> T<unit>) ^-> React.Ref
-            "hydrate" => React.Element * T<Dom.Element> * !?(T<unit> ^-> T<unit>) ^-> React.Ref
+            "render" => React.Element * T<Dom.Element> * !?(T<unit> ^-> T<unit>) ^-> T<unit>
+            "hydrate" => React.Element * T<Dom.Element> * !?(T<unit> ^-> T<unit>) ^-> T<unit>
             "unmountComponentAtNode" => T<Dom.Element> ^-> T<bool>
-            "findDOMNode" => React.Element ^-> T<Dom.Element> |> Obsolete
             "createPortal" => React.Element * T<Dom.Element> ^-> React.Element
+            "flushSync" => (T<unit> ^-> T<unit>)?callback ^-> T<unit>
         ]
 
     let ReactDOMServer =
@@ -175,10 +200,29 @@ module Definition =
         |+> Static [
             "renderToString" => React.Element ^-> T<string>
             "renderToStaticMarkup" => React.Element ^-> T<string>
-            "renderToNodeStream" => React.Element ^-> (T<obj> ^-> T<string>)
-            |> WithWarning "Server-only. This API is not available in the browser."
-            "renderToStaticNodeStream" => React.Element ^-> (T<obj> ^-> T<string>)
-            |> WithWarning "Server-only. This API is not available in the browser."
+        ]
+
+    let RootOptions =
+        Class "RootOptions"
+        |+> Instance [
+            "onRecoverableError" =@ T<obj -> unit>
+            "identifierPrefix" =@ T<string>
+        ]
+
+    let CreateRootOptions =
+        Class "CreateRootOptions"
+        |=> Inherits RootOptions
+
+    let HydrateRootOptions =
+        Class "HydrateRootOptions"
+        |=> Inherits RootOptions
+
+    let ReactDOMClient =
+        AbstractClass "ReactDomClient"
+        |> Requires [Res.ReactDOM]
+        |+> Static [
+            "createRoot" => T<Dom.Element>?container * !?CreateRootOptions?options ^-> ReactRoot
+            "hydrateRoot" => T<Dom.Element>?container * React.Element?element * !?HydrateRootOptions?options ^-> ReactRoot
         ]
 
     let ReactTestUtils =
@@ -236,6 +280,9 @@ module Definition =
             React.Children
             React.Class
             React.Element
+            React.ElementType
+            React.ElementTypeGen
+            React.ISSRContext
             React.ComponentT
             React.Consumer
             React.Context
@@ -250,35 +297,39 @@ module Definition =
                 * T<obj>?props
                 *+T<obj>
                 ^-> React.Element
+            //"cloneElement"
+            //    => React.Element?element
+            //    * T<obj>?props
+            //    *+T<obj>
+            //    ^-> React.Element
+            //Generic - fun t ->
+            //    "createFactory"
+            //        => React.Consumer.[t]
+            //            * T<obj>?props
+            //            * (t ^-> React.Element)
+            //            ^-> React.Element
+            //"isValidElement" => T<obj> ^-> T<bool>
+
+
+            Generic -- fun props state ->
+                "createClass" => React.CreateClassArgs.[props, state] ^-> React.Class
+                |> WithInline "$global.createReactClass($0)"
+            Generic -- fun props t -> "forwardRef" => (props * !?React.Ref.[t] ^-> React.Element)?render ^-> React.ElementTypeGen.[props]
+            Generic - fun props -> "memo" => (props ^-> React.Element)?render * (props * props ^-> T<bool>)?areEqual ^-> React.ElementTypeGen.[props]
+            Generic - fun t -> "createRef" => t ^-> React.Ref.[t]
+            "createElement" => T<obj>?comp * T<obj>?props *+ React.Element ^-> React.Element
             Generic - fun t ->
                 "createElement"
                     => React.Consumer.[t]
                     * T<obj>?props
                     * (t ^-> React.Element)
                     ^-> React.Element
-            "cloneElement"
-                => React.Element?element
-                * T<obj>?props
-                *+T<obj>
-                ^-> React.Element
-            Generic - fun t ->
-                "createFactory"
-                    => React.Consumer.[t]
-                        * T<obj>?props
-                        * (t ^-> React.Element)
-                        ^-> React.Element
-            Generic -- fun props state ->
-                "createClass" => React.CreateClassArgs.[props, state] ^-> React.Class
-                |> WithInline "$global.createReactClass($0)"
-            "isValidElement" => T<obj> ^-> T<bool>
-            "createRef" => T<unit> ^-> React.Ref
-            Generic - fun props ->
-                "forwardRef" => (props * React.Ref ^-> React.Element) ^-> React.Element
-            "Fragment" =? React.Class
-            Generic - fun t ->
-                "createContext" => t ^-> React.Context.[t]
+            Generic - fun t -> "createContext" => t ^-> React.Context.[t]
+            "Fragment" =? React.ElementTypeGen.[T<obj>]
+            "Suspense" =? React.ElementTypeGen.[T<obj>]
             "Lazy" => T<unit> ^-> React.Element
-
+            "startTransition" => T<unit -> unit>?callback ^-> T<unit>
+            "version" =? T<string>
         ]
 
     let SyntheticEvent =
@@ -450,12 +501,33 @@ module Definition =
             "elapsedTime" =? T<float>
         ]
 
+    let IProp =
+        Interface "IProp"
+
+    let IHTMLProp =
+        Interface "IHTMLProp"
+        |=> Extends [IProp]
+
+    let IFragmentProp =
+        Interface "IFragmentProp"
+        |=> Extends [IProp]
+
     let Assembly =
         Assembly [
-            Namespace "WebSharper.React.Bindings" [
-                 React
+            Namespace "WebSharper.React.ReactDOM.Bindings" [
                  ReactDOM
                  ReactDOMServer
+                 ReactDOMClient
+                 ReactRoot
+                 RootOptions
+                 CreateRootOptions
+                 HydrateRootOptions
+            ]
+            Namespace "WebSharper.React.Bindings" [
+                 IProp
+                 IHTMLProp
+                 IFragmentProp
+                 React
                  SyntheticEvent
                  ClipboardEvent
                  CompositionEvent

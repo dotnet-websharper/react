@@ -24,6 +24,7 @@ open WebSharper.JavaScript
 open WebSharper.Sitelets
 open WebSharper.Sitelets.InferRouter
 open WebSharper.React.Bindings
+open WebSharper.React.ReactDOM.Bindings
 type private R = WebSharper.React.Bindings.React
 type private SRouter<'Endpoint when 'Endpoint : equality> = WebSharper.Sitelets.Router<'Endpoint>
 module SRouter = WebSharper.Sitelets.Router
