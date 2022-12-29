@@ -103,13 +103,13 @@ module Macros =
 
     let callElt elt props children =
         match children with
-        | I.NewArray _ ->
+        | I.NewTuple _ ->
             Call(None, NonGeneric tReact, NonGeneric mCreateElement, [elt; props; children])
         | _ ->
             Call(None, NonGeneric tReactModule, NonGeneric mElt, [elt; props; children])
     let callNew arg = Call(None, NonGeneric tPervasives, NonGeneric mNew, [arg])
     let callNewOrNull = function
-        | I.NewArray [] -> !~Null
+        | I.NewTuple ([], _) -> !~Null
         | arg -> callNew arg
 
     type Make() =
@@ -132,7 +132,11 @@ module Macros =
                 match call.Compilation.GetClassInfo(ty.Entity) with
                 | Some x ->
                     match x.Constructors.[ctor] with
-                    | M.Constructor addr ->
+                    | M.New name ->                        
+                        let addr =
+                            match name with
+                            | Some n -> x.Address.Sub(n)
+                            | _ -> x.Address
                         let call = callWithReplacedArg (GlobalAccess addr)
                         MacroDependencies ([M.ConstructorNode(ty.Entity, ctor)], MacroOk call)
                     | _ -> this.Fallback call
@@ -145,13 +149,13 @@ module Macros =
             match call.Arguments.[ix] with
             | I.Call(None, ty, meth, [comp]) when ty.Entity = tPervasives && meth.Entity = mAs ->
                 callWithReplacedArg comp |> MacroOk
-            | I.Function ([], I.Return (I.Ctor(ty, ctor, []))) ->
+            | I.Function ([], _, _, I.Return (I.Ctor(ty, ctor, []))) ->
                 dotnetCtor ty ctor
-            | I.Function ([props], I.Return (I.Ctor(ty, ctor, [I.Var props']))) when props = props' ->
+            | I.Function ([props], _, _, I.Return (I.Ctor(ty, ctor, [I.Var props']))) when props = props' ->
                 dotnetCtor ty ctor
-            | I.Function ([], I.Return (I.New (ctor, []))) ->
+            | I.Function ([], _, _, I.Return (I.New (ctor, [], []))) ->
                 jsCtor ctor
-            | I.Function ([props], I.Return (I.New (ctor, [I.Var props']))) when props = props' ->
+            | I.Function ([props], _, _, I.Return (I.New (ctor, [], [I.Var props']))) when props = props' ->
                 jsCtor ctor
             | _ ->
                 this.Fallback call
