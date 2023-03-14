@@ -131,7 +131,7 @@ module Macros =
             let dotnetCtor (ty: Concrete<TypeDefinition>) (ctor: Constructor) =
                 match call.Compilation.GetClassInfo(ty.Entity) with
                 | Some x ->
-                    match x.Constructors.[ctor] with
+                    match x.Constructors.[ctor].CompiledForm with
                     | M.New name ->                        
                         let addr =
                             match name with
