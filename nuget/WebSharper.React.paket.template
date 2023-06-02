@@ -14,6 +14,7 @@ tags
 files
     ../WebSharper.React.Bindings/bin/Release/netstandard2.0/WebSharper.React.Bindings.dll ==> lib/netstandard2.0
     ../WebSharper.React.Bindings/bin/Release/netstandard2.0/WebSharper.React.Bindings.xml ==> lib/netstandard2.0
+    ../WebSharper.React.Bindings/WebSharper.React.Bindings.fsproj ==> src/
     ../WebSharper.React/bin/Release/netstandard2.0/WebSharper.React.dll ==> lib/netstandard2.0
     ../WebSharper.React/bin/Release/netstandard2.0/WebSharper.React.xml ==> lib/netstandard2.0
 dependencies

@@ -25,28 +25,24 @@ open WebSharper.InterfaceGenerator
 
 module Res =
 
-    let React =
-        Resource "React" "https://unpkg.com/react@17/umd/react.production.min.js"
-        
-    let ReactDOM =
-        Resource "ReactDOM" "https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"
-        |> Requires [React]
+    let ImportReactDomClient (ent: #CodeModel.Entity) =
+        Import ent.Name "react-dom/client" ent
 
-    let ReactDOMServer =
-        Resource "ReactDOMServer" "https://unpkg.com/react-dom@17.0.2/umd/react-dom-server.browser.production.min.js"
-        |> Requires [ReactDOM]
+    let ImportReactDomServer (ent: #CodeModel.Entity) =
+        Import ent.Name "react-dom/server" ent
 
-    let ReactTestUtils =
-        Resource "ReactTestUtils" "https://unpkg.com/react-dom@17.0.2/umd/react-dom-test-utils.production.min.js"
-        |> Requires [ReactDOM]
+    let ImportReactDom (ent: #CodeModel.Entity) =
+        Import ent.Name "react-dom" ent
 
-    let TestRenderer =
-        Resource "TestRenderer" "https://unpkg.com/react-test-renderer@17.0.2/umd/react-test-renderer.development.js"
-        |> Requires [React]
+    let ImportReactSubType (ent: #CodeModel.Entity) =
+        let name = ent.Name.Replace("React.", "")
+        Import name "react" ent
 
-    let CreateReactClass =
-        Resource "CreateReactClass" "https://unpkg.com/create-react-class@15.7.0/create-react-class.min.js"
-        |> Requires [React]
+    let ImportReact (ent: #CodeModel.Entity) =
+        Import ent.Name "react" ent
+
+    let ImportDefaultReact (ent: #CodeModel.Entity) =
+        ImportDefault "react" ent
 
 module Definition =
 
@@ -59,6 +55,7 @@ module Definition =
 
         let ErrorInfo =
             Class "React.ErrorInfo"
+            |> Res.ImportReactSubType
             |+> Instance [
                 "componentStack" =? T<string>
             ]
@@ -82,9 +79,12 @@ module Definition =
                     "DefaultValue" =@ t
                 ]
 
+        // import React from "react"
+
         let ComponentT =
             Generic -- fun props state ->
             AbstractClass "React.Component"
+            |> Res.ImportReactSubType
             |+> Static [
                 Constructor props
                 "defaultProps" =? props
@@ -124,6 +124,7 @@ module Definition =
 
         let Children =
             Children_
+            |> Res.ImportReactSubType
             |+> Static [
                 Generic - fun t -> "map" => TSelf * (Element ^-> t) ^-> Type.ArrayOf t
                 "forEach" => TSelf * (Element ^-> T<unit>) ^-> T<unit>
@@ -159,25 +160,10 @@ module Definition =
                 "Provider" =? Class_
             ]
 
-        let CreateClassArgs =
-            Generic -- fun props state ->
-            Class "React.CreateClassArgs"
-            |> Requires [Res.CreateReactClass]
-            |+> Static [
-                Constructor (ComponentT.[props, state] ^-> Element)?Render
-                |> WithInline "{render:$wsruntime.CreateFuncWithOnlyThis($Render)}"
-            ]
-            |+> Instance [
-                "getDefaultProps" =! T<unit> ^-> props
-                "getInitialState" =! ComponentT.[props, state]?this ^-> state
-                |> WithSetterInline "$0.getInitialState = $wsruntime.CreateFuncWithOnlyThis($1)"
-            ]
-
         let Class = Class_
 
     let ReactRoot =
         Class "ReactRoot"
-        |> Requires [Res.ReactDOM]
         |+> Instance [
             "render" => React.Element?render ^-> T<unit>
             "unmount" => T<unit> ^-> T<unit>
@@ -185,21 +171,47 @@ module Definition =
 
     let ReactDOM =
         Class "ReactDOM"
-        |> Requires [Res.ReactDOM]
         |+> Static [
             "render" => React.Element * T<Dom.Element> * !?(T<unit> ^-> T<unit>) ^-> T<unit>
+            |> ObsoleteWithMessage "In React 18, render was replaced with createRoot"
+            |> Res.ImportReactDom
             "hydrate" => React.Element * T<Dom.Element> * !?(T<unit> ^-> T<unit>) ^-> T<unit>
+            |> ObsoleteWithMessage "In React 18, hydrate was replaced with hydrateRoot"
+            |> Res.ImportReactDom
             "unmountComponentAtNode" => T<Dom.Element> ^-> T<bool>
-            "createPortal" => React.Element * T<Dom.Element> ^-> React.Element
+            |> ObsoleteWithMessage "In React 18, unmountComponentAtNode was replaced with root.unmount()"
+            |> Res.ImportReactDom
+            "createPortal" => React.Element * T<Dom.Element> * !?T<string> ^-> React.Element
+            |> Res.ImportReactDom
             "flushSync" => (T<unit> ^-> T<unit>)?callback ^-> T<unit>
+            |> Res.ImportReactDom
         ]
+
+    let ReadableStreamOptions =
+        Pattern.Config "ReadableStreamOptions"
+            {
+                Required = []
+                Optional = [
+                    "bootstrapScriptContent", T<string>
+                    "bootstrapScripts", T<string []>
+                    "bootstrapModules", T<string []>
+                    "identifierPrefix", T<string>
+                    "namespaceURI", T<string>
+                    "nonce", T<string>
+                    "onError", T<obj -> unit>
+                    "progressiveChunkSize", T<int>
+                    //"signal"
+                ]
+            }
 
     let ReactDOMServer =
         Class "ReactDOMServer"
-        |> Requires [Res.ReactDOMServer]
         |+> Static [
             "renderToString" => React.Element ^-> T<string>
+            |> Res.ImportReactDomServer
             "renderToStaticMarkup" => React.Element ^-> T<string>
+            |> Res.ImportReactDomServer
+            "renderToReadableStream" => React.Element * !?ReadableStreamOptions.Type ^-> T<WebSharper.JavaScript.ReadableStream>
         ]
 
     let RootOptions =
@@ -219,63 +231,16 @@ module Definition =
 
     let ReactDOMClient =
         AbstractClass "ReactDomClient"
-        |> Requires [Res.ReactDOM]
         |+> Static [
             "createRoot" => T<Dom.Element>?container * !?CreateRootOptions?options ^-> ReactRoot
+            |> Res.ImportReactDomClient
             "hydrateRoot" => T<Dom.Element>?container * React.Element?element * !?HydrateRootOptions?options ^-> ReactRoot
-        ]
-
-    let ReactTestUtils =
-        Class "ReactTestUtils"
-        |> Requires [Res.ReactTestUtils]
-        |+> Static [
-            "act"=> T<unit> ^-> React.ComponentT ^-> T<unit>
-            "mockComponent" => React.ComponentT * !? T<string> ^-> T<unit>
-            "isElement" => React.Element ^-> T<bool>
-            "isElementOfType" => React.Element ^-> T<obj> ^-> T<bool>
-            "isDOMComponent" => T<obj> ^-> T<bool>
-            "isCompositeComponent" => T<obj> ^-> T<bool>
-            "isCompositeComponentWithType" => T<obj> ^-> T<obj> ^-> T<bool>
-            "findAllInRenderedTree" => T<obj> ^-> (React.ComponentT ^-> T<bool>) ^-> !| React.ComponentT
-            "scryRenderedDOMComponentsWithClass" => T<obj> ^-> T<string> ^-> !| T<Dom.Element>
-            "findRenderedDOMComponentsWithClass" => T<obj> ^-> T<string> ^-> T<Dom.Element> + T<Error>
-            "scryRenderedDOMComponentsWithTag" => T<obj> ^-> T<string> ^-> !| T<Dom.Element>
-            "findRenderedDOMComponentsWithTag" => T<obj> ^-> T<string> ^-> T<Dom.Element> + T<Error>
-            "scryRenderedDOMComponentsWithType" => T<obj> ^-> T<obj> ^-> !| T<Dom.Element>
-            "findRenderedDOMComponentsWithType" => T<obj> ^-> T<obj> ^-> T<Dom.Element> + T<Error>
-            "renderIntoDocument" => T<Dom.Element> ^-> T<unit>
-            "Simulate" => T<string> ^-> React.Element ^-> !? T<obj> ^-> T<unit>
-            |> WithInline "Simulate.$0($1, $2)"
-        ]
-
-    let rec TestRenderer =
-        Class "TestRenderer"
-        |> Requires [Res.TestRenderer]
-        |+> Static [
-            "create" => React.Element  ^-> TSelf
-            "act" => T<unit> ^-> React.ComponentT ^-> T<unit>
-            "toJSON" => T<unit> ^-> T<obj>
-            "toTree" => T<unit> ^-> T<obj>
-            "update" => React.Element ^-> T<unit>
-            "unmount" => T<unit> ^-> T<unit>
-            "getInstance" => T<unit> ^-> React.Element
-            "root" => T<obj>
-            "find" => (React.Element ^-> T<bool>) ^-> T<bool> + T<Error>
-            "findByType" => T<obj> ^-> React.Element + T<Error>
-            "findByProps" => T<obj> ^-> React.Element + T<Error>
-            "findAll" => (React.Element ^-> T<bool>) ^-> (!| React.Element)
-            "findAllByType" => T<obj> ^-> (!| React.Element)
-            "findAllByProps" => T<obj> ^-> (!| React.Element)
-            "instance" => React.ComponentT
-            "type" => T<obj>
-            "props" => T<obj>
-            "parent" => React.ComponentT
-            "children" => !| React.ComponentT
+            |> Res.ImportReactDomClient
         ]
 
     let React =
         Class "React"
-        |> Requires [Res.React]
+        |> Res.ImportDefaultReact
         |=> Nested [
             React.Children
             React.Class
@@ -286,7 +251,6 @@ module Definition =
             React.ComponentT
             React.Consumer
             React.Context
-            React.CreateClassArgs
             React.ErrorInfo
             React.Fragment
             React.Ref
@@ -297,39 +261,67 @@ module Definition =
                 * T<obj>?props
                 *+T<obj>
                 ^-> React.Element
-            //"cloneElement"
-            //    => React.Element?element
-            //    * T<obj>?props
-            //    *+T<obj>
-            //    ^-> React.Element
-            //Generic - fun t ->
-            //    "createFactory"
-            //        => React.Consumer.[t]
-            //            * T<obj>?props
-            //            * (t ^-> React.Element)
-            //            ^-> React.Element
-            //"isValidElement" => T<obj> ^-> T<bool>
-
-
-            Generic -- fun props state ->
-                "createClass" => React.CreateClassArgs.[props, state] ^-> React.Class
-                |> WithInline "$global.createReactClass($0)"
-            Generic -- fun props t -> "forwardRef" => (props * !?React.Ref.[t] ^-> React.Element)?render ^-> React.ElementTypeGen.[props]
-            Generic - fun props -> "memo" => (props ^-> React.Element)?render * (props * props ^-> T<bool>)?areEqual ^-> React.ElementTypeGen.[props]
-            Generic - fun t -> "createRef" => t ^-> React.Ref.[t]
-            "createElement" => T<obj>?comp * T<obj>?props *+ React.Element ^-> React.Element
+                |> Res.ImportReact
+            "createElement" => T<obj>?comp * T<obj>?props *+ React.Element ^-> React.Element |> Res.ImportReact
+            "isValidElement" => T<obj> ^-> T<bool> |> Res.ImportReact
             Generic - fun t ->
                 "createElement"
                     => React.Consumer.[t]
                     * T<obj>?props
                     * (t ^-> React.Element)
-                    ^-> React.Element
-            Generic - fun t -> "createContext" => t ^-> React.Context.[t]
-            "Fragment" =? React.ElementTypeGen.[T<obj>]
-            "Suspense" =? React.ElementTypeGen.[T<obj>]
-            "Lazy" => T<unit> ^-> React.Element
+                    ^-> React.Element |> Res.ImportReact
+            "version" =? T<string> |> Res.ImportReact
+            Generic - fun t -> "createRef" => t ^-> React.Ref.[t] |> Res.ImportReact
+
+            Generic - fun t -> "createContext" => t ^-> React.Context.[t] |> Res.ImportReact
+            Generic -- fun props t -> "forwardRef" => (props * !?React.Ref.[t] ^-> React.Element)?render ^-> React.ElementTypeGen.[props] |> Res.ImportReact
+            Generic - fun props -> "memo" => (props ^-> React.Element)?render * (props * props ^-> T<bool>)?areEqual ^-> React.ElementTypeGen.[props] |> Res.ImportReact
             "startTransition" => T<unit -> unit>?callback ^-> T<unit>
-            "version" =? T<string>
+            |> Res.ImportReact
+
+            //hooks
+            Generic - fun state ->
+                "useState" => state ^-> state * (state ^-> T<unit>)
+                |> Res.ImportReact
+            Generic - fun t ->
+                "useContext" => React.Context.[t] ^-> t
+                |> Res.ImportReact
+            Generic - fun t ->
+                "useCallback" => (t ^-> T<unit>) * !|T<obj> ^-> (t ^-> T<unit>)
+                |> Res.ImportReact
+            Generic - fun t ->
+                "useDebugValue" => t * !? (t ^-> T<string>) ^-> T<unit>
+                |> Res.ImportReact
+            Generic - fun t ->
+                "useDeferredValue" => t ^-> t
+                |> Res.ImportReact
+            "useEffect" => (T<unit> ^-> T<unit>) * !|T<obj> ^-> (T<unit> ^-> T<unit>)
+            |> Res.ImportReact
+            "useId" => T<unit> ^-> T<string>
+            |> Res.ImportReact
+            Generic -- fun t u ->
+                "useImperativeHandle" => React.Ref.[t] * (T<unit> ^-> React.Ref.[u]) * !|T<obj> |> Res.ImportReact
+            "useInsertionEffect" => (T<unit> ^-> T<unit>) * !|T<obj> ^-> (T<unit> ^-> T<unit>) |> Res.ImportReact
+            "useLayoutEffect" => (T<unit> ^-> T<unit>) * !|T<obj> ^-> (T<unit> ^-> T<unit>) |> Res.ImportReact
+            Generic - fun t ->
+                "useMemo" => (T<unit> ^-> t) * !|T<obj> ^-> t |> Res.ImportReact
+            Generic -- fun t u ->
+                "useReducer" => (t * u ^-> t) * t * !?(t ^-> t) ^-> t * (u ^-> T<unit>) |> Res.ImportReact
+            Generic - fun ref ->
+                "useRef" => ref ^-> React.Ref.[ref]
+                |> Res.ImportReact
+            "useTransition" => T<unit> ^-> T<bool> * T<unit -> unit> |> Res.ImportReact
+            Generic -- fun t u ->
+                "useSyncExternalStore" => (u ^-> (T<unit> ^-> u)) * (T<unit> ^-> t) ^-> t
+                |> WithComment "If your app is fully built with react, we recommend using React state instead"
+                |> Res.ImportReact
+
+            "Fragment" =? React.ElementTypeGen.[T<obj>]
+            |> Res.ImportReact
+            "Suspense" =? React.ElementTypeGen.[T<obj>]
+            |> Res.ImportReact
+            "Lazy" => T<unit> ^-> React.Element
+            |> Res.ImportReact
         ]
 
     let SyntheticEvent =
@@ -522,6 +514,7 @@ module Definition =
                  RootOptions
                  CreateRootOptions
                  HydrateRootOptions
+                 ReadableStreamOptions
             ]
             Namespace "WebSharper.React.Bindings" [
                  IProp
@@ -545,14 +538,6 @@ module Definition =
                  SelectionEvent
                  MediaEvent
                  ImageEvent
-            ]
-            Namespace "WebSharper.React.Bindings.Resources" [
-                Res.React
-                Res.ReactDOM
-                Res.ReactDOMServer
-                Res.ReactTestUtils
-                Res.TestRenderer
-                Res.CreateReactClass
             ]
         ]
 
