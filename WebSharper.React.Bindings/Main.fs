@@ -44,18 +44,6 @@ module Res =
     let ImportDefaultReact (ent: #CodeModel.Entity) =
         ImportDefault "react" ent
 
-    //let ReactTestUtils =
-    //    Resource "ReactTestUtils" "https://unpkg.com/react-dom@17.0.2/umd/react-dom-test-utils.production.min.js"
-    //    //|> Requires [ReactDOM]
-
-    //let TestRenderer =
-    //    Resource "TestRenderer" "https://unpkg.com/react-test-renderer@17.0.2/umd/react-test-renderer.development.js"
-    //    //|> Requires [React]
-
-    //let CreateReactClass =
-    //    Resource "CreateReactClass" "https://unpkg.com/create-react-class@15.7.0/create-react-class.min.js"
-    //    //|> Requires [React]
-
 module Definition =
 
     module React =
@@ -172,20 +160,6 @@ module Definition =
                 "Provider" =? Class_
             ]
 
-        //let CreateClassArgs =
-        //    Generic -- fun props state ->
-        //    Class "React.CreateClassArgs"
-        //    |> Requires [Res.CreateReactClass]
-        //    |+> Static [
-        //        Constructor (ComponentT.[props, state] ^-> Element)?Render
-        //        |> WithInline "{render:$wsruntime.CreateFuncWithOnlyThis($Render)}"
-        //    ]
-        //    |+> Instance [
-        //        "getDefaultProps" =! T<unit> ^-> props
-        //        "getInitialState" =! ComponentT.[props, state]?this ^-> state
-        //        |> WithSetterInline "$0.getInitialState = $wsruntime.CreateFuncWithOnlyThis($1)"
-        //    ]
-
         let Class = Class_
 
     let ReactRoot =
@@ -264,54 +238,6 @@ module Definition =
             |> Res.ImportReactDomClient
         ]
 
-    //let ReactTestUtils =
-    //    Class "ReactTestUtils"
-    //    |> Requires [Res.ReactTestUtils]
-    //    |+> Static [
-    //        "act"=> T<unit> ^-> React.ComponentT ^-> T<unit>
-    //        "mockComponent" => React.ComponentT * !? T<string> ^-> T<unit>
-    //        "isElement" => React.Element ^-> T<bool>
-    //        "isElementOfType" => React.Element ^-> T<obj> ^-> T<bool>
-    //        "isDOMComponent" => T<obj> ^-> T<bool>
-    //        "isCompositeComponent" => T<obj> ^-> T<bool>
-    //        "isCompositeComponentWithType" => T<obj> ^-> T<obj> ^-> T<bool>
-    //        "findAllInRenderedTree" => T<obj> ^-> (React.ComponentT ^-> T<bool>) ^-> !| React.ComponentT
-    //        "scryRenderedDOMComponentsWithClass" => T<obj> ^-> T<string> ^-> !| T<Dom.Element>
-    //        "findRenderedDOMComponentsWithClass" => T<obj> ^-> T<string> ^-> T<Dom.Element> + T<Error>
-    //        "scryRenderedDOMComponentsWithTag" => T<obj> ^-> T<string> ^-> !| T<Dom.Element>
-    //        "findRenderedDOMComponentsWithTag" => T<obj> ^-> T<string> ^-> T<Dom.Element> + T<Error>
-    //        "scryRenderedDOMComponentsWithType" => T<obj> ^-> T<obj> ^-> !| T<Dom.Element>
-    //        "findRenderedDOMComponentsWithType" => T<obj> ^-> T<obj> ^-> T<Dom.Element> + T<Error>
-    //        "renderIntoDocument" => T<Dom.Element> ^-> T<unit>
-    //        "Simulate" => T<string> ^-> React.Element ^-> !? T<obj> ^-> T<unit>
-    //        |> WithInline "Simulate.$0($1, $2)"
-    //    ]
-
-    //let rec TestRenderer =
-    //    Class "TestRenderer"
-    //    |> Requires [Res.TestRenderer]
-    //    |+> Static [
-    //        "create" => React.Element  ^-> TSelf
-    //        "act" => T<unit> ^-> React.ComponentT ^-> T<unit>
-    //        "toJSON" => T<unit> ^-> T<obj>
-    //        "toTree" => T<unit> ^-> T<obj>
-    //        "update" => React.Element ^-> T<unit>
-    //        "unmount" => T<unit> ^-> T<unit>
-    //        "getInstance" => T<unit> ^-> React.Element
-    //        "root" => T<obj>
-    //        "find" => (React.Element ^-> T<bool>) ^-> T<bool> + T<Error>
-    //        "findByType" => T<obj> ^-> React.Element + T<Error>
-    //        "findByProps" => T<obj> ^-> React.Element + T<Error>
-    //        "findAll" => (React.Element ^-> T<bool>) ^-> (!| React.Element)
-    //        "findAllByType" => T<obj> ^-> (!| React.Element)
-    //        "findAllByProps" => T<obj> ^-> (!| React.Element)
-    //        "instance" => React.ComponentT
-    //        "type" => T<obj>
-    //        "props" => T<obj>
-    //        "parent" => React.ComponentT
-    //        "children" => !| React.ComponentT
-    //    ]
-
     let React =
         Class "React"
         |> Res.ImportDefaultReact
@@ -325,7 +251,6 @@ module Definition =
             React.ComponentT
             React.Consumer
             React.Context
-            //React.CreateClassArgs
             React.ErrorInfo
             React.Fragment
             React.Ref
@@ -337,22 +262,6 @@ module Definition =
                 *+T<obj>
                 ^-> React.Element
                 |> Res.ImportReact
-            //"cloneElement"
-            //    => React.Element?element
-            //    * T<obj>?props
-            //    *+T<obj>
-            //    ^-> React.Element
-            //Generic - fun t ->
-            //    "createFactory"
-            //        => React.Consumer.[t]
-            //            * T<obj>?props
-            //            * (t ^-> React.Element)
-            //            ^-> React.Element
-            //"isValidElement" => T<obj> ^-> T<bool>
-
-            //Generic -- fun props state ->
-            //    "createClass" => React.CreateClassArgs.[props, state] ^-> React.Class
-            //    |> WithInline "$global.createReactClass($0)"
             "createElement" => T<obj>?comp * T<obj>?props *+ React.Element ^-> React.Element |> Res.ImportReact
             "isValidElement" => T<obj> ^-> T<bool> |> Res.ImportReact
             Generic - fun t ->
@@ -630,9 +539,6 @@ module Definition =
                  MediaEvent
                  ImageEvent
             ]
-            //Namespace "WebSharper.React.Bindings.Resources" [
-            //    Res.CreateReactClass
-            //]
         ]
 
 [<Sealed>]
