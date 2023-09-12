@@ -37,9 +37,20 @@ open Fake.DotNet
 open Fake.IO
 open Fake.IO.FileSystemOperators
 open WebSharper.Fake
+open Fake.DotNet
 
 let targets =
     LazyVersionFrom "WebSharper" |> WSTargets.Default
+    |> fun args ->
+        { args with
+            Attributes =
+                    [
+                        AssemblyInfo.Company "IntelliFactory"
+                        AssemblyInfo.Copyright "(c) IntelliFactory 2023"
+                        AssemblyInfo.Title "https://github.com/dotnet-websharper/react"
+                        AssemblyInfo.Product "WebSharper React"
+                    ]
+        }
     |> MakeTargets
 
 Target.create "AppVeyor" ignore

@@ -8,7 +8,7 @@ repositoryUrl https://github.com/dotnet-websharper/react
 licenseUrl http://github.com/intellifactory/websharper.react/blob/master/LICENSE.md
 iconUrl https://github.com/dotnet-websharper/core/raw/websharper50/tools/WebSharper.png
 description
-    WebSharper bindings and abstractions for React.
+    WebSharper bindings and abstractions for React 18.0+.
 tags
     Web JavaScript F# C#
 files
