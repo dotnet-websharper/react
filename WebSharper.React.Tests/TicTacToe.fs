@@ -144,7 +144,7 @@ module TicTacToe =
 
             div [attr.className "game"] [
                 div [attr.className "game-board"] [
-                    React.Make Board { squares = current.squares; onClick = this.handleClick }
+                    ReactHelpers.Make Board { squares = current.squares; onClick = this.handleClick }
                 ]
                 div [attr.className "game-info"] [
                     div [] [text status]

@@ -1,7 +1,7 @@
 ﻿namespace WebSharper.React
 
-open WebSharper.React.Bindings
-open WebSharper.React.ReactDOM.Bindings
+open WebSharper.React
+open WebSharper.React.ReactDOM
 
 module rec Props =
     

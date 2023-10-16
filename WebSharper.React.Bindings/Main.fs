@@ -506,7 +506,7 @@ module Definition =
 
     let Assembly =
         Assembly [
-            Namespace "WebSharper.React.ReactDOM.Bindings" [
+            Namespace "WebSharper.React.ReactDOM" [
                  ReactDOM
                  ReactDOMServer
                  ReactDOMClient
@@ -516,7 +516,7 @@ module Definition =
                  HydrateRootOptions
                  ReadableStreamOptions
             ]
-            Namespace "WebSharper.React.Bindings" [
+            Namespace "WebSharper.React" [
                  IProp
                  IHTMLProp
                  IFragmentProp
