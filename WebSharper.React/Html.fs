@@ -21,7 +21,7 @@ namespace WebSharper.React
 
 open WebSharper
 open WebSharper.JavaScript
-open WebSharper.React.Bindings
+open WebSharper.React
 
 // This is an auto-generated module providing HTML5 vocabulary.
 // Generated using tags.csv from WebSharper;
@@ -31,422 +31,422 @@ module Html =
 
     /// Create a text node.
     [<Inline>]
-    let text (t: string) = React.Text t
+    let text (t: string) = ReactHelpers.Text t
 
     let textf format = Printf.kprintf text format
 
     // {{ tag normal
     /// Create an HTML element <a> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let a props children = React.Element "a" props children
+    let a props children = ReactHelpers.Elt "a" props children
     
     /// Create an HTML element <abbr> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let abbr props children = React.Element "abbr" props children
+    let abbr props children = ReactHelpers.Elt "abbr" props children
     
     /// Create an HTML element <address> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let address props children = React.Element "address" props children
+    let address props children = ReactHelpers.Elt "address" props children
     
     /// Create an HTML element <area> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let area props children = React.Element "area" props children
+    let area props children = ReactHelpers.Elt "area" props children
     
     /// Create an HTML element <article> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let article props children = React.Element "article" props children
+    let article props children = ReactHelpers.Elt "article" props children
     
     /// Create an HTML element <aside> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let aside props children = React.Element "aside" props children
+    let aside props children = ReactHelpers.Elt "aside" props children
     
     /// Create an HTML element <audio> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let audio props children = React.Element "audio" props children
+    let audio props children = ReactHelpers.Elt "audio" props children
     
     /// Create an HTML element <b> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let b props children = React.Element "b" props children
+    let b props children = ReactHelpers.Elt "b" props children
     
     /// Create an HTML element <base> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let ``base`` props children = React.Element "base" props children
+    let ``base`` props children = ReactHelpers.Elt "base" props children
     
     /// Create an HTML element <bdi> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let bdi props children = React.Element "bdi" props children
+    let bdi props children = ReactHelpers.Elt "bdi" props children
     
     /// Create an HTML element <bdo> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let bdo props children = React.Element "bdo" props children
+    let bdo props children = ReactHelpers.Elt "bdo" props children
     
     /// Create an HTML element <blockquote> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let blockquote props children = React.Element "blockquote" props children
+    let blockquote props children = ReactHelpers.Elt "blockquote" props children
     
     /// Create an HTML element <body> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let body props children = React.Element "body" props children
+    let body props children = ReactHelpers.Elt "body" props children
     
     /// Create an HTML element <br> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let br props children = React.Element "br" props children
+    let br props children = ReactHelpers.Elt "br" props children
     
     /// Create an HTML element <button> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let button props children = React.Element "button" props children
+    let button props children = ReactHelpers.Elt "button" props children
     
     /// Create an HTML element <canvas> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let canvas props children = React.Element "canvas" props children
+    let canvas props children = ReactHelpers.Elt "canvas" props children
     
     /// Create an HTML element <caption> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let caption props children = React.Element "caption" props children
+    let caption props children = ReactHelpers.Elt "caption" props children
     
     /// Create an HTML element <cite> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let cite props children = React.Element "cite" props children
+    let cite props children = ReactHelpers.Elt "cite" props children
     
     /// Create an HTML element <code> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let code props children = React.Element "code" props children
+    let code props children = ReactHelpers.Elt "code" props children
     
     /// Create an HTML element <col> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let col props children = React.Element "col" props children
+    let col props children = ReactHelpers.Elt "col" props children
     
     /// Create an HTML element <colgroup> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let colgroup props children = React.Element "colgroup" props children
+    let colgroup props children = ReactHelpers.Elt "colgroup" props children
     
     /// Create an HTML element <command> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let command props children = React.Element "command" props children
+    let command props children = ReactHelpers.Elt "command" props children
     
     /// Create an HTML element <datalist> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let datalist props children = React.Element "datalist" props children
+    let datalist props children = ReactHelpers.Elt "datalist" props children
     
     /// Create an HTML element <dd> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let dd props children = React.Element "dd" props children
+    let dd props children = ReactHelpers.Elt "dd" props children
     
     /// Create an HTML element <del> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let del props children = React.Element "del" props children
+    let del props children = ReactHelpers.Elt "del" props children
     
     /// Create an HTML element <details> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let details props children = React.Element "details" props children
+    let details props children = ReactHelpers.Elt "details" props children
     
     /// Create an HTML element <dfn> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let dfn props children = React.Element "dfn" props children
+    let dfn props children = ReactHelpers.Elt "dfn" props children
     
     /// Create an HTML element <div> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let div props children = React.Element "div" props children
+    let div props children = ReactHelpers.Elt "div" props children
     
     /// Create an HTML element <dl> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let dl props children = React.Element "dl" props children
+    let dl props children = ReactHelpers.Elt "dl" props children
     
     /// Create an HTML element <dt> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let dt props children = React.Element "dt" props children
+    let dt props children = ReactHelpers.Elt "dt" props children
     
     /// Create an HTML element <em> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let em props children = React.Element "em" props children
+    let em props children = ReactHelpers.Elt "em" props children
     
     /// Create an HTML element <embed> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let embed props children = React.Element "embed" props children
+    let embed props children = ReactHelpers.Elt "embed" props children
     
     /// Create an HTML element <fieldset> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let fieldset props children = React.Element "fieldset" props children
+    let fieldset props children = ReactHelpers.Elt "fieldset" props children
     
     /// Create an HTML element <figcaption> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let figcaption props children = React.Element "figcaption" props children
+    let figcaption props children = ReactHelpers.Elt "figcaption" props children
     
     /// Create an HTML element <figure> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let figure props children = React.Element "figure" props children
+    let figure props children = ReactHelpers.Elt "figure" props children
     
     /// Create an HTML element <footer> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let footer props children = React.Element "footer" props children
+    let footer props children = ReactHelpers.Elt "footer" props children
     
     /// Create an HTML element <form> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let form props children = React.Element "form" props children
+    let form props children = ReactHelpers.Elt "form" props children
     
     /// Create an HTML element <h1> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let h1 props children = React.Element "h1" props children
+    let h1 props children = ReactHelpers.Elt "h1" props children
     
     /// Create an HTML element <h2> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let h2 props children = React.Element "h2" props children
+    let h2 props children = ReactHelpers.Elt "h2" props children
     
     /// Create an HTML element <h3> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let h3 props children = React.Element "h3" props children
+    let h3 props children = ReactHelpers.Elt "h3" props children
     
     /// Create an HTML element <h4> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let h4 props children = React.Element "h4" props children
+    let h4 props children = ReactHelpers.Elt "h4" props children
     
     /// Create an HTML element <h5> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let h5 props children = React.Element "h5" props children
+    let h5 props children = ReactHelpers.Elt "h5" props children
     
     /// Create an HTML element <h6> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let h6 props children = React.Element "h6" props children
+    let h6 props children = ReactHelpers.Elt "h6" props children
     
     /// Create an HTML element <head> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let head props children = React.Element "head" props children
+    let head props children = ReactHelpers.Elt "head" props children
     
     /// Create an HTML element <header> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let header props children = React.Element "header" props children
+    let header props children = ReactHelpers.Elt "header" props children
     
     /// Create an HTML element <hgroup> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let hgroup props children = React.Element "hgroup" props children
+    let hgroup props children = ReactHelpers.Elt "hgroup" props children
     
     /// Create an HTML element <hr> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let hr props children = React.Element "hr" props children
+    let hr props children = ReactHelpers.Elt "hr" props children
     
     /// Create an HTML element <html> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let html props children = React.Element "html" props children
+    let html props children = ReactHelpers.Elt "html" props children
     
     /// Create an HTML element <i> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let i props children = React.Element "i" props children
+    let i props children = ReactHelpers.Elt "i" props children
     
     /// Create an HTML element <iframe> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let iframe props children = React.Element "iframe" props children
+    let iframe props children = ReactHelpers.Elt "iframe" props children
     
     /// Create an HTML element <img> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let img props children = React.Element "img" props children
+    let img props children = ReactHelpers.Elt "img" props children
     
     /// Create an HTML element <input> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let input props children = React.Element "input" props children
+    let input props children = ReactHelpers.Elt "input" props children
     
     /// Create an HTML element <ins> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let ins props children = React.Element "ins" props children
+    let ins props children = ReactHelpers.Elt "ins" props children
     
     /// Create an HTML element <kbd> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let kbd props children = React.Element "kbd" props children
+    let kbd props children = ReactHelpers.Elt "kbd" props children
     
     /// Create an HTML element <keygen> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let keygen props children = React.Element "keygen" props children
+    let keygen props children = ReactHelpers.Elt "keygen" props children
     
     /// Create an HTML element <label> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let label props children = React.Element "label" props children
+    let label props children = ReactHelpers.Elt "label" props children
     
     /// Create an HTML element <legend> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let legend props children = React.Element "legend" props children
+    let legend props children = ReactHelpers.Elt "legend" props children
     
     /// Create an HTML element <li> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let li props children = React.Element "li" props children
+    let li props children = ReactHelpers.Elt "li" props children
     
     /// Create an HTML element <link> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let link props children = React.Element "link" props children
+    let link props children = ReactHelpers.Elt "link" props children
     
     /// Create an HTML element <mark> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let mark props children = React.Element "mark" props children
+    let mark props children = ReactHelpers.Elt "mark" props children
     
     /// Create an HTML element <meta> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let meta props children = React.Element "meta" props children
+    let meta props children = ReactHelpers.Elt "meta" props children
     
     /// Create an HTML element <meter> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let meter props children = React.Element "meter" props children
+    let meter props children = ReactHelpers.Elt "meter" props children
     
     /// Create an HTML element <nav> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let nav props children = React.Element "nav" props children
+    let nav props children = ReactHelpers.Elt "nav" props children
     
     /// Create an HTML element <noframes> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let noframes props children = React.Element "noframes" props children
+    let noframes props children = ReactHelpers.Elt "noframes" props children
     
     /// Create an HTML element <noscript> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let noscript props children = React.Element "noscript" props children
+    let noscript props children = ReactHelpers.Elt "noscript" props children
     
     /// Create an HTML element <ol> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let ol props children = React.Element "ol" props children
+    let ol props children = ReactHelpers.Elt "ol" props children
     
     /// Create an HTML element <optgroup> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let optgroup props children = React.Element "optgroup" props children
+    let optgroup props children = ReactHelpers.Elt "optgroup" props children
     
     /// Create an HTML element <output> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let output props children = React.Element "output" props children
+    let output props children = ReactHelpers.Elt "output" props children
     
     /// Create an HTML element <p> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let p props children = React.Element "p" props children
+    let p props children = ReactHelpers.Elt "p" props children
     
     /// Create an HTML element <param> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let param props children = React.Element "param" props children
+    let param props children = ReactHelpers.Elt "param" props children
     
     /// Create an HTML element <picture> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let picture props children = React.Element "picture" props children
+    let picture props children = ReactHelpers.Elt "picture" props children
     
     /// Create an HTML element <pre> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let pre props children = React.Element "pre" props children
+    let pre props children = ReactHelpers.Elt "pre" props children
     
     /// Create an HTML element <progress> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let progress props children = React.Element "progress" props children
+    let progress props children = ReactHelpers.Elt "progress" props children
     
     /// Create an HTML element <q> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let q props children = React.Element "q" props children
+    let q props children = ReactHelpers.Elt "q" props children
     
     /// Create an HTML element <rp> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let rp props children = React.Element "rp" props children
+    let rp props children = ReactHelpers.Elt "rp" props children
     
     /// Create an HTML element <rt> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let rt props children = React.Element "rt" props children
+    let rt props children = ReactHelpers.Elt "rt" props children
     
     /// Create an HTML element <rtc> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let rtc props children = React.Element "rtc" props children
+    let rtc props children = ReactHelpers.Elt "rtc" props children
     
     /// Create an HTML element <ruby> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let ruby props children = React.Element "ruby" props children
+    let ruby props children = ReactHelpers.Elt "ruby" props children
     
     /// Create an HTML element <samp> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let samp props children = React.Element "samp" props children
+    let samp props children = ReactHelpers.Elt "samp" props children
     
     /// Create an HTML element <script> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let script props children = React.Element "script" props children
+    let script props children = ReactHelpers.Elt "script" props children
     
     /// Create an HTML element <section> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let section props children = React.Element "section" props children
+    let section props children = ReactHelpers.Elt "section" props children
     
     /// Create an HTML element <select> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let select props children = React.Element "select" props children
+    let select props children = ReactHelpers.Elt "select" props children
     
     /// Create an HTML element <shadow> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let shadow props children = React.Element "shadow" props children
+    let shadow props children = ReactHelpers.Elt "shadow" props children
     
     /// Create an HTML element <small> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let small props children = React.Element "small" props children
+    let small props children = ReactHelpers.Elt "small" props children
     
     /// Create an HTML element <source> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let source props children = React.Element "source" props children
+    let source props children = ReactHelpers.Elt "source" props children
     
     /// Create an HTML element <span> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let span props children = React.Element "span" props children
+    let span props children = ReactHelpers.Elt "span" props children
     
     /// Create an HTML element <strong> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let strong props children = React.Element "strong" props children
+    let strong props children = ReactHelpers.Elt "strong" props children
     
     /// Create an HTML element <sub> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let sub props children = React.Element "sub" props children
+    let sub props children = ReactHelpers.Elt "sub" props children
     
     /// Create an HTML element <summary> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let summary props children = React.Element "summary" props children
+    let summary props children = ReactHelpers.Elt "summary" props children
     
     /// Create an HTML element <sup> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let sup props children = React.Element "sup" props children
+    let sup props children = ReactHelpers.Elt "sup" props children
     
     /// Create an HTML element <table> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let table props children = React.Element "table" props children
+    let table props children = ReactHelpers.Elt "table" props children
     
     /// Create an HTML element <tbody> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let tbody props children = React.Element "tbody" props children
+    let tbody props children = ReactHelpers.Elt "tbody" props children
     
     /// Create an HTML element <td> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let td props children = React.Element "td" props children
+    let td props children = ReactHelpers.Elt "td" props children
     
     /// Create an HTML element <textarea> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let textarea props children = React.Element "textarea" props children
+    let textarea props children = ReactHelpers.Elt "textarea" props children
     
     /// Create an HTML element <tfoot> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let tfoot props children = React.Element "tfoot" props children
+    let tfoot props children = ReactHelpers.Elt "tfoot" props children
     
     /// Create an HTML element <th> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let th props children = React.Element "th" props children
+    let th props children = ReactHelpers.Elt "th" props children
     
     /// Create an HTML element <thead> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let thead props children = React.Element "thead" props children
+    let thead props children = ReactHelpers.Elt "thead" props children
     
     /// Create an HTML element <time> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let time props children = React.Element "time" props children
+    let time props children = ReactHelpers.Elt "time" props children
     
     /// Create an HTML element <tr> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let tr props children = React.Element "tr" props children
+    let tr props children = ReactHelpers.Elt "tr" props children
     
     /// Create an HTML element <track> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let track props children = React.Element "track" props children
+    let track props children = ReactHelpers.Elt "track" props children
     
     /// Create an HTML element <ul> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let ul props children = React.Element "ul" props children
+    let ul props children = ReactHelpers.Elt "ul" props children
     
     /// Create an HTML element <video> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let video props children = React.Element "video" props children
+    let video props children = ReactHelpers.Elt "video" props children
     
     /// Create an HTML element <wbr> with props and children.
     [<Inline; Macro(typeof<Macros.Html>)>]
-    let wbr props children = React.Element "wbr" props children
+    let wbr props children = ReactHelpers.Elt "wbr" props children
     
     // }}
 
@@ -455,107 +455,107 @@ module Html =
         // {{ tag colliding deprecated
         /// Create an HTML element <acronym> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let acronym props children = React.Element "acronym" props children
+        let acronym props children = ReactHelpers.Elt "acronym" props children
         
         /// Create an HTML element <applet> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let applet props children = React.Element "applet" props children
+        let applet props children = ReactHelpers.Elt "applet" props children
         
         /// Create an HTML element <basefont> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let basefont props children = React.Element "basefont" props children
+        let basefont props children = ReactHelpers.Elt "basefont" props children
         
         /// Create an HTML element <big> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let big props children = React.Element "big" props children
+        let big props children = ReactHelpers.Elt "big" props children
         
         /// Create an HTML element <center> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let center props children = React.Element "center" props children
+        let center props children = ReactHelpers.Elt "center" props children
         
         /// Create an HTML element <content> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let content props children = React.Element "content" props children
+        let content props children = ReactHelpers.Elt "content" props children
         
         /// Create an HTML element <data> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let data props children = React.Element "data" props children
+        let data props children = ReactHelpers.Elt "data" props children
         
         /// Create an HTML element <dir> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let dir props children = React.Element "dir" props children
+        let dir props children = ReactHelpers.Elt "dir" props children
         
         /// Create an HTML element <font> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let font props children = React.Element "font" props children
+        let font props children = ReactHelpers.Elt "font" props children
         
         /// Create an HTML element <frame> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let frame props children = React.Element "frame" props children
+        let frame props children = ReactHelpers.Elt "frame" props children
         
         /// Create an HTML element <frameset> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let frameset props children = React.Element "frameset" props children
+        let frameset props children = ReactHelpers.Elt "frameset" props children
         
         /// Create an HTML element <isindex> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let isindex props children = React.Element "isindex" props children
+        let isindex props children = ReactHelpers.Elt "isindex" props children
         
         /// Create an HTML element <main> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let main props children = React.Element "main" props children
+        let main props children = ReactHelpers.Elt "main" props children
         
         /// Create an HTML element <map> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let map props children = React.Element "map" props children
+        let map props children = ReactHelpers.Elt "map" props children
         
         /// Create an HTML element <menu> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let menu props children = React.Element "menu" props children
+        let menu props children = ReactHelpers.Elt "menu" props children
         
         /// Create an HTML element <menuitem> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let menuitem props children = React.Element "menuitem" props children
+        let menuitem props children = ReactHelpers.Elt "menuitem" props children
         
         /// Create an HTML element <object> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let ``object`` props children = React.Element "object" props children
+        let ``object`` props children = ReactHelpers.Elt "object" props children
         
         /// Create an HTML element <option> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let option props children = React.Element "option" props children
+        let option props children = ReactHelpers.Elt "option" props children
         
         /// Create an HTML element <s> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let s props children = React.Element "s" props children
+        let s props children = ReactHelpers.Elt "s" props children
         
         /// Create an HTML element <strike> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let strike props children = React.Element "strike" props children
+        let strike props children = ReactHelpers.Elt "strike" props children
         
         /// Create an HTML element <style> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let style props children = React.Element "style" props children
+        let style props children = ReactHelpers.Elt "style" props children
         
         /// Create an HTML element <template> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let template props children = React.Element "template" props children
+        let template props children = ReactHelpers.Elt "template" props children
         
         /// Create an HTML element <title> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let title props children = React.Element "title" props children
+        let title props children = ReactHelpers.Elt "title" props children
         
         /// Create an HTML element <tt> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let tt props children = React.Element "tt" props children
+        let tt props children = ReactHelpers.Elt "tt" props children
         
         /// Create an HTML element <u> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let u props children = React.Element "u" props children
+        let u props children = ReactHelpers.Elt "u" props children
         
         /// Create an HTML element <var> with props and children.
         [<Inline; Macro(typeof<Macros.Html>)>]
-        let var props children = React.Element "var" props children
+        let var props children = ReactHelpers.Elt "var" props children
         
         // }}
 
@@ -564,323 +564,323 @@ module Html =
         // {{ svgtag normal
         /// Create an SVG element <a> with props and children.
         [<Inline>]
-        let a props children = React.Element "a" props children
+        let a props children = ReactHelpers.Elt "a" props children
         
         /// Create an SVG element <altglyph> with props and children.
         [<Inline>]
-        let altglyph props children = React.Element "altglyph" props children
+        let altglyph props children = ReactHelpers.Elt "altglyph" props children
         
         /// Create an SVG element <altglyphdef> with props and children.
         [<Inline>]
-        let altglyphdef props children = React.Element "altglyphdef" props children
+        let altglyphdef props children = ReactHelpers.Elt "altglyphdef" props children
         
         /// Create an SVG element <altglyphitem> with props and children.
         [<Inline>]
-        let altglyphitem props children = React.Element "altglyphitem" props children
+        let altglyphitem props children = ReactHelpers.Elt "altglyphitem" props children
         
         /// Create an SVG element <animate> with props and children.
         [<Inline>]
-        let animate props children = React.Element "animate" props children
+        let animate props children = ReactHelpers.Elt "animate" props children
         
         /// Create an SVG element <animatecolor> with props and children.
         [<Inline>]
-        let animatecolor props children = React.Element "animatecolor" props children
+        let animatecolor props children = ReactHelpers.Elt "animatecolor" props children
         
         /// Create an SVG element <animatemotion> with props and children.
         [<Inline>]
-        let animatemotion props children = React.Element "animatemotion" props children
+        let animatemotion props children = ReactHelpers.Elt "animatemotion" props children
         
         /// Create an SVG element <animatetransform> with props and children.
         [<Inline>]
-        let animatetransform props children = React.Element "animatetransform" props children
+        let animatetransform props children = ReactHelpers.Elt "animatetransform" props children
         
         /// Create an SVG element <circle> with props and children.
         [<Inline>]
-        let circle props children = React.Element "circle" props children
+        let circle props children = ReactHelpers.Elt "circle" props children
         
         /// Create an SVG element <clippath> with props and children.
         [<Inline>]
-        let clippath props children = React.Element "clippath" props children
+        let clippath props children = ReactHelpers.Elt "clippath" props children
         
         /// Create an SVG element <color-profile> with props and children.
         [<Inline>]
-        let colorProfile props children = React.Element "color-profile" props children
+        let colorProfile props children = ReactHelpers.Elt "color-profile" props children
         
         /// Create an SVG element <cursor> with props and children.
         [<Inline>]
-        let cursor props children = React.Element "cursor" props children
+        let cursor props children = ReactHelpers.Elt "cursor" props children
         
         /// Create an SVG element <defs> with props and children.
         [<Inline>]
-        let defs props children = React.Element "defs" props children
+        let defs props children = ReactHelpers.Elt "defs" props children
         
         /// Create an SVG element <desc> with props and children.
         [<Inline>]
-        let desc props children = React.Element "desc" props children
+        let desc props children = ReactHelpers.Elt "desc" props children
         
         /// Create an SVG element <ellipse> with props and children.
         [<Inline>]
-        let ellipse props children = React.Element "ellipse" props children
+        let ellipse props children = ReactHelpers.Elt "ellipse" props children
         
         /// Create an SVG element <feblend> with props and children.
         [<Inline>]
-        let feblend props children = React.Element "feblend" props children
+        let feblend props children = ReactHelpers.Elt "feblend" props children
         
         /// Create an SVG element <fecolormatrix> with props and children.
         [<Inline>]
-        let fecolormatrix props children = React.Element "fecolormatrix" props children
+        let fecolormatrix props children = ReactHelpers.Elt "fecolormatrix" props children
         
         /// Create an SVG element <fecomponenttransfer> with props and children.
         [<Inline>]
-        let fecomponenttransfer props children = React.Element "fecomponenttransfer" props children
+        let fecomponenttransfer props children = ReactHelpers.Elt "fecomponenttransfer" props children
         
         /// Create an SVG element <fecomposite> with props and children.
         [<Inline>]
-        let fecomposite props children = React.Element "fecomposite" props children
+        let fecomposite props children = ReactHelpers.Elt "fecomposite" props children
         
         /// Create an SVG element <feconvolvematrix> with props and children.
         [<Inline>]
-        let feconvolvematrix props children = React.Element "feconvolvematrix" props children
+        let feconvolvematrix props children = ReactHelpers.Elt "feconvolvematrix" props children
         
         /// Create an SVG element <fediffuselighting> with props and children.
         [<Inline>]
-        let fediffuselighting props children = React.Element "fediffuselighting" props children
+        let fediffuselighting props children = ReactHelpers.Elt "fediffuselighting" props children
         
         /// Create an SVG element <fedisplacementmap> with props and children.
         [<Inline>]
-        let fedisplacementmap props children = React.Element "fedisplacementmap" props children
+        let fedisplacementmap props children = ReactHelpers.Elt "fedisplacementmap" props children
         
         /// Create an SVG element <fedistantlight> with props and children.
         [<Inline>]
-        let fedistantlight props children = React.Element "fedistantlight" props children
+        let fedistantlight props children = ReactHelpers.Elt "fedistantlight" props children
         
         /// Create an SVG element <feflood> with props and children.
         [<Inline>]
-        let feflood props children = React.Element "feflood" props children
+        let feflood props children = ReactHelpers.Elt "feflood" props children
         
         /// Create an SVG element <fefunca> with props and children.
         [<Inline>]
-        let fefunca props children = React.Element "fefunca" props children
+        let fefunca props children = ReactHelpers.Elt "fefunca" props children
         
         /// Create an SVG element <fefuncb> with props and children.
         [<Inline>]
-        let fefuncb props children = React.Element "fefuncb" props children
+        let fefuncb props children = ReactHelpers.Elt "fefuncb" props children
         
         /// Create an SVG element <fefuncg> with props and children.
         [<Inline>]
-        let fefuncg props children = React.Element "fefuncg" props children
+        let fefuncg props children = ReactHelpers.Elt "fefuncg" props children
         
         /// Create an SVG element <fefuncr> with props and children.
         [<Inline>]
-        let fefuncr props children = React.Element "fefuncr" props children
+        let fefuncr props children = ReactHelpers.Elt "fefuncr" props children
         
         /// Create an SVG element <fegaussianblur> with props and children.
         [<Inline>]
-        let fegaussianblur props children = React.Element "fegaussianblur" props children
+        let fegaussianblur props children = ReactHelpers.Elt "fegaussianblur" props children
         
         /// Create an SVG element <feimage> with props and children.
         [<Inline>]
-        let feimage props children = React.Element "feimage" props children
+        let feimage props children = ReactHelpers.Elt "feimage" props children
         
         /// Create an SVG element <femerge> with props and children.
         [<Inline>]
-        let femerge props children = React.Element "femerge" props children
+        let femerge props children = ReactHelpers.Elt "femerge" props children
         
         /// Create an SVG element <femergenode> with props and children.
         [<Inline>]
-        let femergenode props children = React.Element "femergenode" props children
+        let femergenode props children = ReactHelpers.Elt "femergenode" props children
         
         /// Create an SVG element <femorphology> with props and children.
         [<Inline>]
-        let femorphology props children = React.Element "femorphology" props children
+        let femorphology props children = ReactHelpers.Elt "femorphology" props children
         
         /// Create an SVG element <feoffset> with props and children.
         [<Inline>]
-        let feoffset props children = React.Element "feoffset" props children
+        let feoffset props children = ReactHelpers.Elt "feoffset" props children
         
         /// Create an SVG element <fepointlight> with props and children.
         [<Inline>]
-        let fepointlight props children = React.Element "fepointlight" props children
+        let fepointlight props children = ReactHelpers.Elt "fepointlight" props children
         
         /// Create an SVG element <fespecularlighting> with props and children.
         [<Inline>]
-        let fespecularlighting props children = React.Element "fespecularlighting" props children
+        let fespecularlighting props children = ReactHelpers.Elt "fespecularlighting" props children
         
         /// Create an SVG element <fespotlight> with props and children.
         [<Inline>]
-        let fespotlight props children = React.Element "fespotlight" props children
+        let fespotlight props children = ReactHelpers.Elt "fespotlight" props children
         
         /// Create an SVG element <fetile> with props and children.
         [<Inline>]
-        let fetile props children = React.Element "fetile" props children
+        let fetile props children = ReactHelpers.Elt "fetile" props children
         
         /// Create an SVG element <feturbulence> with props and children.
         [<Inline>]
-        let feturbulence props children = React.Element "feturbulence" props children
+        let feturbulence props children = ReactHelpers.Elt "feturbulence" props children
         
         /// Create an SVG element <filter> with props and children.
         [<Inline>]
-        let filter props children = React.Element "filter" props children
+        let filter props children = ReactHelpers.Elt "filter" props children
         
         /// Create an SVG element <font> with props and children.
         [<Inline>]
-        let font props children = React.Element "font" props children
+        let font props children = ReactHelpers.Elt "font" props children
         
         /// Create an SVG element <font-face> with props and children.
         [<Inline>]
-        let fontFace props children = React.Element "font-face" props children
+        let fontFace props children = ReactHelpers.Elt "font-face" props children
         
         /// Create an SVG element <font-face-format> with props and children.
         [<Inline>]
-        let fontFaceFormat props children = React.Element "font-face-format" props children
+        let fontFaceFormat props children = ReactHelpers.Elt "font-face-format" props children
         
         /// Create an SVG element <font-face-name> with props and children.
         [<Inline>]
-        let fontFaceName props children = React.Element "font-face-name" props children
+        let fontFaceName props children = ReactHelpers.Elt "font-face-name" props children
         
         /// Create an SVG element <font-face-src> with props and children.
         [<Inline>]
-        let fontFaceSrc props children = React.Element "font-face-src" props children
+        let fontFaceSrc props children = ReactHelpers.Elt "font-face-src" props children
         
         /// Create an SVG element <font-face-uri> with props and children.
         [<Inline>]
-        let fontFaceUri props children = React.Element "font-face-uri" props children
+        let fontFaceUri props children = ReactHelpers.Elt "font-face-uri" props children
         
         /// Create an SVG element <foreignobject> with props and children.
         [<Inline>]
-        let foreignobject props children = React.Element "foreignobject" props children
+        let foreignobject props children = ReactHelpers.Elt "foreignobject" props children
         
         /// Create an SVG element <g> with props and children.
         [<Inline>]
-        let g props children = React.Element "g" props children
+        let g props children = ReactHelpers.Elt "g" props children
         
         /// Create an SVG element <glyph> with props and children.
         [<Inline>]
-        let glyph props children = React.Element "glyph" props children
+        let glyph props children = ReactHelpers.Elt "glyph" props children
         
         /// Create an SVG element <glyphref> with props and children.
         [<Inline>]
-        let glyphref props children = React.Element "glyphref" props children
+        let glyphref props children = ReactHelpers.Elt "glyphref" props children
         
         /// Create an SVG element <hkern> with props and children.
         [<Inline>]
-        let hkern props children = React.Element "hkern" props children
+        let hkern props children = ReactHelpers.Elt "hkern" props children
         
         /// Create an SVG element <image> with props and children.
         [<Inline>]
-        let image props children = React.Element "image" props children
+        let image props children = ReactHelpers.Elt "image" props children
         
         /// Create an SVG element <line> with props and children.
         [<Inline>]
-        let line props children = React.Element "line" props children
+        let line props children = ReactHelpers.Elt "line" props children
         
         /// Create an SVG element <lineargradient> with props and children.
         [<Inline>]
-        let lineargradient props children = React.Element "lineargradient" props children
+        let lineargradient props children = ReactHelpers.Elt "lineargradient" props children
         
         /// Create an SVG element <marker> with props and children.
         [<Inline>]
-        let marker props children = React.Element "marker" props children
+        let marker props children = ReactHelpers.Elt "marker" props children
         
         /// Create an SVG element <mask> with props and children.
         [<Inline>]
-        let mask props children = React.Element "mask" props children
+        let mask props children = ReactHelpers.Elt "mask" props children
         
         /// Create an SVG element <metadata> with props and children.
         [<Inline>]
-        let metadata props children = React.Element "metadata" props children
+        let metadata props children = ReactHelpers.Elt "metadata" props children
         
         /// Create an SVG element <missing-glyph> with props and children.
         [<Inline>]
-        let missingGlyph props children = React.Element "missing-glyph" props children
+        let missingGlyph props children = ReactHelpers.Elt "missing-glyph" props children
         
         /// Create an SVG element <mpath> with props and children.
         [<Inline>]
-        let mpath props children = React.Element "mpath" props children
+        let mpath props children = ReactHelpers.Elt "mpath" props children
         
         /// Create an SVG element <path> with props and children.
         [<Inline>]
-        let path props children = React.Element "path" props children
+        let path props children = ReactHelpers.Elt "path" props children
         
         /// Create an SVG element <pattern> with props and children.
         [<Inline>]
-        let pattern props children = React.Element "pattern" props children
+        let pattern props children = ReactHelpers.Elt "pattern" props children
         
         /// Create an SVG element <polygon> with props and children.
         [<Inline>]
-        let polygon props children = React.Element "polygon" props children
+        let polygon props children = ReactHelpers.Elt "polygon" props children
         
         /// Create an SVG element <polyline> with props and children.
         [<Inline>]
-        let polyline props children = React.Element "polyline" props children
+        let polyline props children = ReactHelpers.Elt "polyline" props children
         
         /// Create an SVG element <radialgradient> with props and children.
         [<Inline>]
-        let radialgradient props children = React.Element "radialgradient" props children
+        let radialgradient props children = ReactHelpers.Elt "radialgradient" props children
         
         /// Create an SVG element <rect> with props and children.
         [<Inline>]
-        let rect props children = React.Element "rect" props children
+        let rect props children = ReactHelpers.Elt "rect" props children
         
         /// Create an SVG element <script> with props and children.
         [<Inline>]
-        let script props children = React.Element "script" props children
+        let script props children = ReactHelpers.Elt "script" props children
         
         /// Create an SVG element <set> with props and children.
         [<Inline>]
-        let set props children = React.Element "set" props children
+        let set props children = ReactHelpers.Elt "set" props children
         
         /// Create an SVG element <stop> with props and children.
         [<Inline>]
-        let stop props children = React.Element "stop" props children
+        let stop props children = ReactHelpers.Elt "stop" props children
         
         /// Create an SVG element <style> with props and children.
         [<Inline>]
-        let style props children = React.Element "style" props children
+        let style props children = ReactHelpers.Elt "style" props children
         
         /// Create an SVG element <svg> with props and children.
         [<Inline>]
-        let svg props children = React.Element "svg" props children
+        let svg props children = ReactHelpers.Elt "svg" props children
         
         /// Create an SVG element <switch> with props and children.
         [<Inline>]
-        let switch props children = React.Element "switch" props children
+        let switch props children = ReactHelpers.Elt "switch" props children
         
         /// Create an SVG element <symbol> with props and children.
         [<Inline>]
-        let symbol props children = React.Element "symbol" props children
+        let symbol props children = ReactHelpers.Elt "symbol" props children
         
         /// Create an SVG element <text> with props and children.
         [<Inline>]
-        let text props children = React.Element "text" props children
+        let text props children = ReactHelpers.Elt "text" props children
         
         /// Create an SVG element <textpath> with props and children.
         [<Inline>]
-        let textpath props children = React.Element "textpath" props children
+        let textpath props children = ReactHelpers.Elt "textpath" props children
         
         /// Create an SVG element <title> with props and children.
         [<Inline>]
-        let title props children = React.Element "title" props children
+        let title props children = ReactHelpers.Elt "title" props children
         
         /// Create an SVG element <tref> with props and children.
         [<Inline>]
-        let tref props children = React.Element "tref" props children
+        let tref props children = ReactHelpers.Elt "tref" props children
         
         /// Create an SVG element <tspan> with props and children.
         [<Inline>]
-        let tspan props children = React.Element "tspan" props children
+        let tspan props children = ReactHelpers.Elt "tspan" props children
         
         /// Create an SVG element <use> with props and children.
         [<Inline>]
-        let ``use`` props children = React.Element "use" props children
+        let ``use`` props children = ReactHelpers.Elt "use" props children
         
         /// Create an SVG element <view> with props and children.
         [<Inline>]
-        let view props children = React.Element "view" props children
+        let view props children = ReactHelpers.Elt "view" props children
         
         /// Create an SVG element <vkern> with props and children.
         [<Inline>]
-        let vkern props children = React.Element "vkern" props children
+        let vkern props children = ReactHelpers.Elt "vkern" props children
         
         // }}
 
@@ -1758,3 +1758,4 @@ module Html =
 
         [<Inline>]
         let toggle (f: SyntheticEvent -> unit) = "onToggle" => f
+

@@ -49,7 +49,7 @@ module Client =
         inherit React.Component<unit, unit>(())
 
         override this.Render() =
-            React.Fragment [
+            ReactHelpers.Fragment [
                 h1 [] [text "Context test"]
                 theme.Provide "provided" [
                     Widget { shouldBe = "provided" }
@@ -57,7 +57,7 @@ module Client =
                 Widget { shouldBe = "default" }
             ]
 
-    let HomePage (router: React.Router<EndPoint>) =
+    let HomePage (router: ReactHelpers.Router<EndPoint>) =
         div [] [
             h1 [] [text "React tests"]
             ul [] [
@@ -72,12 +72,12 @@ module Client =
 
     [<SPAEntryPoint>]
     let Main () =
-        React.HashRouter (Router.Infer<EndPoint>()) (fun router ->
+        ReactHelpers.HashRouter (Router.Infer<EndPoint>()) (fun router ->
             match router.State with
             | Home -> HomePage router
             | Context ->
-                React.Fragment [
-                    React.Make ContextTest ()
+                ReactHelpers.Fragment [
+                    ReactHelpers.Make ContextTest ()
                     a [
                         // Test that setting the state sets the route
                         attr.href "javascript:void(0)"
@@ -85,10 +85,10 @@ module Client =
                     ] [text "Back to Home"]
                 ]
             | TicTacToe ->
-                React.Fragment [
+                ReactHelpers.Fragment [
                     h1 [] [text "Tic-tac-toe"]
-                    React.Make TicTacToe.Game ()
+                    ReactHelpers.Make TicTacToe.Game ()
                     a [router.Href Home] [text "Back to Home"]
                 ]
         )
-        |> React.Mount (JS.Document.GetElementById "main")
+        |> ReactHelpers.Mount (JS.Document.GetElementById "main")

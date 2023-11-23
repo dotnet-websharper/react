@@ -23,11 +23,11 @@ open WebSharper
 open WebSharper.JavaScript
 open WebSharper.Sitelets
 open WebSharper.Sitelets.InferRouter
-open WebSharper.React.Bindings
-type private R = WebSharper.React.Bindings.React
+open WebSharper.React
+open WebSharper.React.ReactDOM
+type private R = WebSharper.React.React
 type private SRouter<'Endpoint when 'Endpoint : equality> = WebSharper.Sitelets.Router<'Endpoint>
 module SRouter = WebSharper.Sitelets.Router
-type React = R
 
 [<JavaScript false>]
 module Macros =
@@ -52,18 +52,18 @@ module Macros =
                          FullName = "System.Collections.Generic.IEnumerable`1" }
     let tReactModule =
         TypeDefinition { Assembly = "WebSharper.React"
-                         FullName = "WebSharper.React.ReactModule" }
+                         FullName = "WebSharper.React.ReactHelpers" }
     let tReact =
         TypeDefinition { Assembly = "WebSharper.React.Bindings"
-                         FullName = "WebSharper.React.Bindings.React" }
+                         FullName = "WebSharper.React.React" }
     let tElement =
         TypeDefinition { Assembly = "WebSharper.React.Bindings"
-                         FullName = "WebSharper.React.Bindings.React+Element" }
+                         FullName = "WebSharper.React.React+Element" }
     let tHtml =
-        TypeDefinition { Assembly = "WebSharper.React"
+        TypeDefinition { Assembly = "WebSharper.React.Bindings"
                          FullName = "WebSharper.React.Html" }
     let tTags =
-        TypeDefinition { Assembly = "WebSharper.React"
+        TypeDefinition { Assembly = "WebSharper.React.Bindings"
                          FullName = "WebSharper.React.Html+Tags" }
     let mAs =
         Method { MethodName = "As"
@@ -103,13 +103,13 @@ module Macros =
 
     let callElt elt props children =
         match children with
-        | I.NewArray _ ->
+        | I.NewTuple _ ->
             Call(None, NonGeneric tReact, NonGeneric mCreateElement, [elt; props; children])
         | _ ->
             Call(None, NonGeneric tReactModule, NonGeneric mElt, [elt; props; children])
     let callNew arg = Call(None, NonGeneric tPervasives, NonGeneric mNew, [arg])
     let callNewOrNull = function
-        | I.NewArray [] -> !~Null
+        | I.NewTuple ([], _) -> !~Null
         | arg -> callNew arg
 
     type Make() =
@@ -131,8 +131,12 @@ module Macros =
             let dotnetCtor (ty: Concrete<TypeDefinition>) (ctor: Constructor) =
                 match call.Compilation.GetClassInfo(ty.Entity) with
                 | Some x ->
-                    match x.Constructors.[ctor] with
-                    | M.Constructor addr ->
+                    match x.Constructors.[ctor].CompiledForm with
+                    | M.New name ->                        
+                        let addr =
+                            match name with
+                            | Some n -> x.Address.Sub(n)
+                            | _ -> x.Address
                         let call = callWithReplacedArg (GlobalAccess addr)
                         MacroDependencies ([M.ConstructorNode(ty.Entity, ctor)], MacroOk call)
                     | _ -> this.Fallback call
@@ -145,13 +149,13 @@ module Macros =
             match call.Arguments.[ix] with
             | I.Call(None, ty, meth, [comp]) when ty.Entity = tPervasives && meth.Entity = mAs ->
                 callWithReplacedArg comp |> MacroOk
-            | I.Function ([], I.Return (I.Ctor(ty, ctor, []))) ->
+            | I.Function ([], _, _, I.Return (I.Ctor(ty, ctor, []))) ->
                 dotnetCtor ty ctor
-            | I.Function ([props], I.Return (I.Ctor(ty, ctor, [I.Var props']))) when props = props' ->
+            | I.Function ([props], _, _, I.Return (I.Ctor(ty, ctor, [I.Var props']))) when props = props' ->
                 dotnetCtor ty ctor
-            | I.Function ([], I.Return (I.New (ctor, []))) ->
+            | I.Function ([], _, _, I.Return (I.New (ctor, [], []))) ->
                 jsCtor ctor
-            | I.Function ([props], I.Return (I.New (ctor, [I.Var props']))) when props = props' ->
+            | I.Function ([props], _, _, I.Return (I.New (ctor, [], [I.Var props']))) when props = props' ->
                 jsCtor ctor
             | _ ->
                 this.Fallback call
@@ -176,8 +180,7 @@ module Macros =
                 call.Arguments.[1]
             |> MacroOk
 
-module React =
-
+module ReactHelpers =
     let internal inlineArrayOfSeq (s: seq<'T>) : array<'T> =
         match s with
         | :? System.Array -> As s
@@ -187,7 +190,7 @@ module React =
         R.CreateElement(name, props, inlineArrayOfSeq children)
 
     [<Macro(typeof<Macros.Element>); Inline>]
-    let Element name props children =
+    let Elt name props children =
         elt name (New props) children
 
     [<Inline>]
@@ -275,11 +278,11 @@ module Extensions =
     type R.Context<'T> with
 
         member this.Provide (value: 'T) (comp: seq<R.Element>) =
-            R.CreateElement(this.Provider, New ["value" => value], React.inlineArrayOfSeq comp)
+            R.CreateElement(this.Provider, New ["value" => value], ReactHelpers.inlineArrayOfSeq comp)
 
         member this.Consume (f: 'T -> #seq<R.Element>) =
             R.CreateElement(this.Consumer, null, fun v ->
-                R.CreateElement(R.Fragment, null, React.inlineArrayOfSeq(f v)))
+                R.CreateElement(R.Fragment, null, ReactHelpers.inlineArrayOfSeq(f v)))
 
 [<assembly: JavaScript>]
 do ()

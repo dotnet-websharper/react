@@ -5,8 +5,15 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
+  <PropertyGroup>
+	<NpmDependencies>
+	  <NpmPackage Name="react" Version="gte 18.0.0 lt 19.0.0" ResolutionStrategy="Max" />
+	  <NpmPackage Name="react-dom" Version="gte 18.0.0 lt 19.0.0" ResolutionStrategy="Max" />
+	</NpmDependencies>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.fs" />
+    <None Include="wsconfig.json" />
   </ItemGroup>
   <Import Project="..\paket-files\wsbuild\github.com\dotnet-websharper\build-script\WebSharper.Fake.targets" Condition="Exists('..\paket-files\wsbuild\github.com\dotnet-websharper\build-script\WebSharper.Fake.targets')" />
   <Import Project="..\.paket\Paket.Restore.targets" />
