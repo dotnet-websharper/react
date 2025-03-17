@@ -14,3 +14,4 @@ obj/
 /.vscode/
 .vs/
 websharper.log
+/WebSharper.React.Tests/node_modules

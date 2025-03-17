@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -6,11 +6,18 @@
   <ItemGroup>
     <Compile Include="TicTacToe.fs" />
     <Compile Include="Client.fs" />
+    <Content Include="index.html" />
+    <None Include="esbuild.config.mjs" />
+    <Content Include="wsconfig.json" />
+    <Content Include="package.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../WebSharper.React.Bindings\WebSharper.React.Bindings.fsproj" />
     <ProjectReference Include="../WebSharper.React\WebSharper.React.fsproj" />
   </ItemGroup>
-  <Import Project="..\paket-files\wsbuild\github.com\dotnet-websharper\build-script\WebSharper.Fake.targets" Condition="Exists('..\paket-files\wsbuild\github.com\dotnet-websharper\build-script\WebSharper.Fake.targets')" />
+  <Target Name="ESBuildBundle" AfterTargets="WebSharperCompile">
+    <Exec Command="npm install" />
+    <Exec Command="node ./esbuild.config.mjs" />
+  </Target>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
