@@ -10,6 +10,7 @@
     <None Include="esbuild.config.mjs" />
     <Content Include="wsconfig.json" />
     <Content Include="package.json" />
+    <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../WebSharper.React.Bindings\WebSharper.React.Bindings.fsproj" />
