@@ -45,7 +45,7 @@ module Macros =
         System.Reflection.BindingFlags.NonPublic
 
     let tPervasives =
-        TypeDefinition { Assembly = "WebSharper.Main"
+        TypeDefinition { Assembly = "WebSharper.StdLib"
                          FullName = "WebSharper.JavaScript.Pervasives" }
     let tSeq =
         TypeDefinition { Assembly = "netstandard"
