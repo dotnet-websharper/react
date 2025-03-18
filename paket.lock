@@ -1,33 +1,35 @@
 STORAGE: NONE
 STRATEGY: MIN
-RESTRICTION: || (== net8.0) (== netcoreapp2.1) (== netcoreapp3.1) (== netstandard2.0)
+RESTRICTION: == netstandard2.0
 NUGET
   remote: https://api.nuget.org/v3/index.json
     FSharp.Core (6.0)
-    System.Reflection.Emit.ILGeneration (4.7) - restriction: || (&& (== net8.0) (< netcoreapp2.0) (< netstandard2.1)) (&& (== net8.0) (< netstandard2.0)) (&& (== net8.0) (< portable-net45+wp8)) (&& (== net8.0) (>= uap10.1)) (&& (== netcoreapp2.1) (< netcoreapp2.0)) (&& (== netcoreapp2.1) (< netstandard2.0)) (&& (== netcoreapp2.1) (< portable-net45+wp8)) (&& (== netcoreapp2.1) (>= uap10.1)) (&& (== netcoreapp3.1) (< netcoreapp2.0) (< netstandard2.1)) (&& (== netcoreapp3.1) (< netstandard2.0)) (&& (== netcoreapp3.1) (< portable-net45+wp8)) (&& (== netcoreapp3.1) (>= uap10.1)) (== netstandard2.0)
+    System.Reflection.Emit.ILGeneration (4.7)
     System.Reflection.Emit.Lightweight (4.7)
-      System.Reflection.Emit.ILGeneration (>= 4.7) - restriction: || (&& (== net8.0) (< netcoreapp2.0) (< netstandard2.1)) (&& (== net8.0) (< netstandard2.0)) (&& (== net8.0) (< portable-net45+wp8)) (&& (== net8.0) (>= uap10.1)) (&& (== netcoreapp2.1) (< netcoreapp2.0)) (&& (== netcoreapp2.1) (< netstandard2.0)) (&& (== netcoreapp2.1) (< portable-net45+wp8)) (&& (== netcoreapp2.1) (>= uap10.1)) (&& (== netcoreapp3.1) (< netcoreapp2.0) (< netstandard2.1)) (&& (== netcoreapp3.1) (< netstandard2.0)) (&& (== netcoreapp3.1) (< portable-net45+wp8)) (&& (== netcoreapp3.1) (>= uap10.1)) (== netstandard2.0)
-    WebSharper (8.0.0.525-rc2)
+      System.Reflection.Emit.ILGeneration (>= 4.7)
+  remote: https://nuget.pkg.github.com/dotnet-websharper/index.json
+    WebSharper (8.0.0.527-rc2)
       FSharp.Core (>= 6.0)
       System.Reflection.Emit.Lightweight (>= 4.7)
-    WebSharper.FSharp (8.0.0.525-rc2)
-      WebSharper (8.0.0.525-rc2)
+    WebSharper.FSharp (8.0.0.527-rc2)
+      WebSharper (8.0.0.527-rc2)
 
 GROUP testing
 STORAGE: NONE
 STRATEGY: MIN
-RESTRICTION: || (== net8.0) (== netcoreapp2.1) (== netcoreapp3.1) (== netstandard2.0)
+RESTRICTION: || (== net8.0) (== netstandard2.0)
 NUGET
   remote: https://api.nuget.org/v3/index.json
     FSharp.Core (9.0.201)
-    System.Reflection.Emit.ILGeneration (4.7) - restriction: || (&& (== net8.0) (< netcoreapp2.0) (< netstandard2.1)) (&& (== net8.0) (< netstandard2.0)) (&& (== net8.0) (< portable-net45+wp8)) (&& (== net8.0) (>= uap10.1)) (&& (== netcoreapp2.1) (< netcoreapp2.0)) (&& (== netcoreapp2.1) (< netstandard2.0)) (&& (== netcoreapp2.1) (< portable-net45+wp8)) (&& (== netcoreapp2.1) (>= uap10.1)) (&& (== netcoreapp3.1) (< netcoreapp2.0) (< netstandard2.1)) (&& (== netcoreapp3.1) (< netstandard2.0)) (&& (== netcoreapp3.1) (< portable-net45+wp8)) (&& (== netcoreapp3.1) (>= uap10.1)) (== netstandard2.0)
+    System.Reflection.Emit.ILGeneration (4.7) - restriction: || (&& (== net8.0) (< netcoreapp2.0) (< netstandard2.1)) (&& (== net8.0) (< netstandard2.0)) (&& (== net8.0) (< portable-net45+wp8)) (&& (== net8.0) (>= uap10.1)) (== netstandard2.0)
     System.Reflection.Emit.Lightweight (4.7)
-      System.Reflection.Emit.ILGeneration (>= 4.7) - restriction: || (&& (== net8.0) (< netcoreapp2.0) (< netstandard2.1)) (&& (== net8.0) (< netstandard2.0)) (&& (== net8.0) (< portable-net45+wp8)) (&& (== net8.0) (>= uap10.1)) (&& (== netcoreapp2.1) (< netcoreapp2.0)) (&& (== netcoreapp2.1) (< netstandard2.0)) (&& (== netcoreapp2.1) (< portable-net45+wp8)) (&& (== netcoreapp2.1) (>= uap10.1)) (&& (== netcoreapp3.1) (< netcoreapp2.0) (< netstandard2.1)) (&& (== netcoreapp3.1) (< netstandard2.0)) (&& (== netcoreapp3.1) (< portable-net45+wp8)) (&& (== netcoreapp3.1) (>= uap10.1)) (== netstandard2.0)
-    WebSharper (8.0.0.525-rc2)
+      System.Reflection.Emit.ILGeneration (>= 4.7) - restriction: || (&& (== net8.0) (< netcoreapp2.0) (< netstandard2.1)) (&& (== net8.0) (< netstandard2.0)) (&& (== net8.0) (< portable-net45+wp8)) (&& (== net8.0) (>= uap10.1)) (== netstandard2.0)
+  remote: https://nuget.pkg.github.com/dotnet-websharper/index.json
+    WebSharper (8.0.0.527-rc2)
       FSharp.Core (>= 6.0)
       System.Reflection.Emit.Lightweight (>= 4.7)
-    WebSharper.FSharp (8.0.0.525-rc2)
-      WebSharper (8.0.0.525-rc2)
+    WebSharper.FSharp (8.0.0.527-rc2)
+      WebSharper (8.0.0.527-rc2)
 
 GROUP wsbuild
 
