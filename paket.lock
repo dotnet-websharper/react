@@ -8,11 +8,11 @@ NUGET
     System.Reflection.Emit.Lightweight (4.7)
       System.Reflection.Emit.ILGeneration (>= 4.7)
   remote: https://nuget.pkg.github.com/dotnet-websharper/index.json
-    WebSharper (10.0.0.580-beta1)
+    WebSharper (10.0.0.604-beta1)
       FSharp.Core (>= 6.0)
       System.Reflection.Emit.Lightweight (>= 4.7)
-    WebSharper.FSharp (10.0.0.580-beta1)
-      WebSharper (10.0.0.580-beta1)
+    WebSharper.FSharp (10.0.0.604-beta1)
+      WebSharper (10.0.0.604-beta1)
 
 GROUP testing
 STORAGE: NONE
@@ -20,19 +20,19 @@ STRATEGY: MIN
 RESTRICTION: || (== net8.0) (== netstandard2.0)
 NUGET
   remote: https://api.nuget.org/v3/index.json
-    FSharp.Core (9.0.300)
+    FSharp.Core (9.0.303)
     System.Reflection.Emit.ILGeneration (4.7) - restriction: || (&& (== net8.0) (< netcoreapp2.0) (< netstandard2.1)) (&& (== net8.0) (< netstandard2.0)) (&& (== net8.0) (< portable-net45+wp8)) (&& (== net8.0) (>= uap10.1)) (== netstandard2.0)
     System.Reflection.Emit.Lightweight (4.7)
       System.Reflection.Emit.ILGeneration (>= 4.7) - restriction: || (&& (== net8.0) (< netcoreapp2.0) (< netstandard2.1)) (&& (== net8.0) (< netstandard2.0)) (&& (== net8.0) (< portable-net45+wp8)) (&& (== net8.0) (>= uap10.1)) (== netstandard2.0)
   remote: https://nuget.pkg.github.com/dotnet-websharper/index.json
-    WebSharper (10.0.0.580-beta1)
+    WebSharper (10.0.0.604-beta1)
       FSharp.Core (>= 6.0)
       System.Reflection.Emit.Lightweight (>= 4.7)
-    WebSharper.FSharp (10.0.0.580-beta1)
-      WebSharper (10.0.0.580-beta1)
+    WebSharper.FSharp (10.0.0.604-beta1)
+      WebSharper (10.0.0.604-beta1)
 
 GROUP wsbuild
 
 GIT
   remote: https://github.com/dotnet-websharper/build-script
-     (a7b506f18c67bb036a16a9adee507c44aa9e5bbc)
+     (531f35c7382751468733d506e93567c46f3d0da6)
