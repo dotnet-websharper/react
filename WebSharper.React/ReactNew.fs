@@ -1191,6 +1191,3 @@ module Standard =
     let [<WebSharper.Inline>] stop props children = svgEl "stop" props children
     let [<WebSharper.Inline>] text props children = svgEl "text" props children
     let [<WebSharper.Inline>] tspan props children = svgEl "tspan" props children
-
-[<assembly: WebSharper.JavaScript>]
-do ()

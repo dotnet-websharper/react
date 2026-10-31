@@ -283,6 +283,3 @@ module Extensions =
         member this.Consume (f: 'T -> #seq<R.Element>) =
             R.CreateElement(this.Consumer, null, fun v ->
                 R.CreateElement(R.Fragment, null, ReactHelpers.inlineArrayOfSeq(f v)))
-
-[<assembly: JavaScript>]
-do ()
