@@ -2,7 +2,7 @@
 //
 // This file is part of WebSharper
 //
-// Copyright (c) 2008-2018 IntelliFactory
+// Copyright (c) 2008-2026 IntelliFactory
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you
 // may not use this file except in compliance with the License.  You may
@@ -87,7 +87,7 @@ module Definition =
             |> Res.ImportReactSubType
             |+> Static [
                 Constructor props
-                "defaultProps" =? props
+                "defaultProps" =@ props
                 "displayName" =? T<string>
             ]
             |+> Instance [
@@ -141,7 +141,7 @@ module Definition =
             Generic - fun t ->
                 Class "React.Ref"
                 |+> Instance [
-                    "current" =? t
+                    "current" =@ t
                 ]
 
         let Class_ =
@@ -169,21 +169,42 @@ module Definition =
             "unmount" => T<unit> ^-> T<unit>
         ]
 
+    // The object returned by ReactDOM.useFormStatus: the state of the nearest
+    // enclosing <form> (React 19).
+    let FormStatus =
+        Class "FormStatus"
+        |+> Instance [
+            "pending" =@ T<bool>
+            "data" =@ T<obj>
+            "method" =@ T<string>
+            "action" =@ T<string>
+        ]
+
     let ReactDOM =
         Class "ReactDOM"
         |+> Static [
-            "render" => React.Element * T<Dom.Element> * !?(T<unit> ^-> T<unit>) ^-> T<unit>
-            |> ObsoleteWithMessage "In React 18, render was replaced with createRoot"
-            |> Res.ImportReactDom
-            "hydrate" => React.Element * T<Dom.Element> * !?(T<unit> ^-> T<unit>) ^-> T<unit>
-            |> ObsoleteWithMessage "In React 18, hydrate was replaced with hydrateRoot"
-            |> Res.ImportReactDom
-            "unmountComponentAtNode" => T<Dom.Element> ^-> T<bool>
-            |> ObsoleteWithMessage "In React 18, unmountComponentAtNode was replaced with root.unmount()"
-            |> Res.ImportReactDom
+            // Note: render, hydrate, unmountComponentAtNode and findDOMNode were
+            // removed in React 19; use ReactDOMClient.createRoot/hydrateRoot and
+            // root.unmount() instead. renderToNodeStream and
+            // renderToStaticNodeStream were removed from react-dom/server.
             "createPortal" => React.Element * T<Dom.Element> * !?T<string> ^-> React.Element
             |> Res.ImportReactDom
             "flushSync" => (T<unit> ^-> T<unit>)?callback ^-> T<unit>
+            |> Res.ImportReactDom
+            "useFormStatus" => T<unit> ^-> FormStatus
+            |> Res.ImportReactDom
+            // Resource preloading APIs (React 19).
+            "prefetchDNS" => T<string> ^-> T<unit>
+            |> Res.ImportReactDom
+            "preconnect" => T<string> * !?T<obj> ^-> T<unit>
+            |> Res.ImportReactDom
+            "preload" => T<string> * T<obj>?options ^-> T<unit>
+            |> Res.ImportReactDom
+            "preloadModule" => T<string> * T<obj>?options ^-> T<unit>
+            |> Res.ImportReactDom
+            "preinit" => T<string> * T<obj>?options ^-> T<unit>
+            |> Res.ImportReactDom
+            "preinitModule" => T<string> * T<obj>?options ^-> T<unit>
             |> Res.ImportReactDom
         ]
 
@@ -264,6 +285,12 @@ module Definition =
                 |> Res.ImportReact
             "createElement" => T<obj>?comp * T<obj>?props *+ React.Element ^-> React.Element |> Res.ImportReact
             "isValidElement" => T<obj> ^-> T<bool> |> Res.ImportReact
+            "cloneElement" => React.Element * T<obj>?props *+React.Element ^-> React.Element
+            |> Res.ImportReact
+            "cloneElement" => React.Element * T<obj>?props ^-> React.Element
+            |> Res.ImportReact
+            "act" => (T<unit> ^-> T<unit>) ^-> T<obj>
+            |> Res.ImportReact
             Generic - fun t ->
                 "createElement"
                     => React.Consumer.[t]
@@ -279,9 +306,31 @@ module Definition =
             "startTransition" => T<unit -> unit>?callback ^-> T<unit>
             |> Res.ImportReact
 
+            // components
+            "StrictMode" =? React.ElementTypeGen.[T<obj>]
+            |> Res.ImportReact
+            "Profiler" =? React.ElementTypeGen.[T<obj>]
+            |> Res.ImportReact
+            "Fragment" =? React.ElementTypeGen.[T<obj>]
+            |> Res.ImportReact
+            "Suspense" =? React.ElementTypeGen.[T<obj>]
+            |> Res.ImportReact
+            // <Activity> landed in React 19.2.
+            "Activity" =? React.ElementTypeGen.[T<obj>]
+            |> Res.ImportReact
+            Generic - fun props ->
+                "lazy" => (T<unit> ^-> T<obj>)?load ^-> React.ElementTypeGen.[props]
+                |> Res.ImportReact
+
             //hooks
             Generic - fun state ->
                 "useState" => state ^-> state * (state ^-> T<unit>)
+                |> Res.ImportReact
+            Generic - fun t ->
+                "use" => (T<obj> + React.Context.[t]) ^-> t
+                |> Res.ImportReact
+            Generic -- fun state payload ->
+                "useActionState" => (state * payload ^-> state) * state * !?T<string>?permalink ^-> state * (payload ^-> T<unit>) * T<bool>
                 |> Res.ImportReact
             Generic - fun t ->
                 "useContext" => React.Context.[t] ^-> t
@@ -295,8 +344,14 @@ module Definition =
             Generic - fun t ->
                 "useDeferredValue" => t ^-> t
                 |> Res.ImportReact
+            Generic - fun t ->
+                "useDeferredValue" => t * t ^-> t
+                |> Res.ImportReact
             "useEffect" => (T<unit> ^-> T<unit>) * !|T<obj> ^-> (T<unit> ^-> T<unit>)
             |> Res.ImportReact
+            Generic - fun t ->
+                "useEffectEvent" => (t ^-> T<unit>) ^-> (t ^-> T<unit>)
+                |> Res.ImportReact
             "useId" => T<unit> ^-> T<string>
             |> Res.ImportReact
             Generic -- fun t u ->
@@ -306,22 +361,18 @@ module Definition =
             Generic - fun t ->
                 "useMemo" => (T<unit> ^-> t) * !|T<obj> ^-> t |> Res.ImportReact
             Generic -- fun t u ->
+                "useOptimistic" => t * !?(t * u ^-> t) ^-> t * (u ^-> T<unit>)
+                |> Res.ImportReact
+            Generic -- fun t u ->
                 "useReducer" => (t * u ^-> t) * t * !?(t ^-> t) ^-> t * (u ^-> T<unit>) |> Res.ImportReact
             Generic - fun ref ->
                 "useRef" => ref ^-> React.Ref.[ref]
                 |> Res.ImportReact
-            "useTransition" => T<unit> ^-> T<bool> * T<unit -> unit> |> Res.ImportReact
+            "useTransition" => T<unit> ^-> T<bool> * ((T<unit> ^-> T<unit>) ^-> T<unit>) |> Res.ImportReact
             Generic -- fun t u ->
                 "useSyncExternalStore" => (u ^-> (T<unit> ^-> u)) * (T<unit> ^-> t) ^-> t
                 |> WithComment "If your app is fully built with react, we recommend using React state instead"
                 |> Res.ImportReact
-
-            "Fragment" =? React.ElementTypeGen.[T<obj>]
-            |> Res.ImportReact
-            "Suspense" =? React.ElementTypeGen.[T<obj>]
-            |> Res.ImportReact
-            "Lazy" => T<unit> ^-> React.Element
-            |> Res.ImportReact
         ]
 
     let SyntheticEvent =
@@ -511,6 +562,7 @@ module Definition =
                  ReactDOMServer
                  ReactDOMClient
                  ReactRoot
+                 FormStatus
                  RootOptions
                  CreateRootOptions
                  HydrateRootOptions

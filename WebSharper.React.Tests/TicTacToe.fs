@@ -2,7 +2,7 @@
 //
 // This file is part of WebSharper
 //
-// Copyright (c) 2008-2018 IntelliFactory
+// Copyright (c) 2008-2026 IntelliFactory
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you
 // may not use this file except in compliance with the License.  You may
@@ -147,7 +147,7 @@ module TicTacToe =
                     ReactHelpers.Make Board { squares = current.squares; onClick = this.handleClick }
                 ]
                 div [attr.className "game-info"] [
-                    div [] [text status]
-                    ol [] moves
+                    div [attr.className "game-status"] [text status]
+                    ol [attr.className "game-moves"] moves
                 ]
             ]

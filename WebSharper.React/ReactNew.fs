@@ -1044,12 +1044,12 @@ module Helpers =
         /// Finds a DOM element by its ID and mounts the React element there
         /// Important: Not available in SSR
         let inline mountById (domElId: string) (reactEl: React.Element): unit =
-            ReactDOM.Render(reactEl, JS.Document.GetElementById(domElId))
+            ReactDomClient.CreateRoot(JS.Document.GetElementById(domElId)).Render(reactEl)
 
         /// Finds the first DOM element matching a CSS selector and mounts the React element there
         /// Important: Not available in SSR
         let inline mountBySelector (domElSelector: string) (reactEl: React.Element): unit =
-            ReactDOM.Render(reactEl, JS.Document.QuerySelector(domElSelector))
+            ReactDomClient.CreateRoot(JS.Document.QuerySelector(domElSelector)).Render(reactEl)
     
 
 module Standard =
@@ -1191,6 +1191,3 @@ module Standard =
     let [<WebSharper.Inline>] stop props children = svgEl "stop" props children
     let [<WebSharper.Inline>] text props children = svgEl "text" props children
     let [<WebSharper.Inline>] tspan props children = svgEl "tspan" props children
-
-[<assembly: WebSharper.JavaScript>]
-do ()

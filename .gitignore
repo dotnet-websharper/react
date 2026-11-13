@@ -6,12 +6,11 @@ bin/
 obj/
 Content/
 build/
+dist/
 /.vs/config/applicationhost.config
-bin/
-obj/
 /.fake/
 /paket-files/
 /.vscode/
 .vs/
 websharper.log
-/WebSharper.React.Tests/node_modules
+node_modules/
