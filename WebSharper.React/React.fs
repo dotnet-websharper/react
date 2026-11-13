@@ -199,12 +199,20 @@ module ReactHelpers =
 
     [<Inline>]
     let Mount target ``component`` =
-        ReactDOM.Render(``component``, target) |> ignore
+        ReactDomClient.CreateRoot(target).Render(``component``)
 
     [<Macro(typeof<Macros.Make>)>]
     [<Inline>]
     let Make<'T, 'Props, 'State when 'T :> R.Component<'Props, 'State>> (f: 'Props -> 'T) (props: 'Props) =
         R.CreateElement(As<R.Class> f, props)
+
+    /// A React.Element that renders nothing (null in JavaScript).
+    let nothing : R.Element = null
+
+    /// Instantiate a function component (a `props -> Element` function) with the given props.
+    [<Inline>]
+    let OfFunction (f: 'props -> R.Element) (props: 'props) : R.Element =
+        WebSharper.React.Helpers.Helpers.ofFunction f props []
 
     let Fragment (children: seq<R.Element>) =
         R.CreateElement(R.Fragment, null, inlineArrayOfSeq children)

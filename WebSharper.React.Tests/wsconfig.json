@@ -1,6 +1,6 @@
 {
   "$schema": "https://websharper.com/wsconfig.schema.json",
-  "project": "bundleOnly",
+  "project": "spa",
   "outputDir": "build",
   "sourceMap": false
 }
