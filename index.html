@@ -1,66 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>WebSharper.React.Tests</title>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="Content/WebSharper.React.Tests.css" />
-    <style>
-body {
-  font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
-}
+    <title>WebSharper.React — sample</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%2361dafb'/%3E%3Ccircle cx='8' cy='8' r='2.4' fill='%230f172a'/%3E%3Cellipse cx='8' cy='8' rx='6' ry='2.4' fill='none' stroke='%230f172a' stroke-width='1.2'/%3E%3C/svg%3E" />
+    <script>
+        // Apply a previously chosen theme before first paint. Light is the
+        // default; the key is shared with Client.fs (themeStorageKey).
+        try {
+            var t = localStorage.getItem('websharper-react-theme');
+            if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+        } catch (e) { }
+    </script>
+    <link rel="stylesheet" href="site.css" />
+    <!-- react and react-dom are bundled from their npm packages; the WebSharper head is folded in here. -->
+    
+</head>
+<body>
+    <header class="app-header">
+        <div class="app-titles">
+            <h1>WebSharper.React</h1>
+            <p>
+                React 19 bindings and a functional API for F# — with
+                <a href="https://websharper.com">WebSharper</a>
+            </p>
+        </div>
+        <div class="app-actions">
+            <button class="btn theme-toggle" ws-onclick="ToggleTheme" title="Switch between the light and dark theme">
+                <span>${themeLabel}</span>
+            </button>
+            <a class="app-source" href="https://github.com/dotnet-websharper/react">Source</a>
+        </div>
+    </header>
 
-ol, ul {
-  padding-left: 30px;
-}
+    <main class="page">
+        <p class="notice">${notice}</p>
 
-.board-row:after {
-  clear: both;
-  content: "";
-  display: table;
-}
+        <section class="card">
+            <header class="card-header">
+                <h2>About this sample</h2>
+                <p>
+                    Everything below is rendered by React from F# through the
+                    <code>WebSharper.React</code> bindings: class components, hooks,
+                    context, <code>createPortal</code>, server rendering and the
+                    hash router. The page chrome is a WebSharper.UI template.
+                </p>
+            </header>
+            <dl class="readout">
+                <div><dt>React version</dt><dd>${reactVersion}</dd></div>
+                <div><dt>Router</dt><dd>${route}</dd></div>
+            </dl>
+        </section>
 
-.status {
-  margin-bottom: 10px;
-}
+        <div id="react-root" class="react-root"></div>
 
-.square {
-  background: #fff;
-  border: 1px solid #999;
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-  width: 34px;
-}
+        <p class="status" role="status">${status}</p>
+    </main>
 
-.square:focus {
-  outline: none;
-}
-
-.kbd-navigation .square:focus {
-  background: #ddd;
-}
-
-.game {
-  display: flex;
-  flex-direction: row;
-}
-
-.game-info {
-  margin-left: 20px;
-}
-    </style>
-    <script type="text/javascript" src="Content/WebSharper.React.Tests.head.js"></script>
-  </head>
-  <body>
-    <div id="main"></div>
-    <script type="text/javascript" src="Content/WebSharper.React.Tests.js"></script>
+    <script type="text/javascript" src="Scripts/WebSharper.React.Tests.min.js"></script>
 </body>
 </html>
